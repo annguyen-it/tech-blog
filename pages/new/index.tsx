@@ -1,6 +1,6 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import NewBot from "./new-bot";
+import NewBottom from "./new-bottom";
 import NewMain from "./new-main";
 import NewTop from "./new-top";
 
@@ -15,7 +15,7 @@ const New: NextPage = () => {
           <NewMain></NewMain>
         </GridItem>
         <GridItem gridColumnStart="2" gridColumnEnd="span 2">
-          <NewBot></NewBot>
+          <NewBottom></NewBottom>
         </GridItem>
       </Grid>
     </Box>
