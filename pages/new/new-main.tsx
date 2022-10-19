@@ -3,11 +3,11 @@ import {
   Button,
   Flex,
   Heading,
+  Image,
   Input,
-  Tabs,
   Tooltip,
 } from "@chakra-ui/react";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from "react";
 import { Editor, EditorRef } from "../../components/elements/editor/editor";
 import { EditorToolbar } from "../../components/elements/editor/editor-toolbar";
 import { Markdown } from "../../components/elements/text/markdown";
@@ -17,27 +17,78 @@ type ChildProps = {
   value: Post;
   setValue?: Dispatch<SetStateAction<Post>>;
 };
-function Edit(props: ChildProps) {
+function Edit({ value, setValue }: ChildProps) {
   const editorRef = useRef<EditorRef>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
+
+  function onClickUpload(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files[0]) {
+      setValue?.((prevState) => ({
+        ...prevState,
+        coverImage: e.target.files![0],
+      }));
+    }
+  }
 
   return (
     <>
       {/* Top */}
       <Box px="16" py="8">
-        <Box mb="5">
+        {/* Cover photo */}
+        <Flex mb="5" align="center">
+          {value.coverImage && (
+            <Image
+              src={URL.createObjectURL(value.coverImage)}
+              h="105px"
+              w="250px"
+              objectFit="scale-down"
+              overflowWrap="anywhere"
+              borderRadius="md"
+            ></Image>
+          )}
+
           <Tooltip label="Use ratio of 100:42 for best results">
-            <Button variant="outline">Add a cover image</Button>
+            <Button onClick={() => imageRef.current?.click()} variant="outline">
+              {value.coverImage ? "Change" : "Add a cover image"}
+            </Button>
           </Tooltip>
-        </Box>
+          {value.coverImage && (
+            <Button
+              variant="ghost"
+              color="red"
+              _hover={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
+              onClick={() =>
+                setValue?.((prevState) => ({
+                  ...prevState,
+                  coverImage: null,
+                }))
+              }
+            >
+              Remove
+            </Button>
+          )}
+          <Input
+            ref={imageRef}
+            onChange={onClickUpload}
+            type="file"
+            accept="image/*"
+            display="none"
+          ></Input>
+          {!!value.coverImage && <Box></Box>}
+        </Flex>
+
+        {/* Title */}
         <Box mb="2">
           <AutoResizeTextarea
             w="full"
             placeholder="New post title here..."
             fontSize="5xl"
             fontWeight="800"
-            value={props.value.title}
+            value={value.title}
           ></AutoResizeTextarea>
         </Box>
+
+        {/* Tags */}
         <Box>
           <Input variant="unstyled" placeholder="Add up to 4 tags..."></Input>
         </Box>
@@ -78,9 +129,9 @@ function Edit(props: ChildProps) {
 
         <Editor
           ref={editorRef}
-          value={props.value.body}
+          value={value.body}
           onTextChange={(body) =>
-            props.setValue?.((prevState) => ({ ...prevState, body }))
+            setValue?.((prevState) => ({ ...prevState, body }))
           }
           fontSize="lg"
           placeholder="Write your post content here..."
@@ -105,43 +156,15 @@ function Preview(props: ChildProps) {
 
 type NewMainProps = { edit: boolean };
 export type Post = {
-  coverImage?: string;
+  coverImage: File | null;
   title: string;
   body: string;
 };
 export default function NewMain({ edit }: NewMainProps) {
   const [value, setValue] = useState<Post>({
-    title: "This is title",
-    body: `**bold**
-  _italic_
-  [link](url)
-  [](url)
-  
-  1. ordered list
-  
-  - unordered list
-  
-  # h1
-  ## h2
-  ### h3
-  #### h4
-  ##### h5
-  ###### h6
-  
-  > quote
-  
-  \`code\`
-  
-  \`\`\`
-  code block
-  \`\`\`
-  
-  ~~Strikethrough~~
-  
-  <u>underline<u>
-
-  --- 
-`,
+    title: "",
+    body: "",
+    coverImage: null,
   });
 
   return (

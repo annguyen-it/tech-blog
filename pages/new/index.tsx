@@ -7,6 +7,7 @@ import NewTop from "./new-top";
 
 const New: NextPage = () => {
   const [edit, setEdit] = useState(true);
+
   return (
     <Box as="main" px="4" background="#f5f5f5">
       <Grid

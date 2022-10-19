@@ -19,7 +19,7 @@ export default function NewTop({ edit, setEdit }: NewTopProps) {
       <Heading flexGrow="1" fontSize="md" fontWeight="500">
         Create post
       </Heading>
-      <ButtonGroup as="nav" variant="ghost">
+      <ButtonGroup as="nav" variant="flat">
         <Button onClick={() => setEdit(true)} fontWeight={edit ? 600 : 400}>
           Edit
         </Button>
@@ -29,8 +29,9 @@ export default function NewTop({ edit, setEdit }: NewTopProps) {
       </ButtonGroup>
       <IconButton
         aria-label="Cancel"
-        variant="ghost"
+        variant="flat"
         icon={<MdOutlineClose />}
+        title="Close editor"
         pos="absolute"
         top="2"
         right="2"
