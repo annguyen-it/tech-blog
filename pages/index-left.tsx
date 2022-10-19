@@ -10,15 +10,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import {
-  FaHashtag,
-  FaHome,
-  FaQuestion,
   FaTwitter,
   FaFacebookF,
   FaGithub,
   FaInstagram,
   FaTwitch,
 } from "react-icons/fa";
+import { categories, tags } from "../data";
 
 function Tile({ children, href }: { children: React.ReactNode; href: string }) {
   return (
@@ -86,24 +84,6 @@ function Introduction() {
 }
 
 function Category() {
-  const categories = [
-    {
-      title: "Home",
-      icon: <FaHome />,
-      href: "/",
-    },
-    {
-      title: "Hashtags",
-      icon: <FaHashtag />,
-      href: "/hashtags",
-    },
-    {
-      title: "FAQ",
-      icon: <FaQuestion />,
-      href: "/faq",
-    },
-  ];
-
   return (
     <Box as="nav">
       <List>
@@ -157,19 +137,6 @@ function SocialNetwork() {
 }
 
 function Tag() {
-  const tags = [
-    "javascript",
-    "webdev",
-    "beginners",
-    "programming",
-    "react",
-    "python",
-    "angular",
-    "csharp",
-    "cplusplus",
-    "ruby",
-  ];
-
   return (
     <Box as="nav">
       <Heading as="h3" size="sm" p="2">
