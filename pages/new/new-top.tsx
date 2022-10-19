@@ -8,16 +8,24 @@ import {
 } from "@chakra-ui/react";
 import { MdOutlineClose } from "react-icons/md";
 
-export default function NewTop() {
+type NewTopProps = {
+  edit: boolean;
+  setEdit: (edit: boolean) => void;
+};
+export default function NewTop({ edit, setEdit }: NewTopProps) {
   return (
     <Flex h="14" alignItems="center">
       <Box mr="4">Logo</Box>
-      <Heading flexGrow="1" fontSize="md">
+      <Heading flexGrow="1" fontSize="md" fontWeight="500">
         Create post
       </Heading>
       <ButtonGroup as="nav" variant="ghost">
-        <Button>Edit</Button>
-        <Button>Preview</Button>
+        <Button onClick={() => setEdit(true)} fontWeight={edit ? 600 : 400}>
+          Edit
+        </Button>
+        <Button onClick={() => setEdit(false)} fontWeight={edit ? 400 : 600}>
+          Preview
+        </Button>
       </ButtonGroup>
       <IconButton
         aria-label="Cancel"

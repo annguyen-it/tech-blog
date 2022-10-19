@@ -1,24 +1,12 @@
-import { Button, ButtonGroup, IconButton } from "@chakra-ui/react";
-import { MdOutlineSettings } from "react-icons/md";
+import { Button, ButtonGroup } from "@chakra-ui/react";
 
 export default function NewBottom() {
   return (
-    <ButtonGroup
-      variant="ghost"
-      h="20"
-      display="flex"
-      alignItems="center"
-    >
+    <ButtonGroup variant="ghost" h="20" display="flex" alignItems="center">
       <Button variant="solid" colorScheme="blue">
         Publish
       </Button>
       <Button fontWeight="normal">Save draft</Button>
-      <IconButton
-        aria-label="Post setting"
-        icon={<MdOutlineSettings />}
-        fontSize="xl"
-      ></IconButton>
-      <Button fontWeight="normal">Revert new changes</Button>
     </ButtonGroup>
   );
 }
