@@ -2,7 +2,10 @@ import { Box, Grid, GridItem } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Layout from "../components/layout/layout";
 import IndexLeft from "./index-left";
+import IndexRight from "./index-right";
 import IndexMain from "./index-main";
+
+
 
 const Home: NextPage = () => {
   return (
@@ -15,7 +18,9 @@ const Home: NextPage = () => {
           <GridItem>
             <IndexMain></IndexMain>
           </GridItem>
-          <GridItem></GridItem>
+          <GridItem>
+            <IndexRight></IndexRight>
+          </GridItem>
         </Grid>
       </Layout>
     </Box>

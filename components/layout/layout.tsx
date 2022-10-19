@@ -11,7 +11,7 @@ export default function AppLayout({
   return (
     <>
       <TopBar></TopBar>
-      <Box p="4" maxW="7xl">
+      <Box p="4" maxW="7xl" margin="0 auto">
         {children}
       </Box>
       <Footer></Footer>
