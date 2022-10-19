@@ -80,7 +80,7 @@ export default function NewTop() {
             "IMAGE",
             "CODE",
             "CODE_BLOCK",
-            // "UNDERLINE",
+            "UNDERLINE",
             "STRIKETHROUGH",
             "LINE_DIVIDER",
             "HELP",

@@ -4,6 +4,7 @@ import {
   Heading,
   Link,
   OrderedList,
+  Text,
   UnorderedList,
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
@@ -17,7 +18,6 @@ export function Markdown(props: MarkdownProps) {
       children={props.children}
       remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
       components={{
-        p: ({ node, ...props }) => <p {...props} />,
         a: ({ node, ...props }) => <Link {...props} />,
         blockquote: ({ node, ...props }) => (
           <blockquote
@@ -25,7 +25,7 @@ export function Markdown(props: MarkdownProps) {
             {...props}
           />
         ),
-        code: ({ node, ...props }) => (
+        code: ({ node, inline, ...props }) => (
           <Code
             {...props}
             px="1"
@@ -53,13 +53,14 @@ export function Markdown(props: MarkdownProps) {
         h6: ({ node, ...props }) => (
           <Heading as="h6" {...props} fontSize="md" />
         ),
-        ol: ({ node, ...props }) => <OrderedList {...props} />,
+        ol: ({ node, ordered, ...props }) => <OrderedList {...props} />,
+        p: ({ node, ...props }) => <Text {...props} />,
         pre: ({ node, ...props }) => (
           <Box p="5" borderRadius="md" bg="#08090a" color="#f8f8f2">
             <pre {...props} />
           </Box>
         ),
-        ul: ({ node, ...props }) => <UnorderedList {...props} />,
+        ul: ({ node, ordered, ...props }) => <UnorderedList {...props} />,
       }}
     ></ReactMarkdown>
   );

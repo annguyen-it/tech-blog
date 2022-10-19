@@ -3,8 +3,15 @@ import { MdOutlineSettings } from "react-icons/md";
 
 export default function NewBottom() {
   return (
-    <ButtonGroup variant="ghost" h="20" display="flex" alignItems="center">
-      <Button variant="solid" colorScheme="blue">Publish</Button>
+    <ButtonGroup
+      variant="ghost"
+      h="20"
+      display="flex"
+      alignItems="center"
+    >
+      <Button variant="solid" colorScheme="blue">
+        Publish
+      </Button>
       <Button fontWeight="normal">Save draft</Button>
       <IconButton
         aria-label="Post setting"

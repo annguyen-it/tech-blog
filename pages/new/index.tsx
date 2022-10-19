@@ -7,7 +7,11 @@ import NewTop from "./new-top";
 const New: NextPage = () => {
   return (
     <Box as="main" px="4" background="#f5f5f5">
-      <Grid as="form" gridTemplateRows="min-content 1fr min-content" gridTemplateColumns="64px 7fr 3fr">
+      <Grid
+        as="form"
+        gridTemplateRows="min-content 1fr min-content"
+        gridTemplateColumns="64px 7fr 3fr"
+      >
         <GridItem gridColumnStart="1" gridColumnEnd="3">
           <NewTop></NewTop>
         </GridItem>
