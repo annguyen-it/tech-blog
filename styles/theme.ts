@@ -7,6 +7,10 @@ export const theme = extendTheme({
     "primary": "rgb(59, 73, 223)",
     "primary-darker": "rgb(47, 58, 178)",
     "primary-rgba": "rgba(59, 73, 223, 0.1)",
+    "grey-100": "rgb(245, 245, 245)",
+    "grey-700": "rgb(64, 64, 64)",
+    "grey-900": "rgb(23, 23, 23)",
+    "grey-900-rgba": "rgba(23, 23, 23, 0.1)",
   },
   components: {
     Textarea: TextAreaStyles,

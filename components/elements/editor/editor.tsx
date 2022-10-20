@@ -183,7 +183,7 @@ export const Editor = forwardRef<EditorRef, EditorProps>(
 
     useEffect(() => {
       onTextChange?.(value);
-    }, [value]);
+    }, [onTextChange, value]);
 
     useImperativeHandle(ref, () => ({
       onClickTool: (tool) => {
@@ -231,3 +231,5 @@ export const Editor = forwardRef<EditorRef, EditorProps>(
     );
   }
 );
+
+Editor.displayName = "Editor";

@@ -54,7 +54,7 @@ function Introduction() {
         is a community of 938,136 amazing developers
       </Heading>
       <Text>
-        We're a place where coders share, stay up-to-date and grow their
+        We&apos;re a place where coders share, stay up-to-date and grow their
         careers.
       </Text>
 
