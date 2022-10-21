@@ -1,5 +1,3 @@
-import { whiten } from "@chakra-ui/theme-tools";
-
 export const ButtonStyles = {
   baseStyle: {},
   sizes: {},
@@ -19,6 +17,10 @@ export const ButtonStyles = {
         color: "primary",
       },
     },
+    hashtag: {
+      bg: "var(--chakra-colors-grey-900-rgba)",
+      color: "var(--chakra-colors-grey-700)",
+    }
   },
   defaultProps: {},
 };

@@ -11,6 +11,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { FaRegComment, FaRegHeart, FaRegBookmark } from "react-icons/fa";
+import { Posts } from "../data";
 
 function NavButton({
   children,
@@ -35,167 +36,12 @@ function NavButton({
 }
 
 function Post() {
-  const posts = [
-    {
-      image:
-        "https://res.cloudinary.com/practicaldev/image/fetch/s--Vt_eVVRg--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://www.entropywins.wtf/blog/wp-content/uploads/2022/09/code.jpg",
-      author: {
-        url: "johnny.depp",
-        name: "Johnny Depp",
-        intro: "I'm an actor",
-        work: "Hollywood",
-        joined: new Date(2019, 5, 9),
-        image:
-          "https://res.cloudinary.com/practicaldev/image/fetch/s--4Jbi0yB4--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/2884/27097c7514e0bf985ccbe9a8ccd2a550.jpeg",
-      },
-      createdDate: new Date(2022, 9, 9),
-      title: "Advice for junior developers",
-      url: "123456",
-      tags: ["beginners", "newbie", "learning"],
-      likes: 900,
-      comments: 30,
-      timeToRead: 9,
-    },
-    {
-      image: "",
-      author: {
-        url: "johnny.depp",
-        name: "Johnny Depp",
-        intro: "I'm an actor",
-        work: "Hollywood",
-        joined: new Date(2019, 5, 9),
-        image: "",
-      },
-      createdDate: new Date(2022, 9, 9),
-      title: "Advice for junior developers",
-      url: "123451",
-      tags: ["beginners", "newbie", "learning"],
-      likes: 1,
-      comments: 30,
-      timeToRead: 9,
-    },
-    {
-      image:
-        "https://res.cloudinary.com/practicaldev/image/fetch/s--Vt_eVVRg--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://www.entropywins.wtf/blog/wp-content/uploads/2022/09/code.jpg",
-      author: {
-        url: "johnny.depp",
-        name: "Johnny Depp",
-        intro: "I'm an actor",
-        work: "Hollywood",
-        joined: new Date(2019, 5, 9),
-        image:
-          "https://res.cloudinary.com/practicaldev/image/fetch/s--4Jbi0yB4--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/2884/27097c7514e0bf985ccbe9a8ccd2a550.jpeg",
-      },
-      createdDate: new Date(2022, 9, 9),
-      title: "Advice for junior developers",
-      url: "123456",
-      tags: ["beginners", "newbie", "learning"],
-      likes: 900,
-      comments: 30,
-      timeToRead: 9,
-    },
-    {
-      image: "",
-      author: {
-        url: "johnny.depp",
-        name: "Johnny Depp",
-        intro: "I'm an actor",
-        work: "Hollywood",
-        joined: new Date(2019, 5, 9),
-        image: "",
-      },
-      createdDate: new Date(2022, 9, 9),
-      title: "Advice for junior developers",
-      url: "123451",
-      tags: ["beginners", "newbie", "learning"],
-      likes: 1,
-      comments: 30,
-      timeToRead: 9,
-    },
-    {
-      image:
-        "https://res.cloudinary.com/practicaldev/image/fetch/s--Vt_eVVRg--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://www.entropywins.wtf/blog/wp-content/uploads/2022/09/code.jpg",
-      author: {
-        url: "johnny.depp",
-        name: "Johnny Depp",
-        intro: "I'm an actor",
-        work: "Hollywood",
-        joined: new Date(2019, 5, 9),
-        image:
-          "https://res.cloudinary.com/practicaldev/image/fetch/s--4Jbi0yB4--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/2884/27097c7514e0bf985ccbe9a8ccd2a550.jpeg",
-      },
-      createdDate: new Date(2022, 9, 9),
-      title: "Advice for junior developers",
-      url: "123456",
-      tags: ["beginners", "newbie", "learning"],
-      likes: 900,
-      comments: 30,
-      timeToRead: 9,
-    },
-    {
-      image: "",
-      author: {
-        url: "johnny.depp",
-        name: "Johnny Depp",
-        intro: "I'm an actor",
-        work: "Hollywood",
-        joined: new Date(2019, 5, 9),
-        image: "",
-      },
-      createdDate: new Date(2022, 9, 9),
-      title: "Advice for junior developers",
-      url: "123451",
-      tags: ["beginners", "newbie", "learning"],
-      likes: 1,
-      comments: 30,
-      timeToRead: 9,
-    },
-    {
-      image:
-        "https://res.cloudinary.com/practicaldev/image/fetch/s--Vt_eVVRg--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://www.entropywins.wtf/blog/wp-content/uploads/2022/09/code.jpg",
-      author: {
-        url: "johnny.depp",
-        name: "Johnny Depp",
-        intro: "I'm an actor",
-        work: "Hollywood",
-        joined: new Date(2019, 5, 9),
-        image:
-          "https://res.cloudinary.com/practicaldev/image/fetch/s--4Jbi0yB4--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/2884/27097c7514e0bf985ccbe9a8ccd2a550.jpeg",
-      },
-      createdDate: new Date(2022, 9, 9),
-      title: "Advice for junior developers",
-      url: "123456",
-      tags: ["beginners", "newbie", "learning"],
-      likes: 900,
-      comments: 30,
-      timeToRead: 9,
-    },
-    {
-      image: "",
-      author: {
-        url: "johnny.depp",
-        name: "Johnny Depp",
-        intro: "I'm an actor",
-        work: "Hollywood",
-        joined: new Date(2019, 5, 9),
-        image: "",
-      },
-      createdDate: new Date(2022, 9, 9),
-      title: "Advice for junior developers",
-      url: "123451",
-      tags: ["beginners", "newbie", "learning"],
-      likes: 1,
-      comments: 30,
-      timeToRead: 9,
-    },
-  ];
-
   return (
     <Stack spacing="2">
-      {posts.map((post, i) => (
+      {Posts.map((post, i) => (
         <Box
           as="article"
-          key={post.url}
+          key={post.id}
           bg="white"
           boxShadow="0 0 0 1px rgba(23, 23, 23, 0.1)"
           borderRadius="md"
@@ -228,8 +74,8 @@ function Post() {
               </Heading>
 
               <ButtonGroup variant="ghost" size="sm" spacing="0">
-                {post.tags.map((tag) => (
-                  <Button as="a" href={`/t/${tag}`} fontWeight="400">
+                {post.tags.map((tag, i) => (
+                  <Button key={i} as="a" href={`/t/${tag}`} fontWeight="400">
                     #{tag}
                   </Button>
                 ))}
@@ -288,9 +134,7 @@ export default function IndexMain() {
           <NavButton href="/top/week">Top</NavButton>
         </ButtonGroup>
       </Box>
-      <Box>
-        <Post></Post>
-      </Box>
+      <Box><Post></Post></Box>
     </Stack>
   );
 }

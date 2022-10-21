@@ -21,3 +21,5 @@ export const AutoResizeTextarea = forwardRef<
     />
   );
 });
+
+AutoResizeTextarea.displayName = "AutoResizeTextarea";
