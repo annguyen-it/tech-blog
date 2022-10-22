@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Layout from "../components/layout/layout";
 import IndexLeft from "./index-left";
