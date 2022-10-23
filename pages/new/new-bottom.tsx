@@ -1,6 +1,7 @@
 import { Button, ButtonGroup } from "@chakra-ui/react";
+import React from "react";
 
-export default function NewBottom() {
+function NewBottom() {
   return (
     <ButtonGroup variant="flat" h="20" display="flex" alignItems="center">
       <Button variant="primary" colorScheme="blue">
@@ -10,3 +11,5 @@ export default function NewBottom() {
     </ButtonGroup>
   );
 }
+
+export default React.memo(NewBottom);

@@ -8,7 +8,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { FieldValues, Path, PathValue, useFormContext } from "react-hook-form";
+import {
+  FieldValues,
+  Path,
+  PathValue,
+  useFormContext,
+  useWatch,
+} from "react-hook-form";
 import { AutoResizeTextarea } from "../textarea/auto-resize-textarea";
 import { EditorTool } from "./editor-tools";
 
@@ -22,7 +28,7 @@ type EditorProps<T> = TextareaProps & {
 
 export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
   type T = { [key: string]: string };
-  const { register, setValue, watch } = useFormContext<T>();
+  const { register, setValue, control } = useFormContext<T>();
   const controlKeyPath = controlKey as Path<T>;
   const { ref: refCallback, ...registerItem } = register(controlKeyPath);
   const [selection, setSelection] = useState<{
@@ -30,7 +36,11 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
     end: number;
   } | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const value = watch(controlKeyPath);
+  const value = useWatch({ control })[controlKeyPath];
+
+  if (!value) {
+    return <></>;
+  }
 
   function add(character: string) {
     const textarea = textareaRef.current!;
@@ -41,11 +51,11 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
 
     setValue(
       controlKeyPath,
-      value.substring(0, start) +
+      value!.substring(0, start) +
         "\n" +
         character +
         "\n" +
-        value.substring(start)
+        value!.substring(start)
     );
     setSelection({
       start: textarea.selectionStart + character.length + 2,
@@ -57,18 +67,18 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
     const textarea = textareaRef.current!;
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    const currentString = value.substring(start, end);
+    const currentString = value!.substring(start, end);
     const prevChar =
-      start === 0 || value.charAt(start - 1) === "\n" ? "" : "\n";
+      start === 0 || value!.charAt(start - 1) === "\n" ? "" : "\n";
     const afterChar =
-      end === value.length || value.charAt(end) === "\n" ? "" : "\n";
+      end === value!.length || value!.charAt(end) === "\n" ? "" : "\n";
 
     textarea.focus({ preventScroll: false });
 
     if (currentString.indexOf(character) === 0) {
       setValue(
         controlKeyPath,
-        value.substring(0, start) + value.substring(start + character.length)
+        value!.substring(0, start) + value!.substring(start + character.length)
       );
       setSelection({
         start: textarea.selectionStart,
@@ -77,12 +87,12 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
     } else {
       setValue(
         controlKeyPath,
-        (value.substring(0, start) +
+        (value!.substring(0, start) +
           prevChar +
           character +
-          value.substring(start, end) +
+          value!.substring(start, end) +
           afterChar +
-          value.substring(end)) as PathValue<T, Path<T>>
+          value!.substring(end)) as PathValue<T, Path<T>>
       );
       setSelection({
         start: textarea.selectionStart + (prevChar ? 1 : 0),
@@ -106,15 +116,15 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
     if (start !== end) {
       if (
         // |**bold**|
-        value.substring(start, start + numberOfChar) === charString &&
-        value.substring(end - numberOfChar, end) === charString
+        value!.substring(start, start + numberOfChar) === charString &&
+        value!.substring(end - numberOfChar, end) === charString
       ) {
         // Remove
         setValue(
           controlKeyPath,
-          value.substring(0, start) +
-            value.substring(start + numberOfChar, end - numberOfChar) +
-            value.substring(end + numberOfChar)
+          value!.substring(0, start) +
+            value!.substring(start + numberOfChar, end - numberOfChar) +
+            value!.substring(end + numberOfChar)
         );
         setSelection({
           start: textarea.selectionStart,
@@ -122,15 +132,15 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
         });
       } else if (
         // **|bold|**
-        value.substring(start - numberOfChar, start) === charString &&
-        value.substring(end, end + numberOfChar) === charString
+        value!.substring(start - numberOfChar, start) === charString &&
+        value!.substring(end, end + numberOfChar) === charString
       ) {
         // Remove
         setValue(
           controlKeyPath,
-          value.substring(0, start - numberOfChar) +
-            value.substring(start, end) +
-            value.substring(end + numberOfChar)
+          value!.substring(0, start - numberOfChar) +
+            value!.substring(start, end) +
+            value!.substring(end + numberOfChar)
         );
         setSelection({
           start: textarea.selectionStart - numberOfChar,
@@ -139,7 +149,7 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
       } else {
         setValue(
           controlKeyPath,
-          (charString + value.substring(start, end) + charString) as PathValue<
+          (charString + value!.substring(start, end) + charString) as PathValue<
             T,
             Path<T>
           >
@@ -152,13 +162,14 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
     } else {
       charString = character.repeat(numberOfChar * 2);
       if (
-        value.substring(start - numberOfChar, end + numberOfChar) === charString
+        value!.substring(start - numberOfChar, end + numberOfChar) ===
+        charString
       ) {
         // Remove
         setValue(
           controlKeyPath,
-          value.substring(0, start - numberOfChar) +
-            value.substring(start + numberOfChar)
+          value!.substring(0, start - numberOfChar) +
+            value!.substring(start + numberOfChar)
         );
         setSelection({
           start: textarea.selectionStart - numberOfChar,
@@ -167,9 +178,9 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
       } else {
         setValue(
           controlKeyPath,
-          (value.substring(0, start) +
+          (value!.substring(0, start) +
             charString +
-            value.substring(start)) as PathValue<T, Path<T>>
+            value!.substring(start)) as PathValue<T, Path<T>>
         );
         setSelection({
           start: textarea.selectionStart + numberOfChar,

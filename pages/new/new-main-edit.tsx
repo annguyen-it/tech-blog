@@ -20,7 +20,7 @@ import {
   useBoolean,
 } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { MdOutlineClose } from "react-icons/md";
 import { Editor, EditorRef } from "../../components/elements/editor/editor";
 import { EditorToolbar } from "../../components/elements/editor/editor-toolbar";
@@ -28,11 +28,10 @@ import { AutoResizeTextarea } from "../../components/elements/textarea/auto-resi
 import { Post } from "../../models";
 
 function CoverPhoto() {
-  const { register, getValues, setValue, watch } = useFormContext();
+  const { register, setValue, control } = useFormContext<Post>();
+  const { coverImage } = useWatch({ control });
   const [preview, setPreview] = useState<string>("");
   const imageRef = useRef<HTMLInputElement>(null);
-  const watchCoverImage = watch("coverImage");
-  const { coverImage } = getValues();
 
   function onClickUpload(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files?.[0]) {
@@ -41,16 +40,16 @@ function CoverPhoto() {
   }
 
   useEffect(() => {
-    if (!watchCoverImage) {
+    if (!coverImage) {
       setPreview("");
       return;
     }
 
-    const objectUrl = URL.createObjectURL(watchCoverImage);
+    const objectUrl = URL.createObjectURL(coverImage);
     setPreview(objectUrl);
 
     return () => URL.revokeObjectURL(objectUrl);
-  }, [watchCoverImage]);
+  }, [coverImage]);
 
   useEffect(() => {
     if (!preview && imageRef.current) {
@@ -79,10 +78,10 @@ function CoverPhoto() {
       </Tooltip>
       {coverImage && (
         <Button
+          onClick={() => setValue("coverImage", null)}
           variant="ghost"
           color="red"
           _hover={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
-          onClick={() => setValue("coverImage", null)}
         >
           Remove
         </Button>
@@ -117,12 +116,16 @@ function Title() {
 }
 
 function Hashtags() {
-  const { setValue, watch } = useFormContext<Post>();
+  const { setValue, control } = useFormContext<Post>();
+  const { hashtags } = useWatch({ control });
   const popupRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isOpenPopup, setIsOpenPopup] = useBoolean();
   const [editingHashtagIndex, setEditingHashtagIndex] = useState(-1);
-  const hashtags = watch("hashtags");
+
+  if (!hashtags) {
+    return <></>;
+  }
 
   const items = [
     {
@@ -149,7 +152,7 @@ function Hashtags() {
     }
 
     input.focus();
-    input.value = hashtags[index];
+    input.value = hashtags![index];
   }
 
   function updateHashtags(hashtag?: string) {
@@ -160,7 +163,7 @@ function Hashtags() {
     if (editingHashtagIndex !== -1) {
       setValue(
         "hashtags",
-        hashtags.reduce<string[]>((acc, curr, i) => {
+        hashtags!.reduce<string[]>((acc, curr, i) => {
           if (i !== editingHashtagIndex) {
             acc.push(curr);
           } else if (hashtag) {
@@ -170,8 +173,8 @@ function Hashtags() {
         }, [])
       );
     } else {
-      if (!hashtags.includes(hashtag)) {
-        setValue("hashtags", [...hashtags, hashtag]);
+      if (!hashtags!.includes(hashtag)) {
+        setValue("hashtags", [...hashtags!, hashtag]);
       }
     }
   }
