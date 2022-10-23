@@ -18,58 +18,49 @@ import {
   Text,
   Tooltip,
   useBoolean,
-  useDisclosure,
 } from "@chakra-ui/react";
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import { MdOutlineClose } from "react-icons/md";
 import { Editor, EditorRef } from "../../components/elements/editor/editor";
 import { EditorToolbar } from "../../components/elements/editor/editor-toolbar";
 import { AutoResizeTextarea } from "../../components/elements/textarea/auto-resize-textarea";
 import { Post } from "../../models";
 
-type ChildProps<T extends keyof Post> = {
-  value: Post[T];
-  onChange: (value: Post[T]) => void;
-};
-
-function CoverPhoto({ value, onChange }: ChildProps<"coverImage">) {
+function CoverPhoto() {
+  const { register, getValues, setValue, watch } = useFormContext();
   const [preview, setPreview] = useState<string>("");
   const imageRef = useRef<HTMLInputElement>(null);
+  const watchCoverImage = watch("coverImage");
+  const { coverImage } = getValues();
 
   function onClickUpload(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files?.[0]) {
-      onChange(e.target.files[0]);
+      setValue("coverImage", e.target.files[0]);
     }
-  }
-
-  function onRemoveImage() {
-    if (imageRef.current) {
-      imageRef.current.value = "";
-    }
-    onChange(null);
   }
 
   useEffect(() => {
-    if (!value) {
+    if (!watchCoverImage) {
       setPreview("");
       return;
     }
 
-    const objectUrl = URL.createObjectURL(value);
+    const objectUrl = URL.createObjectURL(watchCoverImage);
     setPreview(objectUrl);
+
     return () => URL.revokeObjectURL(objectUrl);
-  }, [value]);
+  }, [watchCoverImage]);
+
+  useEffect(() => {
+    if (!preview && imageRef.current) {
+      imageRef.current.value = "";
+    }
+  }, [preview]);
 
   return (
     <Flex mb="5" align="center">
-      {value && (
+      {coverImage && (
         <Image
           src={preview}
           alt="Post cover"
@@ -83,51 +74,55 @@ function CoverPhoto({ value, onChange }: ChildProps<"coverImage">) {
 
       <Tooltip label="Use ratio of 100:42 for best results">
         <Button onClick={() => imageRef.current?.click()} variant="outline">
-          {value ? "Change" : "Add a cover image"}
+          {coverImage ? "Change" : "Add a cover image"}
         </Button>
       </Tooltip>
-      {value && (
+      {coverImage && (
         <Button
           variant="ghost"
           color="red"
           _hover={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
-          onClick={onRemoveImage}
+          onClick={() => setValue("coverImage", null)}
         >
           Remove
         </Button>
       )}
       <Input
+        {...register("coverImage")}
         ref={imageRef}
         onChange={onClickUpload}
         type="file"
         accept="image/*"
         display="none"
       ></Input>
-      {!!value && <Box></Box>}
+      {!!coverImage && <Box></Box>}
     </Flex>
   );
 }
 
-function Title({ value, onChange }: ChildProps<"title">) {
+function Title() {
+  const { register } = useFormContext();
+
   return (
     <Box mb="2">
       <AutoResizeTextarea
+        {...register("title")}
         w="full"
         placeholder="New post title here..."
         fontSize="5xl"
         fontWeight="800"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
       ></AutoResizeTextarea>
     </Box>
   );
 }
 
-function Hashtags({ value, onChange }: ChildProps<"hashtags">) {
+function Hashtags() {
+  const { setValue, watch } = useFormContext<Post>();
   const popupRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isOpenPopup, setIsOpenPopup] = useBoolean();
   const [editingHashtagIndex, setEditingHashtagIndex] = useState(-1);
+  const hashtags = watch("hashtags");
 
   const items = [
     {
@@ -154,12 +149,30 @@ function Hashtags({ value, onChange }: ChildProps<"hashtags">) {
     }
 
     input.focus();
-    input.value = value[index];
+    input.value = hashtags[index];
   }
 
-  function addHashtag(hashtag?: string) {
-    if (hashtag) {
-      onChange([...value, hashtag]);
+  function updateHashtags(hashtag?: string) {
+    if (!hashtag) {
+      return;
+    }
+
+    if (editingHashtagIndex !== -1) {
+      setValue(
+        "hashtags",
+        hashtags.reduce<string[]>((acc, curr, i) => {
+          if (i !== editingHashtagIndex) {
+            acc.push(curr);
+          } else if (hashtag) {
+            acc.push(hashtag);
+          }
+          return acc;
+        }, [])
+      );
+    } else {
+      if (!hashtags.includes(hashtag)) {
+        setValue("hashtags", [...hashtags, hashtag]);
+      }
     }
   }
 
@@ -169,20 +182,7 @@ function Hashtags({ value, onChange }: ChildProps<"hashtags">) {
       return;
     }
 
-    if (editingHashtagIndex !== -1) {
-      onChange(
-        value.reduce<string[]>((acc, curr, i) => {
-          if (i !== editingHashtagIndex) {
-            acc.push(curr);
-          } else if (input.value) {
-            acc.push(input.value);
-          }
-          return acc;
-        }, [])
-      );
-    } else {
-      addHashtag(input.value);
-    }
+    updateHashtags(input.value);
 
     setTimeout(() => {
       if (document.activeElement !== input) {
@@ -199,10 +199,23 @@ function Hashtags({ value, onChange }: ChildProps<"hashtags">) {
       return;
     }
 
-    if (e.key === "Enter") {
+    const notPreventKeyList = [
+      "Backspace",
+      "Delete",
+      "ArrowRight",
+      "ArrowLeft",
+    ];
+
+    if (
+      (!notPreventKeyList.includes(e.key) && e.key.length > 1) ||
+      !/\w/.test(e.key)
+    ) {
       e.preventDefault();
-      addHashtag(input.value);
+    }
+    if (e.key === "Enter") {
+      updateHashtags(input.value);
       setIsOpenPopup.off();
+      setEditingHashtagIndex(-1);
       input.value = "";
     }
   }
@@ -217,7 +230,8 @@ function Hashtags({ value, onChange }: ChildProps<"hashtags">) {
       >
         <PopoverTrigger>
           <List w="full" display="flex" flexWrap="wrap">
-            {value.map((hashtag, index) => (
+            {/* Hashtags */}
+            {hashtags.map((hashtag, index) => (
               <ListItem
                 key={hashtag}
                 display={editingHashtagIndex === index ? "none" : ""}
@@ -240,7 +254,12 @@ function Hashtags({ value, onChange }: ChildProps<"hashtags">) {
                     # {hashtag}
                   </Button>
                   <IconButton
-                    onClick={() => onChange(value.filter((v) => v !== hashtag))}
+                    onClick={() =>
+                      setValue(
+                        "hashtags",
+                        hashtags.filter((v) => v !== hashtag)
+                      )
+                    }
                     aria-label={`Remove ${hashtag}`}
                     icon={<MdOutlineClose />}
                     px="1"
@@ -250,19 +269,21 @@ function Hashtags({ value, onChange }: ChildProps<"hashtags">) {
                 </ButtonGroup>
               </ListItem>
             ))}
+
+            {/* Input to add item */}
             <ListItem
               alignSelf="center"
               order={
                 editingHashtagIndex !== -1
                   ? editingHashtagIndex + 1
-                  : value.length + 1
+                  : hashtags.length + 1
               }
             >
               <Input
                 ref={inputRef}
                 variant="unstyled"
                 placeholder={
-                  value.length ? "Add another..." : "Add up to 4 tags..."
+                  hashtags.length ? "Add another..." : "Add up to 4 tags..."
                 }
                 onClick={setIsOpenPopup.on}
                 onBlur={() => onBlur()}
@@ -273,6 +294,8 @@ function Hashtags({ value, onChange }: ChildProps<"hashtags">) {
             </ListItem>
           </List>
         </PopoverTrigger>
+
+        {/* Popup */}
         <Portal containerRef={popupRef}>
           <PopoverContent w="auto">
             <PopoverHeader p="3">
@@ -281,11 +304,11 @@ function Hashtags({ value, onChange }: ChildProps<"hashtags">) {
             <PopoverBody p="1" maxH="500px" overflow="auto">
               <List>
                 {items
-                  .filter((item) => value.indexOf(item.hashtag) === -1)
+                  .filter((item) => hashtags.indexOf(item.hashtag) === -1)
                   .map((item) => (
                     <ListItem key={item.hashtag} cursor="pointer">
                       <Box
-                        onClick={() => addHashtag(item.hashtag)}
+                        onClick={() => updateHashtags(item.hashtag)}
                         p="3"
                         borderRadius="md"
                         _hover={{
@@ -304,12 +327,14 @@ function Hashtags({ value, onChange }: ChildProps<"hashtags">) {
           </PopoverContent>
         </Portal>
       </Popover>
+
+      {/* Hashtag wrapper */}
       <Box ref={popupRef} pos="absolute" top="8" w="full" bg="red"></Box>
     </Box>
   );
 }
 
-function Body({ value, onChange }: ChildProps<"body">) {
+function Body() {
   const editorRef = useRef<EditorRef>(null);
 
   return (
@@ -329,10 +354,9 @@ function Body({ value, onChange }: ChildProps<"body">) {
         flexShrink="0"
       ></EditorToolbar>
 
-      <Editor
+      <Editor<Post>
         ref={editorRef}
-        value={value}
-        onTextChange={(body) => onChange(body)}
+        controlKey="body"
         fontSize="lg"
         placeholder="Write your post content here..."
       ></Editor>
@@ -340,30 +364,16 @@ function Body({ value, onChange }: ChildProps<"body">) {
   );
 }
 
-type NewMainEditProps = {
-  value: Post;
-  onChange: (value: Partial<Post>) => void;
-};
-export function NewMainEdit({ value, onChange }: NewMainEditProps) {
-  // console.log(value)
+export function NewMainEdit() {
   return (
     <>
       <Box px="16" py="8">
-        <CoverPhoto
-          value={value.coverImage}
-          onChange={(coverImage) => onChange({ coverImage })}
-        ></CoverPhoto>
-        <Title
-          value={value.title}
-          onChange={(title) => onChange({ title })}
-        ></Title>
-        <Hashtags
-          value={value.hashtags}
-          onChange={(hashtags) => onChange({ hashtags })}
-        ></Hashtags>
+        <CoverPhoto></CoverPhoto>
+        <Title></Title>
+        <Hashtags></Hashtags>
       </Box>
 
-      <Body value={value.body} onChange={(body) => onChange({ body })}></Body>
+      <Body></Body>
     </>
   );
 }
