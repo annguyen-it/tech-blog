@@ -1,10 +1,13 @@
 import { Textarea, TextareaProps } from "@chakra-ui/react";
 import { forwardRef } from "react";
-import ResizeTextarea from "react-textarea-autosize";
+import ResizeTextarea, { TextareaAutosizeProps } from "react-textarea-autosize";
+
+export type AutoResizeTextareaProps = TextareaProps &
+  Omit<TextareaAutosizeProps, "style">;
 
 export const AutoResizeTextarea = forwardRef<
   HTMLTextAreaElement,
-  TextareaProps
+  AutoResizeTextareaProps
 >((props, ref) => {
   return (
     <Textarea
@@ -12,12 +15,9 @@ export const AutoResizeTextarea = forwardRef<
       ref={ref}
       as={ResizeTextarea}
       variant="unstyled"
-      w="100%"
-      minH="unset"
       p="0"
       overflow="hidden"
       resize="none"
-      minRows={1}
     />
   );
 });
