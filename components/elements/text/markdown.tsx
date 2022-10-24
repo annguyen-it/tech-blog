@@ -12,10 +12,9 @@ import remarkGfm from "remark-gfm";
 
 type MarkdownProps = { children: string };
 
-export function Markdown(props: MarkdownProps) {
+export function Markdown({ children }: MarkdownProps) {
   return (
     <ReactMarkdown
-      children={props.children}
       remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
       components={{
         a: ({ node, ...props }) => <Link {...props} />,
@@ -62,6 +61,8 @@ export function Markdown(props: MarkdownProps) {
         ),
         ul: ({ node, ordered, ...props }) => <UnorderedList {...props} />,
       }}
-    ></ReactMarkdown>
+    >
+      {children}
+    </ReactMarkdown>
   );
 }

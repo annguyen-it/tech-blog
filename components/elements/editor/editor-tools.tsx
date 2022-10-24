@@ -35,3 +35,20 @@ export const EditorToolsData = {
 };
 
 export type EditorTool = keyof typeof EditorToolsData;
+
+export const DEFAULT_EDITOR_TOOLS: EditorTool[] = [
+  "BOLD",
+  "ITALIC",
+  "LINK",
+  "ORDERED_LIST",
+  "UNORDERED_LIST",
+  "HEADING",
+  "QUOTE",
+  "IMAGE",
+  "CODE",
+  "CODE_BLOCK",
+  "UNDERLINE",
+  "STRIKETHROUGH",
+  "LINE_DIVIDER",
+  "HELP",
+];

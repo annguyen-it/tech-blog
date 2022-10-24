@@ -3,7 +3,9 @@
     "typescriptreact"
   ],
   "cSpell.words": [
-    "chakra"
+    "chakra",
+    "NEXTAUTH",
+    "welldone"
   ],
   "explorer.fileNesting.patterns": {
     "*.ts": "${capture}.js",
