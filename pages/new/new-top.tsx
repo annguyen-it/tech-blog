@@ -14,7 +14,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import { memo } from "react";
 import { MdOutlineClose } from "react-icons/md";
 
 type NewTopProps = {
@@ -45,7 +45,7 @@ function NewTop({ edit, setEdit }: NewTopProps) {
         variant="flat"
         aria-label="Cancel"
         title="Close editor"
-        pos="absolute"
+        pos={{ lg: "absolute" }}
         top="2"
         right="2"
         fontSize="2xl"
@@ -81,6 +81,6 @@ function NewTop({ edit, setEdit }: NewTopProps) {
   );
 }
 
-export default React.memo(NewTop, (prev, next) => {
+export default memo(NewTop, (prev, next) => {
   return prev.edit === next.edit;
 });

@@ -1,4 +1,3 @@
-import { TextareaProps } from "@chakra-ui/react";
 import {
   forwardRef,
   ReactElement,
@@ -15,14 +14,17 @@ import {
   useFormContext,
   useWatch,
 } from "react-hook-form";
-import { AutoResizeTextarea } from "../textarea/auto-resize-textarea";
+import {
+  AutoResizeTextarea,
+  AutoResizeTextareaProps,
+} from "../textarea/auto-resize-textarea";
 import { EditorTool } from "./editor-tools";
 
 export type EditorRef = HTMLTextAreaElement & {
   onClickTool: (tool: EditorTool) => void;
 };
 
-type EditorProps<T> = TextareaProps & {
+type EditorProps<T> = AutoResizeTextareaProps & {
   controlKey: keyof T;
 };
 
@@ -38,7 +40,7 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const value = useWatch({ control })[controlKeyPath];
 
-  if (!value) {
+  if (value === undefined) {
     return <></>;
   }
 
@@ -210,7 +212,6 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
     ref,
     () =>
       ({
-        ...textareaRef.current,
         onClickTool: (tool) => {
           if (!textareaRef.current) {
             return;
@@ -243,6 +244,8 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
               break;
           }
         },
+        getBoundingClientRect: () =>
+          textareaRef.current?.getBoundingClientRect(),
       } as EditorRef)
   );
 

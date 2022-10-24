@@ -4,9 +4,11 @@ import { TextAreaStyles } from "./components/textarea.style";
 
 export const theme = extendTheme({
   colors: {
-    "primary": "rgb(59, 73, 223)",
+    primary: "rgb(59, 73, 223)",
     "primary-darker": "rgb(47, 58, 178)",
     "primary-rgba": "rgba(59, 73, 223, 0.1)",
+    "base-50": "#8a8a8a",
+    "base-70": "#575757",
     "grey-100": "rgb(245, 245, 245)",
     "grey-700": "rgb(64, 64, 64)",
     "grey-900": "rgb(23, 23, 23)",

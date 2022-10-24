@@ -12,8 +12,8 @@ const New: NextPage = () => {
   const [defaultValues, setDefaultValues] = useState<Post>({
     coverImage: null,
     title: "",
-    body: "123",
-    hashtags: ["javascript", "newbie", "tutorial"],
+    body: "",
+    hashtags: [],
   });
   const methods = useForm<Post>({
     defaultValues,

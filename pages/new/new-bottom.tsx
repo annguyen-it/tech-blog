@@ -1,5 +1,5 @@
 import { Button, ButtonGroup } from "@chakra-ui/react";
-import React from "react";
+import { memo } from "react";
 
 function NewBottom() {
   return (
@@ -12,4 +12,4 @@ function NewBottom() {
   );
 }
 
-export default React.memo(NewBottom);
+export default memo(NewBottom);

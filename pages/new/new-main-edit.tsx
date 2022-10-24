@@ -360,6 +360,7 @@ function Body() {
       <Editor<Post>
         ref={editorRef}
         controlKey="body"
+        minRows={8}
         fontSize="lg"
         placeholder="Write your post content here..."
       ></Editor>

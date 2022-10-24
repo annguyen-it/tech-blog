@@ -1,12 +1,11 @@
 import { Flex } from "@chakra-ui/react";
+import { memo } from "react";
 import { NewMainEdit } from "./new-main-edit";
 import { NewMainPreview } from "./new-main-preview";
 
-type NewMainProps = {
-  edit: boolean;
-};
+type NewMainProps = { edit: boolean };
 
-export default function NewMain({ edit }: NewMainProps) {
+function NewMain({ edit }: NewMainProps) {
   return (
     <Flex
       h="calc(100vh - 56px - 80px)"
@@ -21,3 +20,5 @@ export default function NewMain({ edit }: NewMainProps) {
     </Flex>
   );
 }
+
+export default memo(NewMain);
