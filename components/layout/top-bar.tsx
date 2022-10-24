@@ -89,7 +89,6 @@ function Navigation({ session }: { session: Session }) {
 
 export default function TopBar() {
   const { data: session } = useSession();
-  console.log(session);
 
   function handleSignIn() {
     signIn("github");
