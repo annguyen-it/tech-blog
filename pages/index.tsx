@@ -8,7 +8,13 @@ import IndexMain from "./index-main";
 const Home: NextPage = () => {
   return (
     <Layout>
-      <Grid templateColumns="240px 2fr 1fr" gap="4">
+      <Grid
+        w="full"
+        maxW="7xl"
+        m="auto"
+        templateColumns="240px 2fr 1fr"
+        gap="4"
+      >
         <GridItem>
           <IndexLeft></IndexLeft>
         </GridItem>

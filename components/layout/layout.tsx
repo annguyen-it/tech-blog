@@ -1,20 +1,17 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
 import Footer from "./footer";
 import TopBar from "./top-bar";
 
-export default function AppLayout({
-  children,
-}: {
-  children?: React.ReactNode;
-}) {
+type LayoutProps = { children?: React.ReactNode };
+export default function AppLayout({ children }: LayoutProps) {
   return (
-    <>
+    <Flex direction="column" pt="14">
       <TopBar></TopBar>
-      <Box p="4" maxW="7xl" margin="0 auto">
+      <Box w="full" flex="1 auto" p="4">
         {children}
       </Box>
       <Footer></Footer>
-    </>
+    </Flex>
   );
 }
