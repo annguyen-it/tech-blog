@@ -1,3 +1,5 @@
+/* eslint-disable react/display-name */
+
 import {
   forwardRef,
   ReactElement,
@@ -39,10 +41,6 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
   } | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const value = useWatch({ control })[controlKeyPath];
-
-  if (value === undefined) {
-    return <></>;
-  }
 
   function add(character: string) {
     const textarea = textareaRef.current!;
@@ -248,6 +246,10 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
           textareaRef.current?.getBoundingClientRect(),
       } as EditorRef)
   );
+
+  if (value === undefined) {
+    return <></>;
+  }
 
   return (
     <AutoResizeTextarea

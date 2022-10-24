@@ -19,9 +19,10 @@ import {
   Tooltip,
   useBoolean,
 } from "@chakra-ui/react";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { MdOutlineClose } from "react-icons/md";
+import { NewSuggestionContext } from ".";
 import { Editor, EditorRef } from "../../components/elements/editor/editor";
 import { EditorToolbar } from "../../components/elements/editor/editor-toolbar";
 import { AutoResizeTextarea } from "../../components/elements/textarea/auto-resize-textarea";
@@ -100,13 +101,23 @@ function CoverPhoto() {
 }
 
 function Title() {
+  const { setSuggestionField } = useContext(NewSuggestionContext);
   const { register } = useFormContext();
+  const ref = useRef<HTMLTextAreaElement | null>(null);
 
   return (
     <Box mb="2">
       <AutoResizeTextarea
         {...register("title")}
+        ref={ref}
+        onFocus={() =>
+          setSuggestionField({
+            name: "title",
+            y: ref.current?.getBoundingClientRect().y || 0,
+          })
+        }
         w="full"
+        minH="unset"
         placeholder="New post title here..."
         fontSize="5xl"
         fontWeight="800"
@@ -116,6 +127,7 @@ function Title() {
 }
 
 function Hashtags() {
+  const { setSuggestionField } = useContext(NewSuggestionContext);
   const { setValue, control } = useFormContext<Post>();
   const { hashtags } = useWatch({ control });
   const popupRef = useRef<HTMLDivElement>(null);
@@ -289,8 +301,14 @@ function Hashtags() {
                   hashtags.length ? "Add another..." : "Add up to 4 tags..."
                 }
                 onClick={setIsOpenPopup.on}
-                onBlur={() => onBlur()}
+                onFocus={() =>
+                  setSuggestionField({
+                    name: "hashtags",
+                    y: inputRef.current?.getBoundingClientRect().y || 0,
+                  })
+                }
                 onKeyDown={onKeyDown}
+                onBlur={() => onBlur()}
                 px="0.5"
                 py="px"
               ></Input>
@@ -338,6 +356,7 @@ function Hashtags() {
 }
 
 function Body() {
+  const { setSuggestionField } = useContext(NewSuggestionContext);
   const editorRef = useRef<EditorRef>(null);
 
   return (
@@ -359,6 +378,12 @@ function Body() {
 
       <Editor<Post>
         ref={editorRef}
+        onFocus={() =>
+          setSuggestionField({
+            name: "body",
+            y: editorRef.current?.getBoundingClientRect().y || 0,
+          })
+        }
         controlKey="body"
         minRows={8}
         fontSize="lg"

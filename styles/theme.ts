@@ -1,5 +1,6 @@
 import { extendTheme } from "@chakra-ui/react";
 import { ButtonStyles } from "./components/button.style";
+import { TableStyles } from "./components/table.style";
 import { TextAreaStyles } from "./components/textarea.style";
 
 export const theme = extendTheme({
@@ -17,5 +18,6 @@ export const theme = extendTheme({
   components: {
     Textarea: TextAreaStyles,
     Button: ButtonStyles,
+    Table: TableStyles,
   },
 });

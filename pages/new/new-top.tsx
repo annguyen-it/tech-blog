@@ -14,8 +14,9 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { memo } from "react";
+import { memo, useContext } from "react";
 import { MdOutlineClose } from "react-icons/md";
+import { NewSuggestionContext } from ".";
 
 type NewTopProps = {
   edit: boolean;
@@ -23,6 +24,14 @@ type NewTopProps = {
 };
 function NewTop({ edit, setEdit }: NewTopProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { setSuggestionField } = useContext(NewSuggestionContext);
+
+  function onChangeTab(edit: boolean) {
+    setEdit(edit);
+    if (!edit) {
+      setSuggestionField(null);
+    }
+  }
 
   return (
     <Flex h="14" alignItems="center">
@@ -31,10 +40,13 @@ function NewTop({ edit, setEdit }: NewTopProps) {
         Create post
       </Heading>
       <ButtonGroup as="nav" variant="flat">
-        <Button onClick={() => setEdit(true)} fontWeight={edit ? 600 : 400}>
+        <Button onClick={() => onChangeTab(true)} fontWeight={edit ? 600 : 400}>
           Edit
         </Button>
-        <Button onClick={() => setEdit(false)} fontWeight={edit ? 400 : 600}>
+        <Button
+          onClick={() => onChangeTab(false)}
+          fontWeight={edit ? 400 : 600}
+        >
           Preview
         </Button>
       </ButtonGroup>
@@ -63,7 +75,7 @@ function NewTop({ edit, setEdit }: NewTopProps) {
           <ModalHeader>You have unsaved changes</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            You've made changes to your post. Do you want to navigate to leave
+            You&apos;ve made changes to your post. Do you want to navigate to leave
             this page?
           </ModalBody>
 
