@@ -20,7 +20,11 @@ import { Session } from "next-auth";
 import { signIn, useSession } from "next-auth/react";
 import { MdSearch } from "react-icons/md";
 
-function Navigation({ session }: { session: Session }) {
+function Navigation({ session }: { session: Session | null }) {
+  if (!session) {
+    return <></>;
+  }
+
   const { user } = session;
   const nickname = user?.name?.toLowerCase().split(" ").join("");
 
@@ -89,8 +93,25 @@ function Navigation({ session }: { session: Session }) {
   );
 }
 
+type FadeProps = {
+  display: boolean;
+  children: React.ReactNode;
+};
+function Fade({ children, display }: FadeProps) {
+  return (
+    <Box
+      width={display ? undefined : 0}
+      visibility={display ? "visible" : "hidden"}
+      opacity={display ? 1 : 0}
+      transition="all 300ms, visibility 0ms"
+    >
+      {children}
+    </Box>
+  );
+}
+
 export default function TopBar() {
-  const { data: session } = useSession();
+  const { data, status } = useSession();
 
   function handleSignIn() {
     signIn("github");
@@ -132,9 +153,10 @@ export default function TopBar() {
       </Flex>
 
       {/* Right */}
-      <ButtonGroup spacing="3" flex="1" justifyContent="flex-end">
-        {session && (
-          <>
+      <Box flex="1" display="flex" justifyContent="flex-end">
+        {/* Authenticated */}
+        <Fade display={status === "authenticated"}>
+          <ButtonGroup spacing="3">
             <Button
               as="a"
               variant="outline"
@@ -159,7 +181,7 @@ export default function TopBar() {
                   aria-label="Navigation menu"
                   icon={
                     <Image
-                      src={session.user?.image || ""}
+                      src={data?.user?.image || ""}
                       alt="Avatar"
                       w="full"
                       h="full"
@@ -175,15 +197,16 @@ export default function TopBar() {
               </PopoverTrigger>
               <PopoverContent w="max-content" minW="250px">
                 <PopoverBody mx="-1">
-                  <Navigation session={session} />
+                  <Navigation session={data} />
                 </PopoverBody>
               </PopoverContent>
             </Popover>
-          </>
-        )}
+          </ButtonGroup>
+        </Fade>
 
-        {!session && (
-          <>
+        {/* Unauthenticated */}
+        <Fade display={status === "unauthenticated"}>
+          <ButtonGroup spacing="3" flex="1" justifyContent="flex-end">
             <Button
               onClick={handleSignIn}
               // as="a"
@@ -205,9 +228,9 @@ export default function TopBar() {
             >
               Create account
             </Button>
-          </>
-        )}
-      </ButtonGroup>
+          </ButtonGroup>
+        </Fade>
+      </Box>
     </Flex>
   );
 }

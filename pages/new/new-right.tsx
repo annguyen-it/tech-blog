@@ -10,7 +10,7 @@ import {
   Td,
   Text,
   Tr,
-  UnorderedList
+  UnorderedList,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { NewSuggestionContext } from ".";
@@ -22,13 +22,14 @@ type CommonEffectProps = {
 };
 function CommonEffect({ children, field }: CommonEffectProps) {
   const { suggestionField } = useContext(NewSuggestionContext);
+  const display = suggestionField?.name === field;
 
   return (
     <Box
-      h={suggestionField?.name === field ? "auto" : 0}
-      visibility={suggestionField?.name === field ? "visible" : "hidden"}
-      opacity={suggestionField?.name === field ? 1 : 0}
-      transform={suggestionField?.name === field ? "translateY(0)" : "translateY(-10px)"}
+      h={display ? "auto" : 0}
+      visibility={display ? "visible" : "hidden"}
+      opacity={display ? 1 : 0}
+      transform={display ? "translateY(0)" : "translateY(-10px)"}
       transition="all 300ms, visibility 0ms"
     >
       {children}
@@ -224,8 +225,8 @@ function BodySuggestion() {
         . <Link color="blue">See a list of supported embeds</Link>.
       </ListItem> */}
         <ListItem>
-          In addition to images for the post&apos;s content, you can also drag and
-          drop a cover image.
+          In addition to images for the post&apos;s content, you can also drag
+          and drop a cover image.
         </ListItem>
       </UnorderedList>
     </CommonEffect>
