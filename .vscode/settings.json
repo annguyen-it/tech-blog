@@ -4,8 +4,11 @@
   ],
   "cSpell.words": [
     "chakra",
+    "Loggable",
     "NEXTAUTH",
-    "welldone"
+    "Timeoutable",
+    "welldone",
+    "Withinable"
   ],
   "explorer.fileNesting.patterns": {
     "*.ts": "${capture}.js",

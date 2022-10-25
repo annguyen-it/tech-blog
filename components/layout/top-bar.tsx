@@ -51,13 +51,14 @@ function Navigation({ session }: { session: Session }) {
       label: "Sign Out",
       url: "/sign-out",
       divider: true,
+      dataCy: "nav-sign-out",
     },
   ];
 
   return (
     <Box>
       <UnorderedList m="0" styleType="none">
-        {items.map(({ label, subLabel, url, divider }) => (
+        {items.map(({ label, subLabel, url, divider, dataCy }) => (
           <ListItem
             key={url}
             mt={divider ? 2 : 0}
@@ -71,6 +72,7 @@ function Navigation({ session }: { session: Session }) {
               href={url}
               w="full"
               h={subLabel ? "auto !important" : undefined}
+              data-cy={dataCy}
             >
               {subLabel && (
                 <Box>
@@ -110,7 +112,7 @@ export default function TopBar() {
       {/* Left */}
       <Flex flex="1">
         <Flex align="center" ml="5" mr="10">
-          <Box as="a" href="/">
+          <Box as="a" href="/" data-cy="logo">
             Logo
           </Box>
         </Flex>
@@ -139,6 +141,7 @@ export default function TopBar() {
               colorScheme="blue"
               href="/new"
               fontWeight="600"
+              data-cy="create-post"
             >
               Create Post
             </Button>
@@ -167,6 +170,7 @@ export default function TopBar() {
                   colorScheme="gray"
                   p="1"
                   borderRadius="full"
+                  data-cy="nav-avatar"
                 />
               </PopoverTrigger>
               <PopoverContent w="max-content" minW="250px">
@@ -175,17 +179,6 @@ export default function TopBar() {
                 </PopoverBody>
               </PopoverContent>
             </Popover>
-
-            {/* <Button
-              onClick={() => signOut()}
-              // as="a"
-              variant="outline"
-              colorScheme="blue"
-              // href="#"
-              fontWeight="600"
-            >
-              Logout
-            </Button> */}
           </>
         )}
 
@@ -198,6 +191,7 @@ export default function TopBar() {
               colorScheme="blue"
               // href="#"
               fontWeight="400"
+              data-cy="login"
             >
               Log in
             </Button>
