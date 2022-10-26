@@ -28,7 +28,7 @@ function Tile({ children, href }: { children: React.ReactNode; href: string }) {
       py="2"
       borderRadius="md"
       _hover={{
-        background: "rgba(59, 73, 223, 0.1)",
+        background: "primary-rgba",
         textDecoration: "underline",
       }}
     >
@@ -41,7 +41,7 @@ function Introduction() {
   return (
     <Stack
       as="nav"
-      boxShadow="0 0 0 1px rgba(23, 23, 23, 0.05)"
+      boxShadow="0 0 0 1px var(--chakra-colors-grey-900-rgba-2)"
       borderRadius="md"
       background="white"
       p="4"

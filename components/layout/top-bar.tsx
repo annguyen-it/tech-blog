@@ -68,7 +68,7 @@ function Navigation({ session }: { session: Session | null }) {
             mt={divider ? 2 : 0}
             pt={divider ? 2 : 0}
             borderTopWidth={divider ? 1 : 0}
-            borderColor="var(--chakra-colors-base-20)"
+            borderColor="base-20"
           >
             <Button
               as="a"
@@ -81,7 +81,7 @@ function Navigation({ session }: { session: Session | null }) {
               {subLabel && (
                 <Box>
                   <Text fontWeight="500">{label}</Text>
-                  <small>@{subLabel}</small>
+                  <Text as="small">@{subLabel}</Text>
                 </Box>
               )}
               {!subLabel && label}
@@ -185,7 +185,7 @@ export default function TopBar() {
                       alt="Avatar"
                       w="full"
                       h="full"
-                      bg="var(--chakra-colors-grey-600)"
+                      bg="grey-600"
                       borderRadius="full"
                     />
                   }

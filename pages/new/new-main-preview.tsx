@@ -48,7 +48,7 @@ export function NewMainPreview() {
       </Box>
 
       {/* Body */}
-      <Box px="16" py="8">
+      <Box px="16" py="8" fontSize="xl">
         <Markdown>{body}</Markdown>
       </Box>
     </Box>

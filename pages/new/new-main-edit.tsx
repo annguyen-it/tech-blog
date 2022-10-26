@@ -82,7 +82,7 @@ function CoverPhoto() {
           onClick={() => setValue("coverImage", null)}
           variant="ghost"
           color="red"
-          _hover={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
+          _hover={{ backgroundColor: "grey-900-rgba-2" }}
         >
           Remove
         </Button>
@@ -332,9 +332,7 @@ function Hashtags() {
                         onClick={() => updateHashtags(item.hashtag)}
                         p="3"
                         borderRadius="md"
-                        _hover={{
-                          backgroundColor: "var(--chakra-colors-grey-100)",
-                        }}
+                        _hover={{ backgroundColor: "grey-100" }}
                       >
                         <Box fontWeight="500">#{item.hashtag}</Box>
                         <Text noOfLines={2} fontSize="sm">
@@ -371,7 +369,7 @@ function Body() {
         mb="6"
         px="16"
         py="2"
-        bg="rgba(249, 249, 249)"
+        bg="base-0"
         fontSize="xl"
         flexShrink="0"
       ></EditorToolbar>
