@@ -20,7 +20,11 @@ import { Session } from "next-auth";
 import { signIn, useSession } from "next-auth/react";
 import { MdSearch } from "react-icons/md";
 
-function Navigation({ session }: { session: Session }) {
+function Navigation({ session }: { session: Session | null }) {
+  if (!session) {
+    return <></>;
+  }
+
   const { user } = session;
   const nickname = user?.name?.toLowerCase().split(" ").join("");
 
@@ -51,13 +55,14 @@ function Navigation({ session }: { session: Session }) {
       label: "Sign Out",
       url: "/sign-out",
       divider: true,
+      dataCy: "nav-sign-out",
     },
   ];
 
   return (
     <Box>
       <UnorderedList m="0" styleType="none">
-        {items.map(({ label, subLabel, url, divider }) => (
+        {items.map(({ label, subLabel, url, divider, dataCy }) => (
           <ListItem
             key={url}
             mt={divider ? 2 : 0}
@@ -71,6 +76,7 @@ function Navigation({ session }: { session: Session }) {
               href={url}
               w="full"
               h={subLabel ? "auto !important" : undefined}
+              data-cy={dataCy}
             >
               {subLabel && (
                 <Box>
@@ -87,8 +93,25 @@ function Navigation({ session }: { session: Session }) {
   );
 }
 
+type FadeProps = {
+  display: boolean;
+  children: React.ReactNode;
+};
+function Fade({ children, display }: FadeProps) {
+  return (
+    <Box
+      width={display ? undefined : 0}
+      visibility={display ? "visible" : "hidden"}
+      opacity={display ? 1 : 0}
+      transition="all 300ms, visibility 0ms"
+    >
+      {children}
+    </Box>
+  );
+}
+
 export default function TopBar() {
-  const { data: session } = useSession();
+  const { data, status } = useSession();
 
   function handleSignIn() {
     signIn("github");
@@ -110,7 +133,7 @@ export default function TopBar() {
       {/* Left */}
       <Flex flex="1">
         <Flex align="center" ml="5" mr="10">
-          <Box as="a" href="/">
+          <Box as="a" href="/" data-cy="logo">
             Logo
           </Box>
         </Flex>
@@ -130,15 +153,17 @@ export default function TopBar() {
       </Flex>
 
       {/* Right */}
-      <ButtonGroup spacing="3" flex="1" justifyContent="flex-end">
-        {session && (
-          <>
+      <Box flex="1" display="flex" justifyContent="flex-end">
+        {/* Authenticated */}
+        <Fade display={status === "authenticated"}>
+          <ButtonGroup spacing="3">
             <Button
               as="a"
               variant="outline"
               colorScheme="blue"
               href="/new"
               fontWeight="600"
+              data-cy="create-post"
             >
               Create Post
             </Button>
@@ -156,7 +181,7 @@ export default function TopBar() {
                   aria-label="Navigation menu"
                   icon={
                     <Image
-                      src={session.user?.image || ""}
+                      src={data?.user?.image || ""}
                       alt="Avatar"
                       w="full"
                       h="full"
@@ -167,30 +192,21 @@ export default function TopBar() {
                   colorScheme="gray"
                   p="1"
                   borderRadius="full"
+                  data-cy="nav-avatar"
                 />
               </PopoverTrigger>
               <PopoverContent w="max-content" minW="250px">
                 <PopoverBody mx="-1">
-                  <Navigation session={session} />
+                  <Navigation session={data} />
                 </PopoverBody>
               </PopoverContent>
             </Popover>
+          </ButtonGroup>
+        </Fade>
 
-            {/* <Button
-              onClick={() => signOut()}
-              // as="a"
-              variant="outline"
-              colorScheme="blue"
-              // href="#"
-              fontWeight="600"
-            >
-              Logout
-            </Button> */}
-          </>
-        )}
-
-        {!session && (
-          <>
+        {/* Unauthenticated */}
+        <Fade display={status === "unauthenticated"}>
+          <ButtonGroup spacing="3" flex="1" justifyContent="flex-end">
             <Button
               onClick={handleSignIn}
               // as="a"
@@ -198,6 +214,7 @@ export default function TopBar() {
               colorScheme="blue"
               // href="#"
               fontWeight="400"
+              data-cy="login"
             >
               Log in
             </Button>
@@ -211,9 +228,9 @@ export default function TopBar() {
             >
               Create account
             </Button>
-          </>
-        )}
-      </ButtonGroup>
+          </ButtonGroup>
+        </Fade>
+      </Box>
     </Flex>
   );
 }

@@ -10,7 +10,12 @@ const SignOut: NextPage = () => {
         <Heading as="h1" mb="2" fontSize="2xl">
           Are you sure you want to sign out?
         </Heading>
-        <Button onClick={() => signOut()} variant="primary" size="lg">
+        <Button
+          onClick={() => signOut({ callbackUrl: "/" })}
+          variant="primary"
+          size="lg"
+          data-cy="sign-out"
+        >
           Yes, sign out
         </Button>
       </Box>

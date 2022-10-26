@@ -8,11 +8,13 @@ import { theme } from "../styles/theme";
 type PageProps = { session: Session };
 
 function MyApp({ Component, pageProps }: AppProps<PageProps>) {
+  const { session, ...props } = pageProps;
+
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider session={session}>
       <ChakraProvider resetCSS theme={theme}>
         <Box background="#f5f5f5">
-          <Component {...pageProps} />
+          <Component {...props} />
         </Box>
       </ChakraProvider>
     </SessionProvider>
