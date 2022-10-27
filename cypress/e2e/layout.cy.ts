@@ -6,4 +6,4 @@ describe("Navigate home page", () => {
   });
 });
 
-export {}
+export {};

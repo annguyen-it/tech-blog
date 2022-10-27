@@ -13,8 +13,8 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-import { NewSuggestionContext } from ".";
-import { Post } from "../../models";
+import { Post } from "../../../models";
+import { NewSuggestionContext } from "../../../pages/new";
 
 type CommonEffectProps = {
   children: React.ReactNode;

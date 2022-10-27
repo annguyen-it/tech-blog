@@ -59,7 +59,6 @@ export default function Login() {
             <Button mb={2} background="#1da1f2" color="white">
               Continue with Google
             </Button>
-            <Text></Text>
           </Flex>
 
           <Flex display="flex" direction="column">

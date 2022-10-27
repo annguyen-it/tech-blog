@@ -22,11 +22,11 @@ import {
 import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { MdOutlineClose } from "react-icons/md";
-import { NewSuggestionContext } from ".";
-import { Editor, EditorRef } from "../../components/elements/editor/editor";
-import { EditorToolbar } from "../../components/elements/editor/editor-toolbar";
-import { AutoResizeTextarea } from "../../components/elements/textarea/auto-resize-textarea";
-import { Post } from "../../models";
+import { NewSuggestionContext } from "../../../pages/new";
+import { Editor, EditorRef } from "../../elements/editor/editor";
+import { EditorToolbar } from "../../elements/editor/editor-toolbar";
+import { AutoResizeTextarea } from "../../elements/textarea/auto-resize-textarea";
+import { Post } from "../../../models";
 
 function CoverPhoto() {
   const { register, setValue, control } = useFormContext<Post>();
@@ -69,7 +69,7 @@ function CoverPhoto() {
           objectFit="scale-down"
           overflowWrap="anywhere"
           borderRadius="md"
-        ></Image>
+        />
       )}
 
       <Tooltip label="Use ratio of 100:42 for best results">
@@ -94,8 +94,8 @@ function CoverPhoto() {
         type="file"
         accept="image/*"
         display="none"
-      ></Input>
-      {!!coverImage && <Box></Box>}
+      />
+      {!!coverImage && <Box />}
     </Flex>
   );
 }
@@ -121,7 +121,7 @@ function Title() {
         placeholder="New post title here..."
         fontSize="5xl"
         fontWeight="800"
-      ></AutoResizeTextarea>
+      />
     </Box>
   );
 }
@@ -280,7 +280,7 @@ function Hashtags() {
                     px="1"
                     fontSize="xl"
                     _hover={{ color: "red" }}
-                  ></IconButton>
+                  />
                 </ButtonGroup>
               </ListItem>
             ))}
@@ -311,7 +311,7 @@ function Hashtags() {
                 onBlur={() => onBlur()}
                 px="0.5"
                 py="px"
-              ></Input>
+              />
             </ListItem>
           </List>
         </PopoverTrigger>
@@ -348,7 +348,7 @@ function Hashtags() {
       </Popover>
 
       {/* Hashtag wrapper */}
-      <Box ref={popupRef} pos="absolute" top="8" w="full" bg="red"></Box>
+      <Box ref={popupRef} pos="absolute" top="8" w="full" bg="red" />
     </Box>
   );
 }
@@ -372,7 +372,7 @@ function Body() {
         bg="base-0"
         fontSize="xl"
         flexShrink="0"
-      ></EditorToolbar>
+      />
 
       <Editor<Post>
         ref={editorRef}
@@ -386,7 +386,7 @@ function Body() {
         minRows={8}
         fontSize="lg"
         placeholder="Write your post content here..."
-      ></Editor>
+      />
     </Flex>
   );
 }
@@ -395,12 +395,12 @@ export default function NewMainEdit() {
   return (
     <>
       <Box px="16" py="8">
-        <CoverPhoto></CoverPhoto>
-        <Title></Title>
-        <Hashtags></Hashtags>
+        <CoverPhoto />
+        <Title />
+        <Hashtags />
       </Box>
 
-      <Body></Body>
+      <Body />
     </>
   );
 }

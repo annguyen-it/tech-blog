@@ -2,11 +2,11 @@ import { Box, Grid, GridItem } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { createContext, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import NewBottom from "../../components/pages/new/new-bottom";
+import NewMain from "../../components/pages/new/new-main";
+import NewRight from "../../components/pages/new/new-right";
+import NewTop from "../../components/pages/new/new-top";
 import { Post } from "../../models";
-import NewBottom from "./new-bottom";
-import NewMain from "./new-main";
-import NewRight from "./new-right";
-import NewTop from "./new-top";
 
 type SuggestionField = {
   name: Exclude<keyof Post, "coverImage">;
@@ -40,10 +40,10 @@ const New: NextPage = () => {
   }
 
   return (
-    <NewSuggestionContext.Provider
-      value={{ suggestionField, setSuggestionField }}
-    >
-      <FormProvider {...methods}>
+    <FormProvider {...methods}>
+      <NewSuggestionContext.Provider
+        value={{ suggestionField, setSuggestionField }}
+      >
         <Box as="main" px={{ base: "2", lg: "4" }} background="#f5f5f5">
           <Grid
             as="form"
@@ -74,8 +74,8 @@ const New: NextPage = () => {
             </GridItem>
           </Grid>
         </Box>
-      </FormProvider>
-    </NewSuggestionContext.Provider>
+      </NewSuggestionContext.Provider>
+    </FormProvider>
   );
 };
 
