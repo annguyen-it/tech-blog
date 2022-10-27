@@ -12,7 +12,7 @@ export default defineConfig({
         GitHubSocialLogin,
       });
     },
-    supportFile: 'cypress/support/index.ts',
-    watchForFileChanges: false
+    supportFile: "cypress/support/index.ts",
+    watchForFileChanges: false,
   },
 });

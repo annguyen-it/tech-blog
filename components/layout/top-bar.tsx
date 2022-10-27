@@ -143,7 +143,7 @@ export default function TopBar() {
               variant="ghost"
               h="97%"
               fontSize="24px"
-            ></IconButton>
+            />
           </InputRightElement>
         </InputGroup>
       </Flex>
@@ -169,7 +169,7 @@ export default function TopBar() {
               icon={<BellIcon />}
               variant="ghost"
               fontSize="25px"
-              ></IconButton> */}
+              /> */}
 
             <Popover size="" placement="bottom-end" gutter={1}>
               <PopoverTrigger>

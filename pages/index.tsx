@@ -16,13 +16,13 @@ const Home: NextPage = () => {
         gap="4"
       >
         <GridItem>
-          <IndexLeft></IndexLeft>
+          <IndexLeft />
         </GridItem>
         <GridItem>
-          <IndexMain></IndexMain>
+          <IndexMain />
         </GridItem>
         <GridItem>
-          <IndexRight></IndexRight>
+          <IndexRight />
         </GridItem>
       </Grid>
     </Layout>

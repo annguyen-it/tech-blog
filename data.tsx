@@ -1,9 +1,4 @@
- import {
-    FaHashtag,
-    FaHome,
-    FaQuestion,
-  } from "react-icons/fa";
-
+import { FaHashtag, FaHome, FaQuestion } from "react-icons/fa";
 
 // data main index
 export const Posts = [
@@ -171,64 +166,64 @@ export const Posts = [
 
 // data left index
 export const categories = [
-    {
-      title: "Home",
-      icon: <FaHome />,
-      href: "/",
-    },
-    {
-      title: "Hashtags",
-      icon: <FaHashtag />,
-      href: "/hashtags",
-    },
-    {
-      title: "FAQ",
-      icon: <FaQuestion />,
-      href: "/faq",
-    },
-  ];
-
-  export const tags = [
-    "javascript",
-    "webdev",
-    "beginners",
-    "programming",
-    "react",
-    "python",
-    "angular",
-    "csharp",
-    "cplusplus",
-    "ruby",
-  ];
-// data right index
-export const listings= [
   {
-    id:1,
-    title: "Looking for a Linus  content writter",
-    event:"job",
+    title: "Home",
+    icon: <FaHome />,
+    href: "/",
   },
   {
-    id:2,
-    title: "Help Needed for Low-code Framework for Node.js",
-    event:"collabs",
+    title: "Hashtags",
+    icon: <FaHashtag />,
+    href: "/hashtags",
   },
   {
-    id:3,
-    title: "You are font-end developer? This is for you, Sample Data API",
-    event:"collabs",
-  },
-  {
-    id:4,
-    title: "Help Needed for Low-code Framework for Node.js",
-    event:"collabs",
-  },
-  {
-    id:5,
-    title: "Help Needed for Low-code Framework for Node.js",
-    event:"collabs",
+    title: "FAQ",
+    icon: <FaQuestion />,
+    href: "/faq",
   },
 ];
-export const helps= [
+
+export const tags = [
+  "javascript",
+  "webdev",
+  "beginners",
+  "programming",
+  "react",
+  "python",
+  "angular",
+  "csharp",
+  "cplusplus",
+  "ruby",
+];
+// data right index
+export const listings = [
+  {
+    id: 1,
+    title: "Looking for a Linus  content writter",
+    event: "job",
+  },
+  {
+    id: 2,
+    title: "Help Needed for Low-code Framework for Node.js",
+    event: "collabs",
+  },
+  {
+    id: 3,
+    title: "You are font-end developer? This is for you, Sample Data API",
+    event: "collabs",
+  },
+  {
+    id: 4,
+    title: "Help Needed for Low-code Framework for Node.js",
+    event: "collabs",
+  },
+  {
+    id: 5,
+    title: "Help Needed for Low-code Framework for Node.js",
+    event: "collabs",
+  },
+];
+export const helps = [
   {
     id: 1,
     title: "is there a CMS that produces social networks or communities?",
@@ -241,12 +236,14 @@ export const helps= [
   },
   {
     id: 3,
-    title: "hey guys I need help with a presentation I want the best thing to being related to date engineering",
+    title:
+      "hey guys I need help with a presentation I want the best thing to being related to date engineering",
     numberCmt: 0,
   },
   {
     id: 4,
-    title: "In handle bars if there is an attribute that is an array values, how we can group by that if the json is not sorted?",
+    title:
+      "In handle bars if there is an attribute that is an array values, how we can group by that if the json is not sorted?",
     numberCmt: 13,
   },
 ];
@@ -303,4 +300,4 @@ export const challenge = [
     title: "Daily Challenge #256 - How many Are Smaller Than I",
     numberCmt: 8,
   },
-]
+];

@@ -61,7 +61,10 @@ declare global {
         arg?: any,
         options?: Partial<Loggable & Timeoutable>
       ): Chainable<T>;
-      dataCy(value: string, options?: Partial<Loggable & Timeoutable & Withinable & Shadow>): Chainable<JQuery<HTMLElement>>;
+      dataCy(
+        value: string,
+        options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
+      ): Chainable<JQuery<HTMLElement>>;
       login(): void;
     }
   }

@@ -47,7 +47,6 @@ export default function SignUp() {
             <Button mb={2} background="#1da1f2" color="white">
               Continue with Twitter
             </Button>
-            <Text></Text>
           </Flex>
 
           <Flex display="flex" direction="column">
