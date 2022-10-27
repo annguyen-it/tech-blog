@@ -53,7 +53,7 @@ function Navigation({ session }: { session: Session | null }) {
     },
     {
       label: "Sign Out",
-      url: "/sign-out",
+      url: "/out",
       divider: true,
       dataCy: "nav-sign-out",
     },
