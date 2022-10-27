@@ -391,7 +391,7 @@ function Body() {
   );
 }
 
-export function NewMainEdit() {
+export default function NewMainEdit() {
   return (
     <>
       <Box px="16" py="8">

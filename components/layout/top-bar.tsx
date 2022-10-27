@@ -17,7 +17,7 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import { Session } from "next-auth";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { MdSearch } from "react-icons/md";
 
 function Navigation({ session }: { session: Session | null }) {
@@ -113,10 +113,6 @@ function Fade({ children, display }: FadeProps) {
 export default function TopBar() {
   const { data, status } = useSession();
 
-  function handleSignIn() {
-    signIn("github");
-  }
-
   return (
     <Flex
       pos="fixed"
@@ -208,11 +204,10 @@ export default function TopBar() {
         <Fade display={status === "unauthenticated"}>
           <ButtonGroup spacing="3" flex="1" justifyContent="flex-end">
             <Button
-              onClick={handleSignIn}
-              // as="a"
+              as="a"
               variant="ghost"
               colorScheme="blue"
-              // href="#"
+              href="/login"
               fontWeight="400"
               data-cy="login"
             >
@@ -223,7 +218,7 @@ export default function TopBar() {
               as="a"
               variant="outline"
               colorScheme="blue"
-              href="#"
+              href="/signup"
               fontWeight="600"
             >
               Create account
