@@ -17,7 +17,7 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import { Session } from "next-auth";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { MdSearch } from "react-icons/md";
 
 function Navigation({ session }: { session: Session | null }) {
@@ -53,7 +53,7 @@ function Navigation({ session }: { session: Session | null }) {
     },
     {
       label: "Sign Out",
-      url: "/sign-out",
+      url: "/out",
       divider: true,
       dataCy: "nav-sign-out",
     },
@@ -68,7 +68,7 @@ function Navigation({ session }: { session: Session | null }) {
             mt={divider ? 2 : 0}
             pt={divider ? 2 : 0}
             borderTopWidth={divider ? 1 : 0}
-            borderColor="var(--chakra-colors-base-20)"
+            borderColor="base-20"
           >
             <Button
               as="a"
@@ -81,7 +81,7 @@ function Navigation({ session }: { session: Session | null }) {
               {subLabel && (
                 <Box>
                   <Text fontWeight="500">{label}</Text>
-                  <small>@{subLabel}</small>
+                  <Text as="small">@{subLabel}</Text>
                 </Box>
               )}
               {!subLabel && label}
@@ -112,10 +112,6 @@ function Fade({ children, display }: FadeProps) {
 
 export default function TopBar() {
   const { data, status } = useSession();
-
-  function handleSignIn() {
-    signIn("github");
-  }
 
   return (
     <Flex
@@ -185,7 +181,7 @@ export default function TopBar() {
                       alt="Avatar"
                       w="full"
                       h="full"
-                      bg="var(--chakra-colors-grey-600)"
+                      bg="grey-600"
                       borderRadius="full"
                     />
                   }
@@ -208,11 +204,10 @@ export default function TopBar() {
         <Fade display={status === "unauthenticated"}>
           <ButtonGroup spacing="3" flex="1" justifyContent="flex-end">
             <Button
-              onClick={handleSignIn}
-              // as="a"
+              as="a"
               variant="ghost"
               colorScheme="blue"
-              // href="#"
+              href="/login"
               fontWeight="400"
               data-cy="login"
             >
@@ -223,7 +218,7 @@ export default function TopBar() {
               as="a"
               variant="outline"
               colorScheme="blue"
-              href="#"
+              href="/signup"
               fontWeight="600"
             >
               Create account

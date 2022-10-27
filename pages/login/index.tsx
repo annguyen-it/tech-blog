@@ -1,13 +1,15 @@
-
 import {
   Button,
   Checkbox,
   FormControl,
   FormLabel,
   Text,
-  Input ,
-  Box, Flex, Heading
+  Input,
+  Box,
+  Flex,
+  Heading,
 } from "@chakra-ui/react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { BsTwitter } from "react-icons/bs";
 
@@ -35,14 +37,23 @@ export default function Login() {
               DEV Community 👩‍💻👨‍💻 is a community of 939,039 amazing developers
             </Text>
 
-            <Button mb={2} colorScheme='facebook' >
+            <Button
+              onClick={() => signIn("facebook")}
+              mb={2}
+              colorScheme="facebook"
+            >
               <BsTwitter />
               Continue with Facebook
             </Button>
-            <Button mb={2} colorScheme='twitter' color="white">
+            <Button mb={2} colorScheme="twitter" color="white">
               Continue with Twitter
             </Button>
-            <Button mb={2} background="#24292e" color="white">
+            <Button
+              onClick={() => signIn("github")}
+              mb={2}
+              background="#24292e"
+              color="white"
+            >
               Continue with Github
             </Button>
             <Button mb={2} background="#1da1f2" color="white">

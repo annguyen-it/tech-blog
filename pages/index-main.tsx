@@ -10,28 +10,50 @@ import {
   Link,
   Stack,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { FaRegComment, FaRegHeart, FaRegBookmark } from "react-icons/fa";
 import { Posts } from "../data";
 
-function NavButton({
-  children,
-  href,
-}: {
-  children: React.ReactNode;
-  href: string;
-}) {
+type NavButtonsType = {
+  selectedTabIndex: number;
+  setSelectedTabIndex: (tabIndex: number) => void;
+};
+function NavButtons({ selectedTabIndex, setSelectedTabIndex }: NavButtonsType) {
+  const buttons = [
+    {
+      label: "Relevant",
+      url: "/",
+    },
+    {
+      label: "Latest",
+      url: "/latest",
+    },
+    {
+      label: "Top",
+      url: "/top/week",
+    },
+  ];
+
   return (
-    <Button
-      as="a"
-      href={href}
-      _hover={{
-        background: "white",
-        color: "rgb(59, 73, 223)",
-        textDecoration: "underline",
-      }}
-    >
-      {children}
-    </Button>
+    <ButtonGroup variant="ghost" spacing="0">
+      {buttons.map(({ label, url }, index) => (
+        <Button
+          key={index}
+          onClick={() => setSelectedTabIndex(index)}
+          as="a"
+          href={url}
+          fontSize="lg"
+          fontWeight={index === selectedTabIndex ? 700 : 400}
+          color={index === selectedTabIndex ? "base-100" : "base-70"}
+          _hover={{
+            background: "white",
+            color: "primary",
+          }}
+        >
+          {label}
+        </Button>
+      ))}
+    </ButtonGroup>
   );
 }
 
@@ -125,16 +147,19 @@ function Post() {
 }
 
 export default function IndexMain() {
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+
   return (
     <Stack as="main" spacing="2">
       <Box as="nav">
-        <ButtonGroup variant="ghost" spacing="0">
-          <NavButton href="/">Relevant</NavButton>
-          <NavButton href="/latest">Latest</NavButton>
-          <NavButton href="/top/week">Top</NavButton>
-        </ButtonGroup>
+        <NavButtons
+          selectedTabIndex={selectedTabIndex}
+          setSelectedTabIndex={setSelectedTabIndex}
+        />
       </Box>
-      <Box><Post></Post></Box>
+      <Box>
+        <Post />
+      </Box>
     </Stack>
   );
 }
