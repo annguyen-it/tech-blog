@@ -82,7 +82,7 @@ export const EditorToolbar = forwardRef<HTMLDivElement, EditorToolbarProps>(
               aria-label={EditorToolsData[tool].label}
               icon={EditorToolsData[tool].icon}
               fontSize={props.fontSize}
-            ></IconButton>
+            />
           </Tooltip>
         ))}
 
@@ -100,7 +100,7 @@ export const EditorToolbar = forwardRef<HTMLDivElement, EditorToolbarProps>(
                 fontSize={props.fontSize}
                 bg={openPopup ? "grey-200" : undefined}
                 ml="auto !important"
-              ></IconButton>
+              />
             </PopoverTrigger>
             <Portal>
               <PopoverContent w="auto">
@@ -117,7 +117,7 @@ export const EditorToolbar = forwardRef<HTMLDivElement, EditorToolbarProps>(
                           aria-label={EditorToolsData[tool].label}
                           icon={EditorToolsData[tool].icon}
                           fontSize={props.fontSize}
-                        ></IconButton>
+                        />
                       </Tooltip>
                     ))}
                   </ButtonGroup>

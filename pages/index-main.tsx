@@ -70,12 +70,12 @@ function Post() {
           overflow="hidden"
         >
           {/* Image */}
-          {i == 0 && <Image src={post.image} alt={post.title}></Image>}
+          {i == 0 && <Image src={post.image} alt={post.title} />}
 
           <Stack direction="column" p="5" spacing="2">
             {/* Author */}
             <Stack direction="row" spacing="2">
-              <Avatar size="sm" src={post.author.image}></Avatar>
+              <Avatar size="sm" src={post.author.image} />
               <Box lineHeight="shorter">
                 <Box fontSize="sm" fontWeight="500">
                   <Link href={post.author.url}>{post.author.name}</Link>
@@ -135,7 +135,7 @@ function Post() {
                     aria-label="Save post"
                     icon={<FaRegBookmark />}
                     variant="ghost"
-                  ></IconButton>
+                  />
                 </Stack>
               </Flex>
             </Stack>

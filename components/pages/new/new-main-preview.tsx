@@ -1,9 +1,9 @@
 import { Box, Button, ButtonGroup, Heading, Image } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
-import { Markdown } from "../../components/elements/text/markdown";
-import { Post } from "../../models";
+import { Markdown } from "../../elements/text/markdown";
+import { Post } from "../../../models";
 
-export function NewMainPreview() {
+export default function NewMainPreview() {
   const { getValues } = useFormContext<Post>();
   const { title, body, coverImage, hashtags } = getValues();
 
@@ -21,7 +21,7 @@ export function NewMainPreview() {
               w="full"
               h="full"
               objectFit="scale-down"
-            ></Image>
+            />
           </Box>
         )}
 

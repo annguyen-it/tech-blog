@@ -107,31 +107,31 @@ function SocialNetwork() {
         aria-label="twitter"
         icon={<FaTwitter />}
         title="Twitter"
-      ></IconButton>
+      />
       <IconButton
         variant="ghost"
         aria-label="facebook"
         icon={<FaFacebookF />}
         title="Facebook"
-      ></IconButton>
+      />
       <IconButton
         variant="ghost"
         aria-label="github"
         icon={<FaGithub />}
         title="Github"
-      ></IconButton>
+      />
       <IconButton
         variant="ghost"
         aria-label="instagram"
         icon={<FaInstagram />}
         title="Instagram"
-      ></IconButton>
+      />
       <IconButton
         variant="ghost"
         aria-label="twitch"
         icon={<FaTwitch />}
         title="Twitch"
-      ></IconButton>
+      />
     </Stack>
   );
 }
@@ -156,10 +156,10 @@ function Tag() {
 export default function IndexLeft() {
   return (
     <Stack as="aside" spacing="4">
-      <Introduction></Introduction>
-      <Category></Category>
-      <SocialNetwork></SocialNetwork>
-      <Tag></Tag>
+      <Introduction />
+      <Category />
+      <SocialNetwork />
+      <Tag />
     </Stack>
   );
 }

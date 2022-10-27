@@ -7,11 +7,11 @@ type LayoutProps = { children?: React.ReactNode };
 export default function AppLayout({ children }: LayoutProps) {
   return (
     <Flex direction="column" pt="14">
-      <TopBar></TopBar>
+      <TopBar />
       <Box w="full" flex="1 auto" p="4">
         {children}
       </Box>
-      <Footer></Footer>
+      <Footer />
     </Flex>
   );
 }
