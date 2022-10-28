@@ -42,7 +42,7 @@ function Action() {
             aria-label="Save"
             icon={<BsBookmark />}
             title="Save"
-            _hover={{ backgroundColor: "rgb(47,58,108, 0.1)" }}
+            _hover={{ backgroundColor: "primary-darker-rgba" }}
           ></IconButton>
           10
         </Link>
