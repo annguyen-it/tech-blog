@@ -1,9 +1,15 @@
-// 404.js
 import { Box, Container, Heading, Link, Text } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
 
 export default function FourOhFour() {
+  const { status } = useSession();
+
+  if (status === "loading") {
+    return <></>;
+  }
+
   return (
-    <Box as="section" py="10" bg="white">
+    <Box as="section" py="10" bg="white" data-cy="404">
       <Container maxW="5xl">
         <Box w="83.3333%" mx="auto" textAlign="center">
           <Box

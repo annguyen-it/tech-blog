@@ -14,6 +14,10 @@ import Link from "next/link";
 import { BsTwitter } from "react-icons/bs";
 
 export default function Login() {
+  const loginOptions = {
+    callbackUrl: "/",
+  };
+
   return (
     <>
       <Flex
@@ -38,9 +42,10 @@ export default function Login() {
             </Text>
 
             <Button
-              onClick={() => signIn("facebook")}
+              onClick={() => signIn("facebook", loginOptions)}
               mb={2}
               colorScheme="facebook"
+              data-cy="login-with-facebook"
             >
               <BsTwitter />
               Continue with Facebook
@@ -49,10 +54,11 @@ export default function Login() {
               Continue with Twitter
             </Button>
             <Button
-              onClick={() => signIn("github")}
+              onClick={() => signIn("github", loginOptions)}
               mb={2}
               background="#24292e"
               color="white"
+              data-cy="login-with-github"
             >
               Continue with Github
             </Button>
