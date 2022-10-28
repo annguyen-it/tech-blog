@@ -1,9 +1,16 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Layout from "../../components/layout/layout";
+import FourOhFour from "../404";
 
 const SignOut: NextPage = () => {
+  const { status } = useSession();
+
+  if (status !== "authenticated") {
+    return <FourOhFour />;
+  }
+
   return (
     <Layout>
       <Box pb="30%" pt="calc(15% + 50px)" px="2%" textAlign="center">

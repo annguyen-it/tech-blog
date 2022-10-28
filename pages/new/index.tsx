@@ -1,5 +1,6 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import { createContext, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import NewBottom from "../../components/pages/new/new-bottom";
@@ -7,6 +8,7 @@ import NewMain from "../../components/pages/new/new-main";
 import NewRight from "../../components/pages/new/new-right";
 import NewTop from "../../components/pages/new/new-top";
 import { Post } from "../../models";
+import FourOhFour from "../404";
 
 type SuggestionField = {
   name: Exclude<keyof Post, "coverImage">;
@@ -22,6 +24,7 @@ export const NewSuggestionContext = createContext<SuggestionContextType>({
 });
 
 const New: NextPage = () => {
+  const { status } = useSession();
   const [edit, setEdit] = useState(true);
   const [suggestionField, setSuggestionField] = useState<SuggestionField>(null);
   const [defaultValues, setDefaultValues] = useState<Post>({
@@ -39,12 +42,21 @@ const New: NextPage = () => {
     setEdit(edit);
   }
 
+  if (status !== "authenticated") {
+    return <FourOhFour />;
+  }
+
   return (
     <FormProvider {...methods}>
       <NewSuggestionContext.Provider
         value={{ suggestionField, setSuggestionField }}
       >
-        <Box as="main" px={{ base: "2", lg: "4" }} background="#f5f5f5">
+        <Box
+          as="main"
+          px={{ base: "2", lg: "4" }}
+          background="#f5f5f5"
+          data-cy="new-post"
+        >
           <Grid
             as="form"
             gridTemplateRows="min-content 1fr min-content"
