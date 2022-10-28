@@ -1,10 +1,11 @@
 describe("Login & Sign out", () => {
   before(() => {
-    cy.login();
+    cy.visit("/login");
+    cy.login("github");
   });
 
   it("Sign out", () => {
-    const cookieName = Cypress.env("COOKIE_NAME");
+    const cookieName = Cypress.env("CYPRESS_COOKIE_NAME");
     cy.visit("/");
     cy.getCookie(cookieName).should("have.property", "name", cookieName);
 
