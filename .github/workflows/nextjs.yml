@@ -19,17 +19,29 @@ permissions:
   id-token: write
 
 jobs:
-  # Build job
-  build:
+  setup:
     runs-on: self-hosted
-
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+  cypress-run:
+    needs: setup
+    runs-on: self-hosted
+    steps:
+      - name: Cypress run 
+        uses: cypress-io/github-action@v4
+        with:
+          build: npm run build
+          start: npm start
+
+  build:
+    needs: [setup, cypress-run]
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
       - name: Detect package manager
         id: detect-package-manager
         run: |
