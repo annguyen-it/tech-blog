@@ -6,7 +6,7 @@ export default NextAuth({
   providers: [
     GithubProvider({
       clientId: process.env.AUTH_GITHUB_ID || "",
-      clientSecret: process.env.GITHUB_SECRET || "",
+      clientSecret: process.env.AUTH_GITHUB_SECRET || "",
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID || "",
