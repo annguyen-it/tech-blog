@@ -5,7 +5,7 @@ describe("Login with GitHub, navigate to private route & sign out", () => {
   });
 
   it("Should has cookie", () => {
-    const cookieName = Cypress.env("CYPRESS_COOKIE_NAME");
+    const cookieName = Cypress.env("COOKIE_NAME");
     cy.getCookie(cookieName).should("have.property", "name", cookieName);
   });
 
@@ -23,13 +23,13 @@ describe("Login with GitHub, navigate to private route & sign out", () => {
   });
 });
 
-describe("Navigate to private route", () => {
+describe.skip("Navigate to private route", () => {
   beforeEach(() => {
     cy.visit("/");
   });
 
   it("Should not has cookie", () => {
-    const cookieName = Cypress.env("CYPRESS_COOKIE_NAME");
+    const cookieName = Cypress.env("COOKIE_NAME");
     cy.getCookie(cookieName).should("not.exist");
   });
 
