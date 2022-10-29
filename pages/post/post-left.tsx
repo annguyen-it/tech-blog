@@ -10,21 +10,13 @@ import {
   Button,
   PopoverBody,
   PopoverContent,
-  PopoverArrow
+  PopoverArrow,
 } from "@chakra-ui/react";
 import { BsSuitHeart, BsBookmark, BsThreeDots } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
-import { Share, Posts } from "../../data";
-import { useSession } from "next-auth/react";
-
-function handleLike() {
-  
-}
+import { Share } from "../../data";
 
 function Action() {
-  const {status } = useSession();
-  console.log(status)
-
   return (
     <Stack as="nav" direction="column">
       <Box>
@@ -90,15 +82,23 @@ function Action() {
         </PopoverTrigger>
         <PopoverArrow />
         <PopoverContent w="max-content" minW="250px">
-          <PopoverBody >
-            <ButtonGroup display='flex' flexDirection='column'>
-              <Button fontWeight='700' backgroundColor="inherit" _hover={{ color: "blue" }}>
+          <PopoverBody>
+            <ButtonGroup display="flex" flexDirection="column">
+              <Button
+                fontWeight="700"
+                backgroundColor="inherit"
+                _hover={{ color: "blue" }}
+              >
                 Copy link
               </Button>
-              {Share.map((share,i) => (
-                <Button key={i} backgroundColor="inherit" _hover={{ color: "blue" }}>
-                {share.text}
-              </Button>
+              {Share.map((share, i) => (
+                <Button
+                  key={i}
+                  backgroundColor="inherit"
+                  _hover={{ color: "blue" }}
+                >
+                  {share.text}
+                </Button>
               ))}
             </ButtonGroup>
           </PopoverBody>

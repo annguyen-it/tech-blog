@@ -1,6 +1,6 @@
 describe("Login with GitHub, navigate to private route & sign out", () => {
   beforeEach(() => {
-    cy.login('github');
+    cy.login("github");
     cy.visit("/");
   });
 
@@ -12,7 +12,7 @@ describe("Login with GitHub, navigate to private route & sign out", () => {
   it("Create post", () => {
     cy.visit("/new");
     cy.dataCy("new-post").should("exist");
-  })
+  });
 
   it("Sign out", () => {
     cy.dataCy("nav-avatar", { timeout: 5000 }).click();
@@ -36,7 +36,7 @@ describe("Navigate to private route", () => {
   it("Create post", () => {
     cy.visit("/new");
     cy.dataCy("404").should("exist");
-  })
+  });
 
   it("Sign out", () => {
     cy.visit("/out");

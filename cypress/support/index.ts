@@ -6,10 +6,9 @@ Cypress.Commands.add("dataCy", (value, options) =>
 
 Cypress.Commands.add("login", (socialNetwork) => {
   cy.session("user", () => {
-    cy.visit('/login')
     const username = Cypress.env(`CYPRESS_${socialNetwork.toUpperCase()}_USER`);
     const password = Cypress.env(`CYPRESS_${socialNetwork.toUpperCase()}_PW`);
-    const loginUrl = Cypress.env("CYPRESS_SITE_NAME");
+    const loginUrl = Cypress.env("CYPRESS_SITE_NAME") + "/login";
     const cookieName = Cypress.env("CYPRESS_COOKIE_NAME");
 
     const socialLoginOptions = {
