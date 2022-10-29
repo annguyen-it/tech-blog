@@ -17,10 +17,14 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import { Session } from "next-auth";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { MdSearch } from "react-icons/md";
 
-function Navigation({ session }: { session: Session }) {
+function Navigation({ session }: { session: Session | null }) {
+  if (!session) {
+    return <></>;
+  }
+
   const { user } = session;
   const nickname = user?.name?.toLowerCase().split(" ").join("");
 
@@ -49,21 +53,22 @@ function Navigation({ session }: { session: Session }) {
     },
     {
       label: "Sign Out",
-      url: "/sign-out",
+      url: "/out",
       divider: true,
+      dataCy: "nav-sign-out",
     },
   ];
 
   return (
     <Box>
       <UnorderedList m="0" styleType="none">
-        {items.map(({ label, subLabel, url, divider }) => (
+        {items.map(({ label, subLabel, url, divider, dataCy }) => (
           <ListItem
             key={url}
             mt={divider ? 2 : 0}
             pt={divider ? 2 : 0}
             borderTopWidth={divider ? 1 : 0}
-            borderColor="var(--chakra-colors-base-20)"
+            borderColor="base-20"
           >
             <Button
               as="a"
@@ -71,11 +76,12 @@ function Navigation({ session }: { session: Session }) {
               href={url}
               w="full"
               h={subLabel ? "auto !important" : undefined}
+              data-cy={dataCy}
             >
               {subLabel && (
                 <Box>
                   <Text fontWeight="500">{label}</Text>
-                  <small>@{subLabel}</small>
+                  <Text as="small">@{subLabel}</Text>
                 </Box>
               )}
               {!subLabel && label}
@@ -87,11 +93,25 @@ function Navigation({ session }: { session: Session }) {
   );
 }
 
+type FadeProps = {
+  display: boolean;
+  children: React.ReactNode;
+};
+function Fade({ children, display }: FadeProps) {
+  return (
+    <Box
+      width={display ? undefined : 0}
+      visibility={display ? "visible" : "hidden"}
+      opacity={display ? 1 : 0}
+      transition="all 300ms, visibility 0ms"
+    >
+      {children}
+    </Box>
+  );
+}
+
 export default function TopBar() {
-  const { data: session,status } = useSession();
-  function handleSignIn() {
-    signIn("github");
-  }
+  const { data, status } = useSession();
 
   return (
     <Flex
@@ -109,7 +129,7 @@ export default function TopBar() {
       {/* Left */}
       <Flex flex="1">
         <Flex align="center" ml="5" mr="10">
-          <Box as="a" href="/">
+          <Box as="a" href="/" data-cy="logo">
             Logo
           </Box>
         </Flex>
@@ -123,21 +143,23 @@ export default function TopBar() {
               variant="ghost"
               h="97%"
               fontSize="24px"
-            ></IconButton>
+            />
           </InputRightElement>
         </InputGroup>
       </Flex>
 
       {/* Right */}
-      <ButtonGroup spacing="3" flex="1" justifyContent="flex-end">
-        {session && (
-          <>
+      <Box flex="1" display="flex" justifyContent="flex-end">
+        {/* Authenticated */}
+        <Fade display={status === "authenticated"}>
+          <ButtonGroup spacing="3">
             <Button
               as="a"
               variant="outline"
               colorScheme="blue"
               href="/new"
               fontWeight="600"
+              data-cy="create-post"
             >
               Create Post
             </Button>
@@ -147,7 +169,7 @@ export default function TopBar() {
               icon={<BellIcon />}
               variant="ghost"
               fontSize="25px"
-              ></IconButton> */}
+              /> */}
 
             <Popover placement="bottom-end" gutter={1}>
               <PopoverTrigger>
@@ -155,48 +177,39 @@ export default function TopBar() {
                   aria-label="Navigation menu"
                   icon={
                     <Image
-                      src={session.user?.image || ""}
+                      src={data?.user?.image || ""}
                       alt="Avatar"
                       w="full"
                       h="full"
-                      bg="var(--chakra-colors-grey-600)"
+                      bg="grey-600"
                       borderRadius="full"
                     />
                   }
                   colorScheme="gray"
                   p="1"
                   borderRadius="full"
+                  data-cy="nav-avatar"
                 />
               </PopoverTrigger>
               <PopoverContent w="max-content" minW="250px">
-                <PopoverBody >
-                  <Navigation session={session} />
+                <PopoverBody mx="-1">
+                  <Navigation session={data} />
                 </PopoverBody>
               </PopoverContent>
             </Popover>
+          </ButtonGroup>
+        </Fade>
 
-            {/* <Button
-              onClick={() => signOut()}
-              // as="a"
-              variant="outline"
-              colorScheme="blue"
-              // href="#"
-              fontWeight="600"
-            >
-              Logout
-            </Button> */}
-          </>
-        )}
-
-        {!session && (
-          <>
+        {/* Unauthenticated */}
+        <Fade display={status === "unauthenticated"}>
+          <ButtonGroup spacing="3" flex="1" justifyContent="flex-end">
             <Button
-              onClick={handleSignIn}
-              // as="a"
+              as="a"
               variant="ghost"
               colorScheme="blue"
-              // href="#"
+              href="/login"
               fontWeight="400"
+              data-cy="login"
             >
               Log in
             </Button>
@@ -205,14 +218,14 @@ export default function TopBar() {
               as="a"
               variant="outline"
               colorScheme="blue"
-              href="#"
+              href="/signup"
               fontWeight="600"
             >
               Create account
             </Button>
-          </>
-        )}
-      </ButtonGroup>
+          </ButtonGroup>
+        </Fade>
+      </Box>
     </Flex>
   );
 }

@@ -10,11 +10,11 @@ import {
   Td,
   Text,
   Tr,
-  UnorderedList
+  UnorderedList,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-import { NewSuggestionContext } from ".";
-import { Post } from "../../models";
+import { Post } from "../../../models";
+import { NewSuggestionContext } from "../../../pages/new";
 
 type CommonEffectProps = {
   children: React.ReactNode;
@@ -22,13 +22,14 @@ type CommonEffectProps = {
 };
 function CommonEffect({ children, field }: CommonEffectProps) {
   const { suggestionField } = useContext(NewSuggestionContext);
+  const display = suggestionField?.name === field;
 
   return (
     <Box
-      h={suggestionField?.name === field ? "auto" : 0}
-      visibility={suggestionField?.name === field ? "visible" : "hidden"}
-      opacity={suggestionField?.name === field ? 1 : 0}
-      transform={suggestionField?.name === field ? "translateY(0)" : "translateY(-10px)"}
+      h={display ? "auto" : 0}
+      visibility={display ? "visible" : "hidden"}
+      opacity={display ? 1 : 0}
+      transform={display ? "translateY(0)" : "translateY(-10px)"}
       transition="all 300ms, visibility 0ms"
     >
       {children}
@@ -42,10 +43,7 @@ function TitleSuggestion() {
       <Heading key="new-right-title-1" mb="2" fontSize="lg">
         Writing a Great Post Title
       </Heading>
-      <UnorderedList
-        key="new-right-title-2"
-        color="var(--chakra-colors-base-70)"
-      >
+      <UnorderedList key="new-right-title-2" color="base-70">
         <ListItem>
           Think of your post title as a super short (but compelling!)
           description — like an overview of the actual post in one short
@@ -66,7 +64,7 @@ function HashtagsSuggestion() {
       <Heading mb="2" fontSize="lg">
         Tagging Guidelines
       </Heading>
-      <UnorderedList color="var(--chakra-colors-base-70)">
+      <UnorderedList color="base-70">
         <ListItem>Tags help people find your post.</ListItem>
         <ListItem>
           Think of tags as the topics or categories that best describe your
@@ -92,7 +90,7 @@ function BodySuggestion() {
       <Heading mb="2" fontSize="lg">
         Editor Basics
       </Heading>
-      <UnorderedList color="var(--chakra-colors-base-70)">
+      <UnorderedList color="base-70">
         <ListItem>
           Use{" "}
           <Link
@@ -174,7 +172,8 @@ function BodySuggestion() {
                     <Text
                       as="span"
                       pl="2"
-                      borderLeft="2px solid var(--chakra-colors-base-50)"
+                      borderLeft="2px solid"
+                      borderColor="base-50"
                     >
                       quoted text
                     </Text>
@@ -224,8 +223,8 @@ function BodySuggestion() {
         . <Link color="blue">See a list of supported embeds</Link>.
       </ListItem> */}
         <ListItem>
-          In addition to images for the post&apos;s content, you can also drag and
-          drop a cover image.
+          In addition to images for the post&apos;s content, you can also drag
+          and drop a cover image.
         </ListItem>
       </UnorderedList>
     </CommonEffect>

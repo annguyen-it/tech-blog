@@ -28,7 +28,7 @@ function Tile({ children, href }: { children: React.ReactNode; href: string }) {
       py="2"
       borderRadius="md"
       _hover={{
-        background: "rgba(59, 73, 223, 0.1)",
+        background: "primary-rgba",
         textDecoration: "underline",
       }}
     >
@@ -41,7 +41,7 @@ function Introduction() {
   return (
     <Stack
       as="nav"
-      boxShadow="0 0 0 1px rgba(23, 23, 23, 0.05)"
+      boxShadow="0 0 0 1px var(--chakra-colors-grey-900-rgba-2)"
       borderRadius="md"
       background="white"
       p="4"
@@ -107,31 +107,31 @@ function SocialNetwork() {
         aria-label="twitter"
         icon={<FaTwitter />}
         title="Twitter"
-      ></IconButton>
+      />
       <IconButton
         variant="ghost"
         aria-label="facebook"
         icon={<FaFacebookF />}
         title="Facebook"
-      ></IconButton>
+      />
       <IconButton
         variant="ghost"
         aria-label="github"
         icon={<FaGithub />}
         title="Github"
-      ></IconButton>
+      />
       <IconButton
         variant="ghost"
         aria-label="instagram"
         icon={<FaInstagram />}
         title="Instagram"
-      ></IconButton>
+      />
       <IconButton
         variant="ghost"
         aria-label="twitch"
         icon={<FaTwitch />}
         title="Twitch"
-      ></IconButton>
+      />
     </Stack>
   );
 }
@@ -156,10 +156,10 @@ function Tag() {
 export default function IndexLeft() {
   return (
     <Stack as="aside" spacing="4">
-      <Introduction></Introduction>
-      <Category></Category>
-      <SocialNetwork></SocialNetwork>
-      <Tag></Tag>
+      <Introduction />
+      <Category />
+      <SocialNetwork />
+      <Tag />
     </Stack>
   );
 }

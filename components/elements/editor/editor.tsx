@@ -260,7 +260,7 @@ export const Editor = forwardRef(({ controlKey, ...props }, ref) => {
         textareaRef.current = e;
       }}
       onSelect={onSelect}
-    ></AutoResizeTextarea>
+    />
   );
 }) as <T extends FieldValues>(
   p: EditorProps<T> & { ref?: RefObject<EditorRef> }

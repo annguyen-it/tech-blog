@@ -4,8 +4,13 @@
   ],
   "cSpell.words": [
     "chakra",
+    "elif",
+    "Loggable",
     "NEXTAUTH",
-    "welldone"
+    "nextjs",
+    "Timeoutable",
+    "welldone",
+    "Withinable"
   ],
   "explorer.fileNesting.patterns": {
     "*.ts": "${capture}.js",
@@ -18,6 +23,8 @@
     ".prettierrc": ".prettierignore",
     "jest.config.ts": "jest.*"
   },
+  "formatall.search.include": "**/*",
+  "formatall.search.exclude": "**/{node_modules,dist,.vscode,.next,.github,public}/**",
   "material-icon-theme.activeIconPack": "react",
   "typescript.format.semicolons": "insert",
   "typescript.suggest.autoImports": true,

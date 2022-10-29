@@ -1,12 +1,14 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import { createContext, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import NewBottom from "../../components/pages/new/new-bottom";
+import NewMain from "../../components/pages/new/new-main";
+import NewRight from "../../components/pages/new/new-right";
+import NewTop from "../../components/pages/new/new-top";
 import { Post } from "../../models";
-import NewBottom from "./new-bottom";
-import NewMain from "./new-main";
-import NewRight from "./new-right";
-import NewTop from "./new-top";
+import FourOhFour from "../404";
 
 type SuggestionField = {
   name: Exclude<keyof Post, "coverImage">;
@@ -22,6 +24,7 @@ export const NewSuggestionContext = createContext<SuggestionContextType>({
 });
 
 const New: NextPage = () => {
+  const { status } = useSession();
   const [edit, setEdit] = useState(true);
   const [suggestionField, setSuggestionField] = useState<SuggestionField>(null);
   const [defaultValues, setDefaultValues] = useState<Post>({
@@ -39,12 +42,21 @@ const New: NextPage = () => {
     setEdit(edit);
   }
 
+  if (status !== "authenticated") {
+    return <FourOhFour />;
+  }
+
   return (
-    <NewSuggestionContext.Provider
-      value={{ suggestionField, setSuggestionField }}
-    >
-      <FormProvider {...methods}>
-        <Box as="main" px={{ base: "2", lg: "4" }} background="#f5f5f5">
+    <FormProvider {...methods}>
+      <NewSuggestionContext.Provider
+        value={{ suggestionField, setSuggestionField }}
+      >
+        <Box
+          as="main"
+          px={{ base: "2", lg: "4" }}
+          background="#f5f5f5"
+          data-cy="new-post"
+        >
           <Grid
             as="form"
             gridTemplateRows="min-content 1fr min-content"
@@ -74,8 +86,8 @@ const New: NextPage = () => {
             </GridItem>
           </Grid>
         </Box>
-      </FormProvider>
-    </NewSuggestionContext.Provider>
+      </NewSuggestionContext.Provider>
+    </FormProvider>
   );
 };
 

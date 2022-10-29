@@ -10,28 +10,50 @@ import {
   Link,
   Stack,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { FaRegComment, FaRegHeart, FaRegBookmark } from "react-icons/fa";
 import { Posts } from "../data";
 
-function NavButton({
-  children,
-  href,
-}: {
-  children: React.ReactNode;
-  href: string;
-}) {
+type NavButtonsType = {
+  selectedTabIndex: number;
+  setSelectedTabIndex: (tabIndex: number) => void;
+};
+function NavButtons({ selectedTabIndex, setSelectedTabIndex }: NavButtonsType) {
+  const buttons = [
+    {
+      label: "Relevant",
+      url: "/",
+    },
+    {
+      label: "Latest",
+      url: "/latest",
+    },
+    {
+      label: "Top",
+      url: "/top/week",
+    },
+  ];
+
   return (
-    <Button
-      as="a"
-      href={href}
-      _hover={{
-        background: "white",
-        color: "rgb(59, 73, 223)",
-        textDecoration: "underline",
-      }}
-    >
-      {children}
-    </Button>
+    <ButtonGroup variant="ghost" spacing="0">
+      {buttons.map(({ label, url }, index) => (
+        <Button
+          key={index}
+          onClick={() => setSelectedTabIndex(index)}
+          as="a"
+          href={url}
+          fontSize="lg"
+          fontWeight={index === selectedTabIndex ? 700 : 400}
+          color={index === selectedTabIndex ? "base-100" : "base-70"}
+          _hover={{
+            background: "white",
+            color: "primary",
+          }}
+        >
+          {label}
+        </Button>
+      ))}
+    </ButtonGroup>
   );
 }
 
@@ -48,12 +70,12 @@ function Post() {
           overflow="hidden"
         >
           {/* Image */}
-          {i == 0 && <Image src={post.image} alt={post.title}></Image>}
+          {i == 0 && <Image src={post.image} alt={post.title} />}
 
           <Stack direction="column" p="5" spacing="2">
             {/* Author */}
             <Stack direction="row" spacing="2">
-              <Avatar size="sm" src={post.author.image}></Avatar>
+              <Avatar size="sm" src={post.author.image} />
               <Box lineHeight="shorter">
                 <Box fontSize="sm" fontWeight="500">
                   <Link href={post.author.url}>{post.author.name}</Link>
@@ -70,7 +92,7 @@ function Post() {
             {/* Body */}
             <Stack pl="10" spacing="1">
               <Heading fontSize="3xl">
-                <Link href={post.url}>{post.title}</Link>
+                <Link href={`/post/${post.url}`}>{post.title}</Link>
               </Heading>
 
               <ButtonGroup variant="ghost" size="sm" spacing="0">
@@ -113,7 +135,7 @@ function Post() {
                     aria-label="Save post"
                     icon={<FaRegBookmark />}
                     variant="ghost"
-                  ></IconButton>
+                  />
                 </Stack>
               </Flex>
             </Stack>
@@ -125,16 +147,19 @@ function Post() {
 }
 
 export default function IndexMain() {
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+
   return (
     <Stack as="main" spacing="2">
       <Box as="nav">
-        <ButtonGroup variant="ghost" spacing="0">
-          <NavButton href="/">Relevant</NavButton>
-          <NavButton href="/latest">Latest</NavButton>
-          <NavButton href="/top/week">Top</NavButton>
-        </ButtonGroup>
+        <NavButtons
+          selectedTabIndex={selectedTabIndex}
+          setSelectedTabIndex={setSelectedTabIndex}
+        />
       </Box>
-      <Box><Post></Post></Box>
+      <Box>
+        <Post />
+      </Box>
     </Stack>
   );
 }
