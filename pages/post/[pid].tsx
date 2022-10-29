@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 const Post: NextPage = () => {
   const router = useRouter();
   const { pid } = router.query;
-  console.log(pid);
 
   return (
     <AppLayout>
