@@ -88,8 +88,7 @@ function Navigation({ session }: { session: Session }) {
 }
 
 export default function TopBar() {
-  const { data: session } = useSession();
-
+  const { data: session,status } = useSession();
   function handleSignIn() {
     signIn("github");
   }
@@ -150,7 +149,7 @@ export default function TopBar() {
               fontSize="25px"
               ></IconButton> */}
 
-            <Popover size="" placement="bottom-end" gutter={1}>
+            <Popover placement="bottom-end" gutter={1}>
               <PopoverTrigger>
                 <IconButton
                   aria-label="Navigation menu"
@@ -170,7 +169,7 @@ export default function TopBar() {
                 />
               </PopoverTrigger>
               <PopoverContent w="max-content" minW="250px">
-                <PopoverBody mx="-1">
+                <PopoverBody >
                   <Navigation session={session} />
                 </PopoverBody>
               </PopoverContent>
