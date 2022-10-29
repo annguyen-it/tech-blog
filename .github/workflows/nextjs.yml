@@ -55,7 +55,7 @@ jobs:
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
 
   build:
-    needs: [setup, cypress-run]
+    needs: [setup]
     runs-on: self-hosted
     strategy:
       matrix:
