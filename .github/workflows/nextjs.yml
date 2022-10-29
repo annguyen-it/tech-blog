@@ -32,6 +32,12 @@ jobs:
       - name: Cypress run 
         uses: cypress-io/github-action@v4
         with:
+          path: |
+            .next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: npm-${{ hashFiles('**/package-lock.json') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: npm-
           build: npm run build
           start: npm start
         env:
