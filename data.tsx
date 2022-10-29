@@ -301,3 +301,34 @@ export const challenge = [
     numberCmt: 8,
   },
 ];
+
+export const Share = [
+  {
+    id: 1,
+    text: "Share to Twitter",
+  },
+  {
+    id: 2,
+    text: "Share to Linkedln",
+  },
+  {
+    id: 3,
+    text: "Share to Reddit",
+  },
+  {
+    id: 4,
+    text: "Share to Hacker News",
+  },
+  {
+    id: 5,
+    text: "Share to Facebook",
+  },
+  {
+    id: 6,
+    text: "Share Post via...",
+  },
+  {
+    id: 7,
+    text: "Report Abuse",
+  },
+];

@@ -171,7 +171,7 @@ export default function TopBar() {
               fontSize="25px"
               /> */}
 
-            <Popover size="" placement="bottom-end" gutter={1}>
+            <Popover placement="bottom-end" gutter={1}>
               <PopoverTrigger>
                 <IconButton
                   aria-label="Navigation menu"

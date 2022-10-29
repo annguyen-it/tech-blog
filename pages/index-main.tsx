@@ -92,7 +92,7 @@ function Post() {
             {/* Body */}
             <Stack pl="10" spacing="1">
               <Heading fontSize="3xl">
-                <Link href={post.url}>{post.title}</Link>
+                <Link href={`/post/${post.url}`}>{post.title}</Link>
               </Heading>
 
               <ButtonGroup variant="ghost" size="sm" spacing="0">
