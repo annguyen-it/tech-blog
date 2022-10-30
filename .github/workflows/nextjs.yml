@@ -18,42 +18,27 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  CYPRESS_GITHUB_USER: ${{ secrets.CYPRESS_GITHUB_USER }}
+  CYPRESS_GITHUB_PW: ${{ secrets.CYPRESS_GITHUB_PW }}
+  CYPRESS_FACEBOOK_USER: ${{ secrets.CYPRESS_FACEBOOK_USER }}
+  CYPRESS_FACEBOOK_PW: ${{ secrets.CYPRESS_FACEBOOK_PW }}
+  CYPRESS_COOKIE_NAME: ${{ secrets.CYPRESS_COOKIE_NAME }}
+  CYPRESS_SITE_NAME: ${{ secrets.CYPRESS_SITE_NAME }}
+  AUTH_GITHUB_ID: ${{ secrets.AUTH_GITHUB_ID }}
+  AUTH_GITHUB_SECRET: ${{ secrets.AUTH_GITHUB_SECRET }}
+  FACEBOOK_ID: ${{ secrets.FACEBOOK_ID }}
+  FACEBOOK_SECRET: ${{ secrets.FACEBOOK_SECRET }}
+  NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+  NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+
 jobs:
   setup:
     runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-  cypress-run:
-    needs: setup
-    runs-on: self-hosted
-    steps:
-      - name: Cypress run 
-        uses: cypress-io/github-action@v4
-        with:
-          path: |
-            .next/cache
-          # Generate a new cache whenever packages or source files change.
-          key: npm-${{ hashFiles('**/package-lock.json') }}
-          # If source files changed but packages didn't, rebuild from a prior cache.
-          restore-keys: npm-
-          build: npm run build
-          start: npm start
-        env:
-          CYPRESS_GITHUB_USER: ${{ secrets.CYPRESS_GITHUB_USER }}
-          CYPRESS_GITHUB_PW: ${{ secrets.CYPRESS_GITHUB_PW }}
-          CYPRESS_FACEBOOK_USER: ${{ secrets.CYPRESS_FACEBOOK_USER }}
-          CYPRESS_FACEBOOK_PW: ${{ secrets.CYPRESS_FACEBOOK_PW }}
-          CYPRESS_COOKIE_NAME: ${{ secrets.CYPRESS_COOKIE_NAME }}
-          CYPRESS_SITE_NAME: ${{ secrets.CYPRESS_SITE_NAME }}
-          AUTH_GITHUB_ID: ${{ secrets.AUTH_GITHUB_ID }}
-          AUTH_GITHUB_SECRET: ${{ secrets.AUTH_GITHUB_SECRET }}
-          FACEBOOK_ID: ${{ secrets.FACEBOOK_ID }}
-          FACEBOOK_SECRET: ${{ secrets.FACEBOOK_SECRET }}
-          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-
+        
   build:
     needs: [setup]
     runs-on: self-hosted
@@ -98,6 +83,18 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Static HTML export with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next export
+
+  cypress-run:
+    needs: [build]
+    runs-on: self-hosted
+    steps:
+      - name: Cypress run 
+        uses: cypress-io/github-action@v4
+        with:
+          path: |
+            .next/cache
+          cache-key: npm-${{ hashFiles('**/package-lock.json') }}
+          start: npm start
 
   # Deployment job
   #deploy:
