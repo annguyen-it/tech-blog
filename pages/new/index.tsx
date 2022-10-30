@@ -1,6 +1,7 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
+import Head from "next/head";
 import { createContext, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import NewBottom from "../../components/pages/new/new-bottom";
@@ -48,6 +49,10 @@ const New: NextPage = () => {
 
   return (
     <FormProvider {...methods}>
+      <Head>
+        <title>New post</title>
+      </Head>
+      
       <NewSuggestionContext.Provider
         value={{ suggestionField, setSuggestionField }}
       >

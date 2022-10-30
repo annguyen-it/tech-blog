@@ -1,12 +1,15 @@
-import { Input } from "@chakra-ui/input";
-import { Box, Flex, Heading } from "@chakra-ui/layout";
 import {
+  Box,
   Button,
   Checkbox,
+  Flex,
   FormControl,
   FormLabel,
-  Text,
+  Heading,
+  Input,
+  Text
 } from "@chakra-ui/react";
+import Head from "next/head";
 import Link from "next/link";
 import { BsTwitter } from "react-icons/bs";
 import Layout from "../../components/layout/layout";
@@ -14,6 +17,10 @@ import Layout from "../../components/layout/layout";
 export default function SignUp() {
   return (
     <Layout>
+      <Head>
+        <title>Sign up</title>
+      </Head>
+
       <Flex
         height="100vh"
         alignItems="center"

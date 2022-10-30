@@ -1,15 +1,16 @@
 import {
+  Box,
   Button,
   Checkbox,
+  Flex,
   FormControl,
   FormLabel,
-  Text,
-  Input,
-  Box,
-  Flex,
   Heading,
+  Input,
+  Text,
 } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
+import Head from "next/head";
 import Link from "next/link";
 import { BsTwitter } from "react-icons/bs";
 import Layout from "../../components/layout/layout";
@@ -21,6 +22,10 @@ export default function Login() {
 
   return (
     <Layout>
+      <Head>
+        <title>Login</title>
+      </Head>
+
       <Flex
         height="100vh"
         alignItems="center"
