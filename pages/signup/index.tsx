@@ -9,10 +9,11 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { BsTwitter } from "react-icons/bs";
+import Layout from "../../components/layout/layout";
 
 export default function SignUp() {
   return (
-    <>
+    <Layout>
       <Flex
         height="100vh"
         alignItems="center"
@@ -68,6 +69,6 @@ export default function SignUp() {
           </Box>
         </Flex>
       </Flex>
-    </>
+    </Layout>
   );
 }
