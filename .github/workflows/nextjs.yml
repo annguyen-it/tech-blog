@@ -69,6 +69,7 @@ jobs:
           node-version: "16"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Restore cache
+        id: cache
         uses: actions/cache@v3
         with:
           path: |
@@ -78,23 +79,23 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: npm-
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }} --ignore-scripts
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Static HTML export with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next export
+      - name: Start
+        run: ${{ steps.detect-package-manager.outputs.manager }} run start
 
-  cypress-run:
-    needs: [build]
-    runs-on: self-hosted
-    steps:
-      - name: Cypress run 
-        uses: cypress-io/github-action@v4
-        with:
-          path: |
-            .next/cache
-          cache-key: npm-${{ hashFiles('**/package-lock.json') }}
-          start: npm start
+  #cypress-run:
+  #  needs: [build]
+  #  runs-on: self-hosted
+  #  steps:
+  #    - name: Cypress run
+  #      uses: cypress-io/github-action@v4
+  #      with:
+  #        cache-key: npm-${{ hashFiles('**/package-lock.json') }}
 
   # Deployment job
   #deploy:
