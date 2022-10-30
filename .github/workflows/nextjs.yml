@@ -79,6 +79,7 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: npm-
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
