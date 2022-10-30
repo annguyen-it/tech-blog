@@ -23,7 +23,7 @@ describe.skip("Login with GitHub, navigate to private route & sign out", () => {
   });
 });
 
-describe.skip("Navigate to private route", () => {
+describe("Navigate to private route", () => {
   beforeEach(() => {
     cy.visit("/");
   });
