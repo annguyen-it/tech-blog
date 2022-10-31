@@ -1,27 +1,24 @@
 import {
   Box,
-  Stack,
-  Link,
-  IconButton,
-  Tooltip,
-  Popover,
-  PopoverTrigger,
-  ButtonGroup,
   Button,
+  ButtonGroup,
+  Flex,
+  IconButton,
+  Link,
+  Popover,
+  PopoverArrow,
   PopoverBody,
   PopoverContent,
-  PopoverArrow,
+  PopoverTrigger,
+  Stack,
   Text,
-  Flex,
+  Tooltip,
 } from "@chakra-ui/react";
-import { BsSuitHeart, BsBookmark, BsThreeDots } from "react-icons/bs";
-import { FaRegComment } from "react-icons/fa";
-import { Share, Posts } from "../../data";
 import { useSession } from "next-auth/react";
-import Post from "./[pid]";
 import { useState } from "react";
-
-function handleLike() {}
+import { BsBookmark, BsSuitHeart, BsThreeDots } from "react-icons/bs";
+import { FaRegComment } from "react-icons/fa";
+import { Share } from "../../data";
 
 type ActionType = {
   pid: string;

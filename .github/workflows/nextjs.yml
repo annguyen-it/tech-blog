@@ -18,38 +18,29 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  CYPRESS_GITHUB_USER: ${{ secrets.CYPRESS_GITHUB_USER }}
+  CYPRESS_GITHUB_PW: ${{ secrets.CYPRESS_GITHUB_PW }}
+  CYPRESS_FACEBOOK_USER: ${{ secrets.CYPRESS_FACEBOOK_USER }}
+  CYPRESS_FACEBOOK_PW: ${{ secrets.CYPRESS_FACEBOOK_PW }}
+  CYPRESS_COOKIE_NAME: ${{ secrets.CYPRESS_COOKIE_NAME }}
+  CYPRESS_SITE_NAME: ${{ secrets.CYPRESS_SITE_NAME }}
+  AUTH_GITHUB_ID: ${{ secrets.AUTH_GITHUB_ID }}
+  AUTH_GITHUB_SECRET: ${{ secrets.AUTH_GITHUB_SECRET }}
+  FACEBOOK_ID: ${{ secrets.FACEBOOK_ID }}
+  FACEBOOK_SECRET: ${{ secrets.FACEBOOK_SECRET }}
+  NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+  NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+
 jobs:
   setup:
     runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-  cypress-run:
-    needs: setup
-    runs-on: self-hosted
-    steps:
-      - name: Cypress run 
-        uses: cypress-io/github-action@v4
-        with:
-          build: npm run build
-          start: npm start
-        env:
-          CYPRESS_GITHUB_USER: ${{ secrets.CYPRESS_GITHUB_USER }}
-          CYPRESS_GITHUB_PW: ${{ secrets.CYPRESS_GITHUB_PW }}
-          CYPRESS_FACEBOOK_USER: ${{ secrets.CYPRESS_FACEBOOK_USER }}
-          CYPRESS_FACEBOOK_PW: ${{ secrets.CYPRESS_FACEBOOK_PW }}
-          CYPRESS_COOKIE_NAME: ${{ secrets.CYPRESS_COOKIE_NAME }}
-          CYPRESS_SITE_NAME: ${{ secrets.CYPRESS_SITE_NAME }}
-          AUTH_GITHUB_ID: ${{ secrets.AUTH_GITHUB_ID }}
-          AUTH_GITHUB_SECRET: ${{ secrets.AUTH_GITHUB_SECRET }}
-          FACEBOOK_ID: ${{ secrets.FACEBOOK_ID }}
-          FACEBOOK_SECRET: ${{ secrets.FACEBOOK_SECRET }}
-          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-
+        
   build:
-    needs: [setup, cypress-run]
+    needs: [setup]
     runs-on: self-hosted
     strategy:
       matrix:
@@ -59,14 +50,14 @@ jobs:
         id: detect-package-manager
         run: |
           if [ -f "${{ github.workspace }}/yarn.lock" ]; then
-            echo "::set-output name=manager::yarn"
-            echo "::set-output name=command::install"
-            echo "::set-output name=runner::yarn"
+            echo "manager=yarn" >> $GITHUB_OUTPUT
+            echo "command::install" >> $GITHUB_OUTPUT
+            echo "runner::yarn" >> $GITHUB_OUTPUT
             exit 0
           elif [ -f "${{ github.workspace }}/package.json" ]; then
-            echo "::set-output name=manager::npm"
-            echo "::set-output name=command::ci"
-            echo "::set-output name=runner::npx --no-install"
+            echo "manager::npm" >> $GITHUB_OUTPUT
+            echo "command::ci" >> $GITHUB_OUTPUT
+            echo "runner::npx --no-install" >> $GITHUB_OUTPUT
             exit 0
           else
             echo "Unable to determine packager manager"
@@ -78,6 +69,7 @@ jobs:
           node-version: "16"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Restore cache
+        id: cache
         uses: actions/cache@v3
         with:
           path: |
@@ -90,8 +82,17 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
-      - name: Static HTML export with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next export
+      #- name: Static HTML export with Next.js
+      #  run: ${{ steps.detect-package-manager.outputs.runner }} next export
+
+  #cypress-run:
+  #  needs: [build]
+  #  runs-on: self-hosted
+  #  steps:
+  #    - name: Cypress run
+  #      uses: cypress-io/github-action@v4
+  #      with:
+  #        cache-key: npm-${{ hashFiles('**/package-lock.json') }}
 
   # Deployment job
   #deploy:

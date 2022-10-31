@@ -1,13 +1,18 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import Head from "next/head";
 import Layout from "../components/layout/layout";
 import IndexLeft from "./index-left";
-import IndexRight from "./index-right";
 import IndexMain from "./index-main";
+import IndexRight from "./index-right";
 
 const Home: NextPage = () => {
   return (
     <Layout>
+      <Head>
+        <title>Tech blog</title>
+      </Head>
+
       <Grid
         w="full"
         maxW="7xl"

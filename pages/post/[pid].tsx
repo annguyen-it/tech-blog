@@ -1,15 +1,11 @@
-import AppLayout from "../../components/layout/layout";
+import Layout from "../../components/layout/layout";
 import { NextPage } from "next";
 import { Grid, GridItem } from "@chakra-ui/react";
 import PostLeft from "./post-left";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import PostMain from "./post-main";
-
-
-type animal = 'dog' | 'cat'
-let a:animal = 'cat' 
-a
+import Head from "next/head";
 
 const Post: NextPage = () => {
   const router = useRouter();
@@ -38,7 +34,11 @@ const Post: NextPage = () => {
   })
 
   return (
-    <AppLayout>
+    <Layout>
+      <Head>
+        <title>Post name</title>
+      </Head>
+
       <Grid templateColumns="64px 2fr 1fr" gap="4">
         <GridItem>
           <PostLeft pid={pid}/>
@@ -48,7 +48,7 @@ const Post: NextPage = () => {
         </GridItem>
         <GridItem></GridItem>
       </Grid>
-    </AppLayout>
+    </Layout>
   );
 };
 
