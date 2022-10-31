@@ -1,38 +1,82 @@
 import {
   Box,
-  Stack,
-  Link,
-  IconButton,
-  Tooltip,
-  Popover,
-  PopoverTrigger,
-  ButtonGroup,
   Button,
+  ButtonGroup,
+  Flex,
+  IconButton,
+  Link,
+  Popover,
+  PopoverArrow,
   PopoverBody,
   PopoverContent,
-  PopoverArrow,
+  PopoverTrigger,
+  Stack,
+  Text,
+  Tooltip,
 } from "@chakra-ui/react";
-import { BsSuitHeart, BsBookmark, BsThreeDots } from "react-icons/bs";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
+import { BsBookmark, BsSuitHeart, BsThreeDots } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
 import { Share } from "../../data";
 
-function Action() {
+type ActionType = {
+  pid: string;
+};
+function Action(props: ActionType) {
+  const { status } = useSession();
+  // console.log(props);
+  const [data, setData] = useState({
+    id: 1,
+    image:
+      "https://res.cloudinary.com/practicaldev/image/fetch/s--Vt_eVVRg--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://www.entropywins.wtf/blog/wp-content/uploads/2022/09/code.jpg",
+    author: {
+      url: "johnny.depp",
+      name: "Johnny Depp",
+      intro: "I'm an actor",
+      work: "Hollywood",
+      joined: new Date(2019, 5, 9),
+      image:
+        "https://res.cloudinary.com/practicaldev/image/fetch/s--4Jbi0yB4--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/2884/27097c7514e0bf985ccbe9a8ccd2a550.jpeg",
+    },
+    createdDate: new Date(2022, 9, 9),
+    title: "Advice for junior developers",
+    url: "123456",
+    tags: ["beginners", "newbie", "learning"],
+    likes: 900,
+    comments: 30,
+    timeToRead: 9,
+  });
+
+  const like = () => {
+    setData((prev) => {
+      return {
+        ...prev,
+        likes: prev.likes + 1,
+      };
+    });
+  };
+
   return (
     <Stack as="nav" direction="column">
       <Box>
         <Link display="flex" flexDirection="column">
           <Tooltip label="Like">
-            <IconButton
-              borderRadius="50%"
-              fontSize="24px"
-              variant="ghost"
-              aria-label="Like"
-              icon={<BsSuitHeart />}
-              _hover={{
-                backgroundColor: "rgba(220, 38, 38 , 0.1)",
-                color: "rgba(220, 38, 38)",
-              }}
-            ></IconButton>
+            <Flex direction="column" align="center">
+              <IconButton
+                onClick={like}
+                borderRadius="50%"
+                fontSize="24px"
+                variant="ghost"
+                aria-label="Like"
+                icon={<BsSuitHeart />}
+                _hover={{
+                  backgroundColor: "rgba(220, 38, 38 , 0.1)",
+                  color: "rgba(220, 38, 38)",
+                }}
+              ></IconButton>
+              <Text>{data.likes}</Text>
+            </Flex>
           </Tooltip>
         </Link>
       </Box>
@@ -108,6 +152,10 @@ function Action() {
   );
 }
 
-export default function PostLeft() {
-  return <Action />;
+type PostLeftType = {
+  pid: string;
+};
+export default function PostLeft({ pid }: PostLeftType) {
+  return <Action pid={pid} />;
 }
+23;
