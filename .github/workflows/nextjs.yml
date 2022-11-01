@@ -83,7 +83,6 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: |
-          ${{ steps.detect-package-manager.outputs.runner }} next build
           touch .env.local
           echo CYPRESS_GITHUB_USER=${{ secrets.CYPRESS_GITHUB_USER }} >> .env.local
           echo CYPRESS_GITHUB_PW=${{ secrets.CYPRESS_GITHUB_PW }} >> .env.local
@@ -97,6 +96,7 @@ jobs:
           echo FACEBOOK_SECRET=${{ secrets.FACEBOOK_SECRET }} >> .env.local
           echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env.local
           echo NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} >> .env.local
+          ${{ steps.detect-package-manager.outputs.runner }} next build
       #- name: Static HTML export with Next.js
       #  run: ${{ steps.detect-package-manager.outputs.runner }} next export
 
