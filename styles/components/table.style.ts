@@ -1,9 +1,12 @@
 import { tableAnatomy as parts } from "@chakra-ui/anatomy";
-import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
+import {
+  ComponentStyleConfig,
+  createMultiStyleConfigHelpers,
+} from "@chakra-ui/react";
 
 const { definePartsStyle } = createMultiStyleConfigHelpers(parts.keys);
 
-export const TableStyles = {
+export const TableStyles: ComponentStyleConfig = {
   baseStyle: {},
   sizes: {
     "new-suggestion": definePartsStyle({
