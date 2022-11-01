@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { BsTwitter } from "react-icons/bs";
 import { ValidationUtils } from "../../utils/validation";
@@ -26,14 +27,15 @@ type LogForm = {
 
 type LogLayoutProps = { page: "Login" | "SignUp" };
 export default function LogLayout({ page }: LogLayoutProps) {
-  const loginOptions = {
-    callbackUrl: "/",
-  };
+  const router = useRouter();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<LogForm>();
+  const loginOptions = {
+    callbackUrl: router.pathname === "login" ? "/" : router.pathname,
+  };
   const action = page === "Login" ? "Continue" : "Sign up";
 
   return (
