@@ -4,7 +4,6 @@ import { Session } from "next-auth";
 import { SessionProvider, useSession } from "next-auth/react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { env } from "process";
 import "../styles/globals.css";
 import { theme } from "../styles/theme";
 
