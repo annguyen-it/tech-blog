@@ -11,7 +11,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { FaRegComment, FaRegHeart, FaRegBookmark } from "react-icons/fa";
+import { FaRegBookmark, FaRegComment, FaRegHeart } from "react-icons/fa";
 import { Posts } from "../data";
 
 type NavButtonsType = {

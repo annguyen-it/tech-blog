@@ -1,5 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
 import { ButtonStyles } from "./components/button.style";
+import { CheckboxStyles } from "./components/checkbox.style";
+import { LinkStyles } from "./components/link.style";
 import { TableStyles } from "./components/table.style";
 import { TextAreaStyles } from "./components/textarea.style";
 
@@ -25,8 +27,10 @@ export const theme = extendTheme({
     "yellow-300": "rgb(252, 211, 77)",
   },
   components: {
-    Textarea: TextAreaStyles,
     Button: ButtonStyles,
+    Checkbox: CheckboxStyles,
+    Link: LinkStyles,
     Table: TableStyles,
+    Textarea: TextAreaStyles,
   },
 });
