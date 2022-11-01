@@ -7,6 +7,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
+  Icon,
   Input,
   Stack,
   Text,
@@ -15,16 +16,17 @@ import { signIn } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { BsTwitter } from "react-icons/bs";
+import { BsTwitter,BsGithub,BsGoogle,BsFacebook } from "react-icons/bs";
 import { ValidationUtils } from "../../utils/validation";
 import Layout from "./layout";
 
 type LogForm = {
   email: string;
   password: string;
+  confirmPassword: string;
 };
 
-type LogLayoutProps = { page: "Login" | "SignUp" };
+type LogLayoutProps = { page: "Login" | "Sign Up" };
 export default function LogLayout({ page }: LogLayoutProps) {
   const loginOptions = {
     callbackUrl: "/",
@@ -35,7 +37,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
     handleSubmit,
   } = useForm<LogForm>();
   const action = page === "Login" ? "Continue" : "Sign up";
-
+  const pseudo = page === "Login" ? "Sign in" : "Sign up";
   return (
     <Layout>
       <Head>
@@ -68,21 +70,24 @@ export default function LogLayout({ page }: LogLayoutProps) {
                 colorScheme="facebook"
                 data-cy="login-with-facebook"
               >
-                <BsTwitter />
+                <Icon as={BsFacebook} mr="3" />
                 {action} with Facebook
               </Button>
               <Button colorScheme="twitter" color="white">
+                <Icon as={BsTwitter} mr="5" />
                 {action} with Twitter
               </Button>
-              <Button
+              <Button               
                 onClick={() => signIn("github", loginOptions)}
                 background="#24292e"
                 color="white"
                 data-cy="login-with-github"
               >
+                <Icon as={BsGithub} mr="5" />
                 {action} with Github
               </Button>
               <Button background="#1da1f2" color="white">
+              <Icon as={BsGoogle} mr="4" />
                 {action} with Google
               </Button>
             </Stack>
@@ -111,7 +116,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
               fontSize="sm"
               zIndex="1"
             >
-              Or continue with account
+              Or {pseudo} down there
             </Text>
           </Box>
 
@@ -148,11 +153,13 @@ export default function LogLayout({ page }: LogLayoutProps) {
               <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
 
-            {page === "SignUp" && (
+            {page === "Sign Up" && (
               <FormControl isInvalid={!!errors.password}>
                 <FormLabel>Confirm Password</FormLabel>
                 <Input
-                  {...register("password", {
+                
+                type="password"
+                  {...register("confirmPassword", {
                     required: "Password is required",
                     minLength: {
                       value: 6,
@@ -169,7 +176,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
             </FormControl>
 
             <Button variant="primary" type="submit" width="full">
-              Continue
+              {action}
             </Button>
 
             <Box textAlign="center">
