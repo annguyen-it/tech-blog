@@ -4,7 +4,6 @@ import { Session } from "next-auth";
 import { SessionProvider, useSession } from "next-auth/react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { env } from "process";
 import "../styles/globals.css";
 import { theme } from "../styles/theme";
 
@@ -32,7 +31,6 @@ function SessionContainer({ Component, pageProps }: SessionContainerProps) {
 
 function MyApp({ Component, pageProps }: AppProps<PageProps>) {
   const { session, ...props } = pageProps;
-  console.log(process.env.NEXTAUTH_URL);
 
   return (
     <>
