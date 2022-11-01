@@ -9,7 +9,7 @@ import NewMain from "../../components/pages/new/new-main";
 import NewRight from "../../components/pages/new/new-right";
 import NewTop from "../../components/pages/new/new-top";
 import { Post } from "../../models";
-import FourOhFour from "../404";
+import Login from "../login";
 
 type SuggestionField = {
   name: Exclude<keyof Post, "coverImage">;
@@ -44,7 +44,7 @@ const New: NextPage = () => {
   }
 
   if (status !== "authenticated") {
-    return <FourOhFour />;
+    return <Login />;
   }
 
   return (
