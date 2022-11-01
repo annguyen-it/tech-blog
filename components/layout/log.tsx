@@ -8,12 +8,12 @@ import {
   FormLabel,
   Heading,
   Input,
+  Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
 import Head from "next/head";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { BsTwitter } from "react-icons/bs";
 import { ValidationUtils } from "../../utils/validation";

@@ -18,9 +18,13 @@ import {
 } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { MdSearch } from "react-icons/md";
+import { NextUtils } from "../../utils/next";
 
 function Navigation({ session }: { session: Session | null }) {
+  const router = useRouter();
+
   if (!session) {
     return <></>;
   }
@@ -71,9 +75,8 @@ function Navigation({ session }: { session: Session | null }) {
             borderColor="base-20"
           >
             <Button
-              as="a"
               variant="flat-link"
-              href={url}
+              onClick={() => NextUtils.navigate(router, url)}
               w="full"
               h={subLabel ? "auto !important" : undefined}
               data-cy={dataCy}
@@ -112,6 +115,7 @@ function Fade({ children, display }: FadeProps) {
 
 export default function TopBar() {
   const { data, status } = useSession();
+  const router = useRouter();
 
   return (
     <Flex
@@ -129,7 +133,11 @@ export default function TopBar() {
       {/* Left */}
       <Flex flex="1">
         <Flex align="center" ml="5" mr="10">
-          <Box as="a" href="/" data-cy="logo">
+          <Box
+            onClick={() => NextUtils.navigate(router, "/")}
+            cursor="pointer"
+            data-cy="logo"
+          >
             Logo
           </Box>
         </Flex>
@@ -154,10 +162,9 @@ export default function TopBar() {
         <Fade display={status === "authenticated"}>
           <ButtonGroup spacing="3">
             <Button
-              as="a"
+              onClick={() => NextUtils.navigate(router, "/new")}
               variant="outline"
               colorScheme="blue"
-              href="/new"
               fontWeight="600"
               data-cy="create-post"
             >
@@ -204,10 +211,9 @@ export default function TopBar() {
         <Fade display={status === "unauthenticated"}>
           <ButtonGroup spacing="3" flex="1" justifyContent="flex-end">
             <Button
-              as="a"
+              onClick={() => NextUtils.navigate(router, "/login")}
               variant="ghost"
               colorScheme="blue"
-              href="/login"
               fontWeight="400"
               data-cy="login"
             >
@@ -215,10 +221,9 @@ export default function TopBar() {
             </Button>
 
             <Button
-              as="a"
+              onClick={() => NextUtils.navigate(router, "/signup")}
               variant="outline"
               colorScheme="blue"
-              href="/signup"
               fontWeight="600"
             >
               Create account
