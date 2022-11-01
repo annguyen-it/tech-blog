@@ -31,7 +31,7 @@ function SessionContainer({ Component, pageProps }: SessionContainerProps) {
 
 function MyApp({ Component, pageProps }: AppProps<PageProps>) {
   const { session, ...props } = pageProps;
-  console.log(process.env.NEXTAUTH_URL);
+  console.log(process.env);
 
   return (
     <>
