@@ -1,59 +1,161 @@
-import { Box, Stack, Link, IconButton } from "@chakra-ui/react";
-import { BsSuitHeart,BsBookmark  } from "react-icons/bs";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Flex,
+  IconButton,
+  Link,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Stack,
+  Text,
+  Tooltip,
+} from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
+import { BsBookmark, BsSuitHeart, BsThreeDots } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
+import { Share } from "../../data";
 
+type ActionType = {
+  pid: string;
+};
+function Action(props: ActionType) {
+  const { status } = useSession();
+  // console.log(props);
+  const [data, setData] = useState({
+    id: 1,
+    image:
+      "https://res.cloudinary.com/practicaldev/image/fetch/s--Vt_eVVRg--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://www.entropywins.wtf/blog/wp-content/uploads/2022/09/code.jpg",
+    author: {
+      url: "johnny.depp",
+      name: "Johnny Depp",
+      intro: "I'm an actor",
+      work: "Hollywood",
+      joined: new Date(2019, 5, 9),
+      image:
+        "https://res.cloudinary.com/practicaldev/image/fetch/s--4Jbi0yB4--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/2884/27097c7514e0bf985ccbe9a8ccd2a550.jpeg",
+    },
+    createdDate: new Date(2022, 9, 9),
+    title: "Advice for junior developers",
+    url: "123456",
+    tags: ["beginners", "newbie", "learning"],
+    likes: 900,
+    comments: 30,
+    timeToRead: 9,
+  });
 
-function Action() {
-    return(
-        <Stack as='nav' direction='column'>
-            <Box>
-                <Link display='flex' flexDirection='column'>
-                    <IconButton 
-                        borderRadius='50%'
-                        fontSize='24px'
-                        variant="ghost"
-                        aria-label="Like"
-                        icon={<BsSuitHeart />}
-                        title="Like"
-                        _hover={{ backgroundColor: '#dda0dd' }}
-                    ></IconButton>
-                    2
-                </Link>
-            </Box>
-            <Box>
-                <Link display='flex' flexDirection='column'>
-                <IconButton 
-                        borderRadius='50%'
-                        fontSize='24px'
-                        variant="ghost"
-                        aria-label="Comment"
-                        icon={<FaRegComment />}
-                        title="Jump to Comment"
-                        _hover={{ backgroundColor: '#f2ca27' }}
-                    ></IconButton>
-                    6
-                </Link>
-            </Box>
-            <Box>
-                <Link display='flex' flexDirection='column'>
-                <IconButton 
-                        borderRadius='50%'
-                        fontSize='24px'
-                        variant="ghost"
-                        aria-label="Save"
-                        icon={<BsBookmark />}
-                        title="Save"
-                        _hover={{ backgroundColor: 'rgb(47,58,108, 0.1)' }}
-                    ></IconButton>
-                    10
-                </Link>
-            </Box>
-        </Stack>
-    );
+  const like = () => {
+    setData((prev) => {
+      return {
+        ...prev,
+        likes: prev.likes + 1,
+      };
+    });
+  };
+
+  return (
+    <Stack as="nav" direction="column">
+      <Box>
+        <Link display="flex" flexDirection="column">
+          <Tooltip label="Like">
+            <Flex direction="column" align="center">
+              <IconButton
+                onClick={like}
+                borderRadius="50%"
+                fontSize="24px"
+                variant="ghost"
+                aria-label="Like"
+                icon={<BsSuitHeart />}
+                _hover={{
+                  backgroundColor: "rgba(220, 38, 38 , 0.1)",
+                  color: "rgba(220, 38, 38)",
+                }}
+              ></IconButton>
+              <Text>{data.likes}</Text>
+            </Flex>
+          </Tooltip>
+        </Link>
+      </Box>
+      <Box>
+        <Link display="flex" flexDirection="column">
+          <Tooltip label="Jump to Comment">
+            <IconButton
+              borderRadius="50%"
+              fontSize="24px"
+              variant="ghost"
+              aria-label="Comment"
+              icon={<FaRegComment />}
+              _hover={{
+                backgroundColor: "rgba(245, 158, 11, 0.1)",
+                color: "rgb(245, 158, 11)",
+              }}
+            ></IconButton>
+          </Tooltip>
+        </Link>
+      </Box>
+      <Box>
+        <Link display="flex" flexDirection="column">
+          <Tooltip label="Save">
+            <IconButton
+              borderRadius="50%"
+              fontSize="24px"
+              variant="ghost"
+              aria-label="Save"
+              icon={<BsBookmark />}
+              title="Save"
+              _hover={{ backgroundColor: "rgba(47,58,108, 0.1)" }}
+            ></IconButton>
+          </Tooltip>
+        </Link>
+      </Box>
+
+      <Popover placement="right-start">
+        <PopoverTrigger>
+          <IconButton
+            borderRadius="50%"
+            fontSize="24px"
+            variant="ghost"
+            aria-label="Save"
+            icon={<BsThreeDots />}
+            _hover={{ backgroundColor: "rgba(47,58,108, 0.1)" }}
+          ></IconButton>
+        </PopoverTrigger>
+        <PopoverArrow />
+        <PopoverContent w="max-content" minW="250px">
+          <PopoverBody>
+            <ButtonGroup display="flex" flexDirection="column">
+              <Button
+                fontWeight="700"
+                backgroundColor="inherit"
+                _hover={{ color: "blue" }}
+              >
+                Copy link
+              </Button>
+              {Share.map((share, i) => (
+                <Button
+                  key={i}
+                  backgroundColor="inherit"
+                  _hover={{ color: "blue" }}
+                >
+                  {share.text}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
+    </Stack>
+  );
 }
 
-export default function PostLeft() {
-    return (
-      <Action />
-    );
-  }
+type PostLeftType = {
+  pid: string;
+};
+export default function PostLeft({ pid }: PostLeftType) {
+  return <Action pid={pid} />;
+}
+23;

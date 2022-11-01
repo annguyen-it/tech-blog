@@ -4,11 +4,11 @@ Cypress.Commands.add("dataCy", (value, options) =>
   cy.get(`[data-cy="${value}"]`, options)
 );
 
-Cypress.Commands.add("login", () => {
+Cypress.Commands.add("login", (socialNetwork) => {
   cy.session("user", () => {
-    const username = Cypress.env("GITHUB_USER");
-    const password = Cypress.env("GITHUB_PW");
-    const loginUrl = Cypress.env("SITE_NAME");
+    const username = Cypress.env(`${socialNetwork.toUpperCase()}_USER`);
+    const password = Cypress.env(`${socialNetwork.toUpperCase()}_PW`);
+    const loginUrl = Cypress.env("SITE_NAME") + "/login";
     const cookieName = Cypress.env("COOKIE_NAME");
 
     const socialLoginOptions = {
@@ -17,7 +17,7 @@ Cypress.Commands.add("login", () => {
       loginUrl,
       logs: false,
       headless: false,
-      loginSelector: "[data-cy='login']",
+      loginSelector: `[data-cy='login-with-${socialNetwork}']`,
       loginSelectorDelay: "1000",
       postLoginSelector: "[data-cy='create-post']",
       screenshotOnError: true,
@@ -61,8 +61,11 @@ declare global {
         arg?: any,
         options?: Partial<Loggable & Timeoutable>
       ): Chainable<T>;
-      dataCy(value: string, options?: Partial<Loggable & Timeoutable & Withinable & Shadow>): Chainable<JQuery<HTMLElement>>;
-      login(): void;
+      dataCy(
+        value: string,
+        options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
+      ): Chainable<JQuery<HTMLElement>>;
+      login(socialNetwork: SocialNetwork): void;
     }
   }
 
@@ -84,6 +87,8 @@ declare global {
     size: number;
     value: string;
   };
+
+  type SocialNetwork = "github" | "facebook";
 }
 
 export {};

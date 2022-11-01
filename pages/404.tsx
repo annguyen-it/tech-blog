@@ -1,9 +1,21 @@
-// 404.js
 import { Box, Container, Heading, Link, Text } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
+import Head from "next/head";
 
 export default function FourOhFour() {
+  const { status } = useSession();
+  const title = "The page you were looking for does not exist!";
+
+  if (status === "loading") {
+    return <></>;
+  }
+
   return (
-    <Box as="section" py="10" bg="white">
+    <Box as="section" py="10" bg="white" data-cy="404">
+      <Head>
+        <title>{title}</title>
+      </Head>
+
       <Container maxW="5xl">
         <Box w="83.3333%" mx="auto" textAlign="center">
           <Box
@@ -21,7 +33,7 @@ export default function FourOhFour() {
               Look like you&apos;re lost
             </Heading>
 
-            <Text mb="2.5">The page you are looking for is not available!</Text>
+            <Text mb="2.5">{title}</Text>
 
             <Link
               href="/"

@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { memo, useContext } from "react";
 import { MdOutlineClose } from "react-icons/md";
-import { NewSuggestionContext } from ".";
+import { NewSuggestionContext } from "../../../pages/new";
 
 type NewTopProps = {
   edit: boolean;
@@ -61,7 +61,7 @@ function NewTop({ edit, setEdit }: NewTopProps) {
         top="2"
         right="2"
         fontSize="2xl"
-      ></IconButton>
+      />
 
       <Modal
         isOpen={isOpen}
@@ -75,8 +75,8 @@ function NewTop({ edit, setEdit }: NewTopProps) {
           <ModalHeader>You have unsaved changes</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            You&apos;ve made changes to your post. Do you want to navigate to leave
-            this page?
+            You&apos;ve made changes to your post. Do you want to navigate to
+            leave this page?
           </ModalBody>
 
           <ModalFooter>
