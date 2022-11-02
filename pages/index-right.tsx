@@ -1,4 +1,4 @@
-import { Box, Stack, Link, Text, Heading, Button, Tag } from "@chakra-ui/react";
+import { Box, Stack, Link, Text, Heading, Tag } from "@chakra-ui/react";
 import { listings, helps, discuss, challenge } from "../data";
 
 function Listings() {

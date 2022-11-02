@@ -50,6 +50,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
       router.push("/");
       setRouterPushed(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   if (status === "authenticated") {
