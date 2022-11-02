@@ -17,7 +17,7 @@ function Listings() {
         <Heading p="4" size="md">
           Listings
         </Heading>
-        <Button
+        {/* <Button
           as="a"
           variant="link"
           href="/"
@@ -27,7 +27,7 @@ function Listings() {
           _hover={{ color: "blue" }}
         >
           See all
-        </Button>
+        </Button> */}
       </Box>
 
       <Box>

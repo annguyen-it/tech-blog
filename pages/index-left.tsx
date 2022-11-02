@@ -67,7 +67,7 @@ function Introduction() {
       <Stack direction="column" spacing="1">
         <Button
           onClick={() => router.push("/signup")}
-          variant="outline"
+          variant="primary-outline"
           colorScheme="blue"
           fontWeight="600"
         >
@@ -76,7 +76,7 @@ function Introduction() {
 
         <Button
           onClick={() => router.push("/login")}
-          variant="ghost"
+          variant="flat"
           colorScheme="blue"
           fontWeight="400"
         >
@@ -107,31 +107,31 @@ function SocialNetwork() {
   return (
     <Stack as="nav" direction="row">
       <IconButton
-        variant="ghost"
+        variant="flat"
         aria-label="twitter"
         icon={<FaTwitter />}
         title="Twitter"
       />
       <IconButton
-        variant="ghost"
+        variant="flat"
         aria-label="facebook"
         icon={<FaFacebookF />}
         title="Facebook"
       />
       <IconButton
-        variant="ghost"
+        variant="flat"
         aria-label="github"
         icon={<FaGithub />}
         title="Github"
       />
       <IconButton
-        variant="ghost"
+        variant="flat"
         aria-label="instagram"
         icon={<FaInstagram />}
         title="Instagram"
       />
       <IconButton
-        variant="ghost"
+        variant="flat"
         aria-label="twitch"
         icon={<FaTwitch />}
         title="Twitch"

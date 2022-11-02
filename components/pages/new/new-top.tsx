@@ -14,6 +14,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { memo, useContext } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { NewSuggestionContext } from "../../../pages/new";
@@ -24,6 +25,7 @@ type NewTopProps = {
 };
 function NewTop({ edit, setEdit }: NewTopProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
   const { setSuggestionField } = useContext(NewSuggestionContext);
 
   function onChangeTab(edit: boolean) {
@@ -80,7 +82,7 @@ function NewTop({ edit, setEdit }: NewTopProps) {
           </ModalBody>
 
           <ModalFooter>
-            <Button as="a" href="/" colorScheme="red" mr={3}>
+            <Button onClick={() => router.push("/")} colorScheme="red" mr={3}>
               Yes, leave the page
             </Button>
             <Button colorScheme="blackAlpha" onClick={onClose}>

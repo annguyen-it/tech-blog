@@ -17,7 +17,7 @@ export function Markdown({ children }: MarkdownProps) {
     <ReactMarkdown
       remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
       components={{
-        a: ({ node, ...props }) => <Link {...props} />,
+        a: ({ node, ...props }) => <Link {...props} color="primary" />,
         blockquote: ({ node, ...props }) => (
           <blockquote
             style={{ paddingLeft: "20px", borderLeft: "4px solid #d6d6d7" }}
@@ -52,14 +52,24 @@ export function Markdown({ children }: MarkdownProps) {
         h6: ({ node, ...props }) => (
           <Heading as="h6" {...props} fontSize="md" />
         ),
-        ol: ({ node, ordered, ...props }) => <OrderedList {...props} />,
-        p: ({ node, ...props }) => <Text {...props} />,
+        ol: ({ node, ordered, ...props }) => (
+          <OrderedList {...props} fontSize="xl" />
+        ),
+        p: ({ node, ...props }) => <Text {...props} fontSize="xl" />,
         pre: ({ node, ...props }) => (
-          <Box p="5" borderRadius="md" bg="#08090a" color="#f8f8f2">
+          <Box
+            p="5"
+            borderRadius="md"
+            bg="#08090a"
+            color="#f8f8f2"
+            fontSize="xl"
+          >
             <pre {...props} />
           </Box>
         ),
-        ul: ({ node, ordered, ...props }) => <UnorderedList {...props} />,
+        ul: ({ node, ordered, ...props }) => (
+          <UnorderedList {...props} fontSize="xl" />
+        ),
       }}
     >
       {children}

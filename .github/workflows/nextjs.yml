@@ -29,6 +29,8 @@ env:
   AUTH_GITHUB_SECRET: ${{ secrets.AUTH_GITHUB_SECRET }}
   FACEBOOK_ID: ${{ secrets.FACEBOOK_ID }}
   FACEBOOK_SECRET: ${{ secrets.FACEBOOK_SECRET }}
+  GOOGLE_ID: ${{ secrets.GOOGLE_ID }}
+  GOOGLE_SECRET: ${{ secrets.GOOGLE_SECRET }}
   NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
   NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
 
@@ -94,6 +96,8 @@ jobs:
           echo AUTH_GITHUB_SECRET=${{ secrets.AUTH_GITHUB_SECRET }} >> .env.local
           echo FACEBOOK_ID=${{ secrets.FACEBOOK_ID }} >> .env.local
           echo FACEBOOK_SECRET=${{ secrets.FACEBOOK_SECRET }} >> .env.local
+          echo GOOGLE_ID=${{ secrets.GOOGLE_ID }} >> .env.local
+          echo GOOGLE_SECRET=${{ secrets.GOOGLE_SECRET }} >> .env.local
           echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env.local
           echo NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} >> .env.local
           ${{ steps.detect-package-manager.outputs.runner }} next build
