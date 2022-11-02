@@ -9,9 +9,9 @@ import Head from "next/head";
 
 const Post: NextPage = () => {
   const router = useRouter();
-  const pid = router.query['pid'] as string;
+  const pid = router.query["pid"] as string;
   // console.log(pid);
-  const [dataPost, setDataPost]= useState({
+  const [dataPost, setDataPost] = useState({
     id: 1,
     image:
       "https://res.cloudinary.com/practicaldev/image/fetch/s--Vt_eVVRg--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://www.entropywins.wtf/blog/wp-content/uploads/2022/09/code.jpg",
@@ -31,20 +31,22 @@ const Post: NextPage = () => {
     likes: 900,
     comments: 30,
     timeToRead: 9,
-  })
+  });
 
   return (
     <Layout>
-      <Head>
-        <title>Post name</title>
-      </Head>
-
-      <Grid templateColumns="64px 2fr 1fr" gap="4">
+      <Grid
+        w="full"
+        maxW="7xl"
+        m="auto"
+        templateColumns="100px 2fr 1fr"
+        gap="4"
+      >
         <GridItem>
-          <PostLeft pid={pid}/>
+          <PostLeft pid={pid} />
         </GridItem>
         <GridItem>
-          <PostMain />
+          <PostMain dataPost={dataPost} />
         </GridItem>
         <GridItem></GridItem>
       </Grid>
