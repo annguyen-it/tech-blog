@@ -11,12 +11,23 @@ export const ButtonStyles: ComponentStyleConfig = {
         bg: "primary-darker",
       },
     },
+    "primary-outline": {
+      bg: "white",
+      color: "primary",
+      border: "1px solid",
+      borderColor: "primary",
+      _hover: {
+        bg: "primary",
+        color: "white",
+      },
+    },
     flat: {
       bg: "rgba(0, 0, 0, 0)",
       color: "#171717",
       _hover: {
         bg: "primary-rgba",
         color: "primary",
+        textDecoration: "none",
       },
     },
     "flat-link": {

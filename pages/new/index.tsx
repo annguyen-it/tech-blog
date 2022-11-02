@@ -52,7 +52,7 @@ const New: NextPage = () => {
       <Head>
         <title>New post</title>
       </Head>
-      
+
       <NewSuggestionContext.Provider
         value={{ suggestionField, setSuggestionField }}
       >

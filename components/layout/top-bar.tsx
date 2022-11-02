@@ -163,7 +163,7 @@ export default function TopBar() {
           <ButtonGroup spacing="3">
             <Button
               onClick={() => NextUtils.navigate(router, "/new")}
-              variant="outline"
+              variant="primary-outline"
               colorScheme="blue"
               fontWeight="600"
               data-cy="create-post"
@@ -212,7 +212,7 @@ export default function TopBar() {
           <ButtonGroup spacing="3" flex="1" justifyContent="flex-end">
             <Button
               onClick={() => NextUtils.navigate(router, "/login")}
-              variant="ghost"
+              variant="flat"
               colorScheme="blue"
               fontWeight="400"
               data-cy="login"
@@ -222,7 +222,7 @@ export default function TopBar() {
 
             <Button
               onClick={() => NextUtils.navigate(router, "/signup")}
-              variant="outline"
+              variant="primary-outline"
               colorScheme="blue"
               fontWeight="600"
             >
