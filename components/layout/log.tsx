@@ -12,9 +12,10 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsTwitter } from "react-icons/bs";
 import { ValidationUtils } from "../../utils/validation";
@@ -27,16 +28,30 @@ type LogForm = {
 
 type LogLayoutProps = { page: "Login" | "SignUp" };
 export default function LogLayout({ page }: LogLayoutProps) {
+  const { status } = useSession();
   const router = useRouter();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<LogForm>();
+  const [routerPushed, setRouterPushed] = useState(false);
+
   const loginOptions = {
-    callbackUrl: router.pathname === "login" ? "/" : router.pathname,
+    callbackUrl: router.pathname.includes("login") ? "/" : router.pathname,
   };
   const action = page === "Login" ? "Continue" : "Sign up";
+
+  useEffect(() => {
+    if (status === "authenticated" && !routerPushed) {
+      router.push("/");
+      setRouterPushed(true);
+    }
+  }, [status]);
+
+  if (status === "authenticated") {
+    return <></>;
+  }
 
   return (
     <Layout>
