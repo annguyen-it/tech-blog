@@ -1,4 +1,4 @@
-import { Box, Stack, Link, Text, Heading, Button, Tag } from "@chakra-ui/react";
+import { Box, Stack, Link, Text, Heading, Tag } from "@chakra-ui/react";
 import { listings, helps, discuss, challenge } from "../data";
 
 function Listings() {
@@ -17,7 +17,7 @@ function Listings() {
         <Heading p="4" size="md">
           Listings
         </Heading>
-        <Button
+        {/* <Button
           as="a"
           variant="link"
           href="/"
@@ -27,7 +27,7 @@ function Listings() {
           _hover={{ color: "blue" }}
         >
           See all
-        </Button>
+        </Button> */}
       </Box>
 
       <Box>

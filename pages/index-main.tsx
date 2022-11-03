@@ -10,8 +10,9 @@ import {
   Link,
   Stack,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import { FaRegComment, FaRegHeart, FaRegBookmark } from "react-icons/fa";
+import { FaRegBookmark, FaRegComment, FaRegHeart } from "react-icons/fa";
 import { Posts } from "../data";
 
 type NavButtonsType = {
@@ -19,6 +20,7 @@ type NavButtonsType = {
   setSelectedTabIndex: (tabIndex: number) => void;
 };
 function NavButtons({ selectedTabIndex, setSelectedTabIndex }: NavButtonsType) {
+  const router = useRouter();
   const buttons = [
     {
       label: "Relevant",
@@ -34,14 +36,17 @@ function NavButtons({ selectedTabIndex, setSelectedTabIndex }: NavButtonsType) {
     },
   ];
 
+  function onClick(index: number) {
+    setSelectedTabIndex(index);
+    router.push(buttons[index].url);
+  }
+
   return (
     <ButtonGroup variant="ghost" spacing="0">
-      {buttons.map(({ label, url }, index) => (
+      {buttons.map(({ label }, index) => (
         <Button
           key={index}
-          onClick={() => setSelectedTabIndex(index)}
-          as="a"
-          href={url}
+          onClick={() => onClick(index)}
           fontSize="lg"
           fontWeight={index === selectedTabIndex ? 700 : 400}
           color={index === selectedTabIndex ? "base-100" : "base-70"}
@@ -58,6 +63,8 @@ function NavButtons({ selectedTabIndex, setSelectedTabIndex }: NavButtonsType) {
 }
 
 function Post() {
+  const router = useRouter();
+
   return (
     <Stack spacing="2">
       {Posts.map((post, i) => (
@@ -95,20 +102,25 @@ function Post() {
                 <Link href={`/post/${post.url}`}>{post.title}</Link>
               </Heading>
 
-              <ButtonGroup variant="ghost" size="sm" spacing="0">
+              {/* Tags */}
+              <ButtonGroup variant="flat" size="sm" spacing="0">
                 {post.tags.map((tag, i) => (
-                  <Button key={i} as="a" href={`/t/${tag}`} fontWeight="400">
+                  <Button
+                    key={i}
+                    onClick={() => router.push(`/t/${tag}`)}
+                    fontWeight="400"
+                  >
                     #{tag}
                   </Button>
                 ))}
               </ButtonGroup>
 
+              {/* Buttons */}
               <Flex justify="space-between">
-                <ButtonGroup variant="ghost" size="sm" spacing="0">
+                <ButtonGroup variant="flat" size="sm" spacing="0">
                   {post.likes && (
                     <Button
-                      as="a"
-                      href={post.url}
+                      onClick={() => router.push(`/post/${post.url}`)}
                       leftIcon={<FaRegHeart />}
                       fontWeight="400"
                     >
@@ -116,8 +128,7 @@ function Post() {
                     </Button>
                   )}
                   <Button
-                    as="a"
-                    href={`${post.url}#comments`}
+                    onClick={() => router.push(`${post.url}#comments`)}
                     leftIcon={<FaRegComment />}
                     fontWeight="400"
                   >
@@ -132,9 +143,9 @@ function Post() {
                     {post.timeToRead} min{post.timeToRead > 1 && "s"} to read
                   </Box>
                   <IconButton
-                    aria-label="Save post"
+                    variant="flat"
                     icon={<FaRegBookmark />}
-                    variant="ghost"
+                    aria-label="Save post"
                   />
                 </Stack>
               </Flex>

@@ -8,11 +8,11 @@ import NewBottom from "../../components/pages/new/new-bottom";
 import NewMain from "../../components/pages/new/new-main";
 import NewRight from "../../components/pages/new/new-right";
 import NewTop from "../../components/pages/new/new-top";
-import { Post } from "../../models";
-import FourOhFour from "../404";
+import { EditPost } from "../../models";
+import Login from "../login";
 
 type SuggestionField = {
-  name: Exclude<keyof Post, "coverImage">;
+  name: Exclude<keyof EditPost, "coverImage">;
   y: number;
 } | null;
 type SuggestionContextType = {
@@ -28,13 +28,13 @@ const New: NextPage = () => {
   const { status } = useSession();
   const [edit, setEdit] = useState(true);
   const [suggestionField, setSuggestionField] = useState<SuggestionField>(null);
-  const [defaultValues, setDefaultValues] = useState<Post>({
+  const [defaultValues, setDefaultValues] = useState<EditPost>({
     coverImage: null,
     title: "",
     body: "",
-    hashtags: [],
+    tags: [],
   });
-  const methods = useForm<Post>({
+  const methods = useForm<EditPost>({
     defaultValues,
   });
 
@@ -44,7 +44,7 @@ const New: NextPage = () => {
   }
 
   if (status !== "authenticated") {
-    return <FourOhFour />;
+    return <Login />;
   }
 
   return (
@@ -52,7 +52,7 @@ const New: NextPage = () => {
       <Head>
         <title>New post</title>
       </Head>
-      
+
       <NewSuggestionContext.Provider
         value={{ suggestionField, setSuggestionField }}
       >

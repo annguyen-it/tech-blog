@@ -9,6 +9,8 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import {
   FaTwitter,
   FaFacebookF,
@@ -22,6 +24,7 @@ function Tile({ children, href }: { children: React.ReactNode; href: string }) {
   return (
     <Link
       href={href}
+      variant="secondary"
       display="flex"
       alignItems="center"
       px="4"
@@ -29,6 +32,7 @@ function Tile({ children, href }: { children: React.ReactNode; href: string }) {
       borderRadius="md"
       _hover={{
         background: "primary-rgba",
+        color: "primary-darker",
         textDecoration: "underline",
       }}
     >
@@ -38,6 +42,8 @@ function Tile({ children, href }: { children: React.ReactNode; href: string }) {
 }
 
 function Introduction() {
+  const router = useRouter();
+
   return (
     <Stack
       as="nav"
@@ -48,8 +54,8 @@ function Introduction() {
       spacing="4"
     >
       <Heading size="md">
-        <Link href="/" color="blue">
-          DEV Community 👩&zwj;💻👨&zwj;💻
+        <Link href="/" variant="blue">
+          Tech blog
         </Link>{" "}
         is a community of 938,136 amazing developers
       </Heading>
@@ -60,21 +66,19 @@ function Introduction() {
 
       <Stack direction="column" spacing="1">
         <Button
-          variant="outline"
+          onClick={() => router.push("/signup")}
+          variant="primary-outline"
           colorScheme="blue"
           fontWeight="600"
-          as="a"
-          href="#"
         >
           Create account
         </Button>
 
         <Button
-          variant="ghost"
+          onClick={() => router.push("/login")}
+          variant="flat"
           colorScheme="blue"
           fontWeight="400"
-          as="a"
-          href="#"
         >
           Log in
         </Button>
@@ -103,31 +107,31 @@ function SocialNetwork() {
   return (
     <Stack as="nav" direction="row">
       <IconButton
-        variant="ghost"
+        variant="flat"
         aria-label="twitter"
         icon={<FaTwitter />}
         title="Twitter"
       />
       <IconButton
-        variant="ghost"
+        variant="flat"
         aria-label="facebook"
         icon={<FaFacebookF />}
         title="Facebook"
       />
       <IconButton
-        variant="ghost"
+        variant="flat"
         aria-label="github"
         icon={<FaGithub />}
         title="Github"
       />
       <IconButton
-        variant="ghost"
+        variant="flat"
         aria-label="instagram"
         icon={<FaInstagram />}
         title="Instagram"
       />
       <IconButton
-        variant="ghost"
+        variant="flat"
         aria-label="twitch"
         icon={<FaTwitch />}
         title="Twitch"
@@ -154,9 +158,11 @@ function Tag() {
 }
 
 export default function IndexLeft() {
+  const { status } = useSession();
+
   return (
     <Stack as="aside" spacing="4">
-      <Introduction />
+      {status === "unauthenticated" && <Introduction />}
       <Category />
       <SocialNetwork />
       <Tag />

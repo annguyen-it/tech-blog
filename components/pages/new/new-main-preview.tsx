@@ -1,11 +1,13 @@
 import { Box, Button, ButtonGroup, Heading, Image } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useFormContext } from "react-hook-form";
+import { EditPost } from "../../../models";
 import { Markdown } from "../../elements/text/markdown";
-import { Post } from "../../../models";
 
 export default function NewMainPreview() {
-  const { getValues } = useFormContext<Post>();
-  const { title, body, coverImage, hashtags } = getValues();
+  const { getValues } = useFormContext<EditPost>();
+  const { title, body, coverImage, tags: hashtags } = getValues();
+  const router = useRouter();
 
   return (
     <Box as="article">
@@ -35,9 +37,8 @@ export default function NewMainPreview() {
           <ButtonGroup variant="ghost" size="sm" spacing="0">
             {hashtags.map((hashtag) => (
               <Button
-                as="a"
                 key={hashtag}
-                href={`/t/${hashtag}`}
+                onClick={() => router.push(`/t/${hashtag}`)}
                 fontWeight="400"
               >
                 # {hashtag}
@@ -48,7 +49,7 @@ export default function NewMainPreview() {
       </Box>
 
       {/* Body */}
-      <Box px="16" py="8" fontSize="xl">
+      <Box px="16" py="8">
         <Markdown>{body}</Markdown>
       </Box>
     </Box>

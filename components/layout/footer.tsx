@@ -1,53 +1,63 @@
-import { Stack } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Link, Stack, Text } from "@chakra-ui/react";
 
 export default function Footer() {
   return (
-    <Stack p="12" textAlign="center" background="#e5e5e5">
-      <p>
-        <Link aria-label="DEV Community 👩&zwj;💻👨&zwj;💻 Home" href="/">
-          DEV Community 👩&zwj;💻👨&zwj;💻
+    <Stack p="12" textAlign="center" background="#e5e5e5" fontSize="sm">
+      <Text>
+        <Link href="/" variant="blue" fontWeight="500">
+          Tech blog
         </Link>{" "}
         — A constructive and inclusive social network for software developers.
         With you every step of your journey.
-      </p>
-      <div>
-        <p>
+      </Text>
+      <Box>
+        <Text>
           Built on{" "}
-          <a
+          <Link
+            isExternal
+            variant="blue"
             target="_blank"
             rel="noopener noreferrer"
             href="https://www.forem.com"
           >
             Forem
-          </a>{" "}
-          — the
-          <a
+          </Link>{" "}
+          — the{" "}
+          <Link
+            isExternal
+            variant="blue"
             target="_blank"
             rel="noopener noreferrer"
             href="https://dev.to/t/opensource"
           >
             open source
-          </a>{" "}
+          </Link>{" "}
           software that powers{" "}
-          <a target="_blank" rel="noopener noreferrer" href="https://dev.to">
+          <Link
+            isExternal
+            variant="blue"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://dev.to"
+          >
             DEV
-          </a>{" "}
+          </Link>{" "}
           and other inclusive communities.
-        </p>
-        <p>
+        </Text>
+        <Text>
           Made with love and{" "}
-          <a
+          <Link
+            isExternal
+            variant="blue"
             target="_blank"
             rel="noopener noreferrer"
             href="https://dev.to/t/rails"
           >
-            Ruby on Rails
-          </a>
-          . DEV Community 👩&zwj;💻👨&zwj;💻 <span title="copyright">©</span>{" "}
-          2016 - 2022.
-        </p>
-      </div>
+            NextJS
+          </Link>
+          . Tech blog <span title="copyright">©</span> 2022.
+        </Text>
+      </Box>
     </Stack>
   );
 }
