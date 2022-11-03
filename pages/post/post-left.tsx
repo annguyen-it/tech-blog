@@ -83,38 +83,45 @@ function Action(props: ActionType) {
       <Box>
         <Link display="flex" flexDirection="column">
           <Tooltip label="Jump to Comment">
-            <IconButton
-              borderRadius="50%"
-              fontSize="24px"
-              variant="ghost"
-              aria-label="Comment"
-              icon={<FaRegComment />}
-              _hover={{
-                backgroundColor: "rgba(245, 158, 11, 0.1)",
-                color: "rgb(245, 158, 11)",
-              }}
-            ></IconButton>
+            <Flex direction="column" align="center">
+              <IconButton
+                borderRadius="50%"
+                fontSize="24px"
+                variant="ghost"
+                aria-label="Comment"
+                icon={<FaRegComment />}
+                _hover={{
+                  backgroundColor: "rgba(245, 158, 11, 0.1)",
+                  color: "rgb(245, 158, 11)",
+                }}
+              ></IconButton>
+              <Text>{data.comments}</Text>
+            </Flex>
           </Tooltip>
         </Link>
       </Box>
       <Box>
         <Link display="flex" flexDirection="column">
           <Tooltip label="Save">
-            <IconButton
-              borderRadius="50%"
-              fontSize="24px"
-              variant="ghost"
-              aria-label="Save"
-              icon={<BsBookmark />}
-              title="Save"
-              _hover={{ backgroundColor: "rgba(47,58,108, 0.1)" }}
-            ></IconButton>
+            <Flex direction="column" align="center">
+              <IconButton
+                borderRadius="50%"
+                fontSize="24px"
+                variant="ghost"
+                aria-label="Save"
+                icon={<BsBookmark />}
+                title="Save"
+                _hover={{ backgroundColor: "rgba(47,58,108, 0.1)" }}
+              ></IconButton>
+              <Text>{data.timeToRead}</Text>
+            </Flex>
           </Tooltip>
         </Link>
       </Box>
 
       <Popover placement="right-start">
         <PopoverTrigger>
+          <Flex direction="column" align="center">
           <IconButton
             borderRadius="50%"
             fontSize="24px"
@@ -123,7 +130,9 @@ function Action(props: ActionType) {
             icon={<BsThreeDots />}
             _hover={{ backgroundColor: "rgba(47,58,108, 0.1)" }}
           ></IconButton>
+          </Flex>
         </PopoverTrigger>
+
         <PopoverArrow />
         <PopoverContent w="max-content" minW="250px">
           <PopoverBody>

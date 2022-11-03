@@ -26,10 +26,10 @@ import { NewSuggestionContext } from "../../../pages/new";
 import { Editor, EditorRef } from "../../elements/editor/editor";
 import { EditorToolbar } from "../../elements/editor/editor-toolbar";
 import { AutoResizeTextarea } from "../../elements/textarea/auto-resize-textarea";
-import { Post } from "../../../models";
+import { EditPost } from "../../../models";
 
 function CoverPhoto() {
-  const { register, setValue, control } = useFormContext<Post>();
+  const { register, setValue, control } = useFormContext<EditPost>();
   const { coverImage } = useWatch({ control });
   const [preview, setPreview] = useState<string>("");
   const imageRef = useRef<HTMLInputElement>(null);
@@ -128,8 +128,8 @@ function Title() {
 
 function Hashtags() {
   const { setSuggestionField } = useContext(NewSuggestionContext);
-  const { setValue, control } = useFormContext<Post>();
-  const { hashtags } = useWatch({ control });
+  const { setValue, control } = useFormContext<EditPost>();
+  const { tags: hashtags } = useWatch({ control });
   const popupRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isOpenPopup, setIsOpenPopup] = useBoolean();
@@ -374,7 +374,7 @@ function Body() {
         flexShrink="0"
       />
 
-      <Editor<Post>
+      <Editor<EditPost>
         ref={editorRef}
         onFocus={() =>
           setSuggestionField({
