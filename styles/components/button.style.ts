@@ -43,7 +43,7 @@ export const ButtonStyles: ComponentStyleConfig = {
         textDecoration: "underline",
       },
     },
-    hashtag: {
+    tag: {
       bg: "grey-900-rgba",
       color: "grey-700",
     },

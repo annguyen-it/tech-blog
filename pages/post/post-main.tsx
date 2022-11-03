@@ -7,7 +7,7 @@ export default function PostMain({ dataPost }: PostMainProps) {
   return (
     <Stack as="nav" spacing="2">
       <Box borderRadius="md">
-        <Image src={dataPost.coverImage} />
+        <Image src={dataPost.coverImage} alt={dataPost.title} />
       </Box>
       <Stack marginTop="0" bg="white" overflow="hidden" h="100vh">
         <Markdown>{dataPost.body}</Markdown>

@@ -126,67 +126,67 @@ function Title() {
   );
 }
 
-function Hashtags() {
+function Tags() {
   const { setSuggestionField } = useContext(NewSuggestionContext);
   const { setValue, control } = useFormContext<EditPost>();
-  const { tags: hashtags } = useWatch({ control });
+  const { tags } = useWatch({ control });
   const popupRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isOpenPopup, setIsOpenPopup] = useBoolean();
-  const [editingHashtagIndex, setEditingHashtagIndex] = useState(-1);
+  const [editingTagIndex, setEditingTagIndex] = useState(-1);
 
-  if (!hashtags) {
+  if (!tags) {
     return <></>;
   }
 
   const items = [
     {
-      hashtag: "beginners",
+      tag: "beginners",
       description:
         '"A journey of a thousand miles begins with a single step." - Chinese Proverb',
     },
     {
-      hashtag: "programming",
+      tag: "programming",
       description: "The magic behind computers. 💻",
     },
     {
-      hashtag: "tutorial",
+      tag: "tutorial",
       description:
         "Tutorial is a general purpose tag. We welcome all types of tutorial - code related or not! It's all about learning, and using tutorials to teach others!",
     },
   ];
 
-  function onClickHashtag(index: number) {
-    setEditingHashtagIndex(index);
+  function onClickTag(index: number) {
+    setEditingTagIndex(index);
     const input = inputRef.current;
     if (!input) {
       return;
     }
 
     input.focus();
-    input.value = hashtags![index];
+    input.value = tags![index];
   }
 
-  function updateHashtags(hashtag?: string) {
-    if (!hashtag) {
+  function updateTags(tag?: string) {
+    if (!tag) {
       return;
     }
 
-    if (editingHashtagIndex !== -1) {
+    if (editingTagIndex !== -1) {
       setValue(
-        "hashtags",
-        hashtags!.reduce<string[]>((acc, curr, i) => {
-          if (i !== editingHashtagIndex) {
+        "tags",
+        tags!.reduce<string[]>((acc, curr, i) => {
+          if (i !== editingTagIndex) {
             acc.push(curr);
-          } else if (hashtag) {
-            acc.push(hashtag);
+          } else if (tag) {
+            acc.push(tag);
           }
           return acc;
         }, [])
       );
     } else {
-      if (!hashtags!.includes(hashtag)) {
-        setValue("hashtags", [...hashtags!, hashtag]);
+      if (!tags!.includes(tag)) {
+        setValue("tags", [...tags!, tag]);
       }
     }
   }
@@ -197,11 +197,11 @@ function Hashtags() {
       return;
     }
 
-    updateHashtags(input.value);
+    updateTags(input.value);
 
     setTimeout(() => {
       if (document.activeElement !== input) {
-        setEditingHashtagIndex(-1);
+        setEditingTagIndex(-1);
         setIsOpenPopup.off();
         input.value = "";
       }
@@ -228,9 +228,9 @@ function Hashtags() {
       e.preventDefault();
     }
     if (e.key === "Enter") {
-      updateHashtags(input.value);
+      updateTags(input.value);
       setIsOpenPopup.off();
-      setEditingHashtagIndex(-1);
+      setEditingTagIndex(-1);
       input.value = "";
     }
   }
@@ -245,37 +245,37 @@ function Hashtags() {
       >
         <PopoverTrigger>
           <List w="full" display="flex" flexWrap="wrap">
-            {/* Hashtags */}
-            {hashtags.map((hashtag, index) => (
+            {/* Tags */}
+            {tags.map((tag, index) => (
               <ListItem
-                key={hashtag}
-                display={editingHashtagIndex === index ? "none" : ""}
+                key={tag}
+                display={editingTagIndex === index ? "none" : ""}
                 order={index + 1}
               >
                 <ButtonGroup
-                  variant="hashtag"
+                  variant="tag"
                   size="sm"
                   isAttached
                   mr="1"
                   mb="1"
                 >
                   <Button
-                    onClick={() => onClickHashtag(index)}
+                    onClick={() => onClickTag(index)}
                     px="1"
                     fontWeight="400"
                     fontSize="md"
                     cursor="text"
                   >
-                    # {hashtag}
+                    # {tag}
                   </Button>
                   <IconButton
                     onClick={() =>
                       setValue(
-                        "hashtags",
-                        hashtags.filter((v) => v !== hashtag)
+                        "tags",
+                        tags.filter((v) => v !== tag)
                       )
                     }
-                    aria-label={`Remove ${hashtag}`}
+                    aria-label={`Remove ${tag}`}
                     icon={<MdOutlineClose />}
                     px="1"
                     fontSize="xl"
@@ -289,21 +289,21 @@ function Hashtags() {
             <ListItem
               alignSelf="center"
               order={
-                editingHashtagIndex !== -1
-                  ? editingHashtagIndex + 1
-                  : hashtags.length + 1
+                editingTagIndex !== -1
+                  ? editingTagIndex + 1
+                  : tags.length + 1
               }
             >
               <Input
                 ref={inputRef}
                 variant="unstyled"
                 placeholder={
-                  hashtags.length ? "Add another..." : "Add up to 4 tags..."
+                  tags.length ? "Add another..." : "Add up to 4 tags..."
                 }
                 onClick={setIsOpenPopup.on}
                 onFocus={() =>
                   setSuggestionField({
-                    name: "hashtags",
+                    name: "tags",
                     y: inputRef.current?.getBoundingClientRect().y || 0,
                   })
                 }
@@ -320,21 +320,21 @@ function Hashtags() {
         <Portal containerRef={popupRef}>
           <PopoverContent w="auto">
             <PopoverHeader p="3">
-              <Heading fontSize="lg">Top hashtags</Heading>
+              <Heading fontSize="lg">Top tags</Heading>
             </PopoverHeader>
             <PopoverBody p="1" maxH="500px" overflow="auto">
               <List>
                 {items
-                  .filter((item) => hashtags.indexOf(item.hashtag) === -1)
+                  .filter((item) => tags.indexOf(item.tag) === -1)
                   .map((item) => (
-                    <ListItem key={item.hashtag} cursor="pointer">
+                    <ListItem key={item.tag} cursor="pointer">
                       <Box
-                        onClick={() => updateHashtags(item.hashtag)}
+                        onClick={() => updateTags(item.tag)}
                         p="3"
                         borderRadius="md"
                         _hover={{ backgroundColor: "grey-100" }}
                       >
-                        <Box fontWeight="500">#{item.hashtag}</Box>
+                        <Box fontWeight="500">#{item.tag}</Box>
                         <Text noOfLines={2} fontSize="sm">
                           {item.description}
                         </Text>
@@ -347,7 +347,7 @@ function Hashtags() {
         </Portal>
       </Popover>
 
-      {/* Hashtag wrapper */}
+      {/* Tag wrapper */}
       <Box ref={popupRef} pos="absolute" top="8" w="full" bg="red" />
     </Box>
   );
@@ -397,7 +397,7 @@ export default function NewMainEdit() {
       <Box px="16" py="8">
         <CoverPhoto />
         <Title />
-        <Hashtags />
+        <Tags />
       </Box>
 
       <Body />
