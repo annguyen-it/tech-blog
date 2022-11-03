@@ -6,7 +6,7 @@ import { Markdown } from "../../elements/text/markdown";
 
 export default function NewMainPreview() {
   const { getValues } = useFormContext<EditPost>();
-  const { title, body, coverImage, tags: hashtags } = getValues();
+  const { title, body, coverImage, tags } = getValues();
   const router = useRouter();
 
   return (
@@ -33,15 +33,15 @@ export default function NewMainPreview() {
             {title}
           </Heading>
 
-          {/* Hashtags */}
+          {/* Tags */}
           <ButtonGroup variant="ghost" size="sm" spacing="0">
-            {hashtags.map((hashtag) => (
+            {tags.map((tag) => (
               <Button
-                key={hashtag}
-                onClick={() => router.push(`/t/${hashtag}`)}
+                key={tag}
+                onClick={() => router.push(`/t/${tag}`)}
                 fontWeight="400"
               >
-                # {hashtag}
+                # {tag}
               </Button>
             ))}
           </ButtonGroup>
