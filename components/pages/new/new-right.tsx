@@ -13,12 +13,12 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-import { Post } from "../../../models";
+import { EditPost } from "../../../models";
 import { NewSuggestionContext } from "../../../pages/new";
 
 type CommonEffectProps = {
   children: React.ReactNode;
-  field: Exclude<keyof Post, "coverImage">;
+  field: Exclude<keyof EditPost, "coverImage">;
 };
 function CommonEffect({ children, field }: CommonEffectProps) {
   const { suggestionField } = useContext(NewSuggestionContext);

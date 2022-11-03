@@ -105,7 +105,11 @@ export default function LogLayout({ page }: LogLayoutProps) {
                 <Icon as={BsGithub} mr="2" />
                 {action} with Github
               </Button>
-              <Button background="#1da1f2" color="white">
+              <Button
+                onClick={() => signIn("google", loginOptions)}
+                background="#1da1f2"
+                color="white"
+              >
                 <Icon as={BsGoogle} mr="2" />
                 {action} with Google
               </Button>
@@ -197,8 +201,10 @@ export default function LogLayout({ page }: LogLayoutProps) {
               {action}
             </Button>
 
-            <Box textAlign="center">
-              <Link href="">I forgot my password</Link>
+            <Box pt="2" textAlign="center">
+              <Link href="#" fontSize="sm">
+                I forgot my password
+              </Link>
             </Box>
           </Stack>
         </Stack>
