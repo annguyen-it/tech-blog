@@ -58,9 +58,9 @@ function TitleSuggestion() {
   );
 }
 
-function HashtagsSuggestion() {
+function TagsSuggestion() {
   return (
-    <CommonEffect field="hashtags">
+    <CommonEffect field="tags">
       <Heading mb="2" fontSize="lg">
         Tagging Guidelines
       </Heading>
@@ -238,7 +238,7 @@ export default function NewRight() {
     <Box pos="relative" w="full" h="full">
       <Box pos="sticky" top={suggestionField?.y}>
         <TitleSuggestion />
-        <HashtagsSuggestion />
+        <TagsSuggestion />
         <BodySuggestion />
       </Box>
     </Box>
