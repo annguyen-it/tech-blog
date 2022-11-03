@@ -1,12 +1,12 @@
 import { Box, Button, ButtonGroup, Heading, Image } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useFormContext } from "react-hook-form";
-import { Post } from "../../../models";
+import { EditPost } from "../../../models";
 import { Markdown } from "../../elements/text/markdown";
 
 export default function NewMainPreview() {
-  const { getValues } = useFormContext<Post>();
-  const { title, body, coverImage, hashtags } = getValues();
+  const { getValues } = useFormContext<EditPost>();
+  const { title, body, coverImage, tags: hashtags } = getValues();
   const router = useRouter();
 
   return (
