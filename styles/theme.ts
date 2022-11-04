@@ -14,6 +14,7 @@ export const theme = extendTheme({
     "base-0": "#f9f9f9",
     "base-20": "#d6d6d7",
     "base-50": "#8a8a8a",
+    "base-60": "#717171",
     "base-70": "#575757",
     "base-100": "#090909",
     "grey-50": "rgb(250, 250, 250)",
@@ -25,6 +26,14 @@ export const theme = extendTheme({
     "grey-900-rgba": "rgba(23, 23, 23, 0.1)",
     "grey-900-rgba-2": "rgba(23, 23, 23, 0.05)",
     "yellow-300": "rgb(252, 211, 77)",
+    github: {
+      500: "#24292e", 
+      600: "#000000", 
+    },
+    google: {
+      500: "#db4437", 
+      600: "#e57368", 
+    },
   },
   components: {
     Button: ButtonStyles,

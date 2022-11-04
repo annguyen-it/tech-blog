@@ -43,7 +43,7 @@ function Listings() {
             _hover={{ background: "white" }}
           >
             <Text>{box.title}</Text>
-            <Text color="grey" fontSize="sm">
+            <Text color="base-60" fontSize="sm">
               {box.event}
             </Text>
           </Link>
@@ -94,7 +94,7 @@ function Help() {
                 New
               </Tag>
             ) : (
-              <Text pl="4" pr="4" color="grey" fontSize="sm">
+              <Text pl="4" pr="4" color="base-60" fontSize="sm">
                 {box.numberCmt} comments
               </Text>
             )}
@@ -141,7 +141,7 @@ function Discuss() {
                 New
               </Tag>
             ) : (
-              <Text pl="4" pr="4" color="grey" fontSize="sm">
+              <Text pl="4" pr="4" color="base-60" fontSize="sm">
                 {box.numberCmt} comments
               </Text>
             )}
@@ -188,7 +188,7 @@ function Challenge() {
                 New
               </Tag>
             ) : (
-              <Text pl="4" pr="4" color="grey" fontSize="sm">
+              <Text pl="4" pr="4" color="base-60" fontSize="sm">
                 {box.numberCmt} comments
               </Text>
             )}
