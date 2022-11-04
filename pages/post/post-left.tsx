@@ -1,10 +1,8 @@
 import {
-  Box,
   Button,
   ButtonGroup,
   Flex,
   IconButton,
-  Link,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -58,106 +56,90 @@ function Action(props: ActionType) {
   };
 
   return (
-    <Stack as="nav" direction="column">
-      <Box>
-        <Link display="flex" flexDirection="column">
-          <Tooltip label="Like">
-            <Flex direction="column" align="center">
-              <IconButton
-                onClick={like}
-                borderRadius="50%"
-                fontSize="24px"
-                variant="ghost"
-                aria-label="Like"
-                icon={<BsSuitHeart />}
-                _hover={{
-                  backgroundColor: "rgba(220, 38, 38 , 0.1)",
-                  color: "rgba(220, 38, 38)",
-                }}
-              ></IconButton>
-              <Text>{data.likes}</Text>
-            </Flex>
-          </Tooltip>
-        </Link>
-      </Box>
-      <Box>
-        <Link display="flex" flexDirection="column">
-          <Tooltip label="Jump to Comment">
-            <Flex direction="column" align="center">
-              <IconButton
-                borderRadius="50%"
-                fontSize="24px"
-                variant="ghost"
-                aria-label="Comment"
-                icon={<FaRegComment />}
-                _hover={{
-                  backgroundColor: "rgba(245, 158, 11, 0.1)",
-                  color: "rgb(245, 158, 11)",
-                }}
-              ></IconButton>
-              <Text>{data.comments}</Text>
-            </Flex>
-          </Tooltip>
-        </Link>
-      </Box>
-      <Box>
-        <Link display="flex" flexDirection="column">
-          <Tooltip label="Save">
-            <Flex direction="column" align="center">
-              <IconButton
-                borderRadius="50%"
-                fontSize="24px"
-                variant="ghost"
-                aria-label="Save"
-                icon={<BsBookmark />}
-                title="Save"
-                _hover={{ backgroundColor: "rgba(47,58,108, 0.1)" }}
-              ></IconButton>
-              <Text>{data.timeToRead}</Text>
-            </Flex>
-          </Tooltip>
-        </Link>
-      </Box>
-
-      <Popover placement="right-start">
-        <PopoverTrigger>
+    <ButtonGroup variant="ghost" w="full">
+      <Stack as="nav" spacing="4" m="auto" textAlign="center">
+        <Tooltip label="Like">
           <Flex direction="column" align="center">
-          <IconButton
-            borderRadius="50%"
-            fontSize="24px"
-            variant="ghost"
-            aria-label="Save"
-            icon={<BsThreeDots />}
-            _hover={{ backgroundColor: "rgba(47,58,108, 0.1)" }}
-          ></IconButton>
+            <IconButton
+              onClick={like}
+              borderRadius="50%"
+              fontSize="24px"
+              aria-label="Like"
+              icon={<BsSuitHeart />}
+              _hover={{
+                backgroundColor: "rgba(220, 38, 38 , 0.1)",
+                color: "rgba(220, 38, 38)",
+              }}
+            ></IconButton>
+            <Text>{data.likes}</Text>
           </Flex>
-        </PopoverTrigger>
+        </Tooltip>
+        <Tooltip label="Jump to Comment">
+          <Flex direction="column" align="center">
+            <IconButton
+              borderRadius="50%"
+              fontSize="24px"
+              aria-label="Comment"
+              icon={<FaRegComment />}
+              _hover={{
+                backgroundColor: "rgba(245, 158, 11, 0.1)",
+                color: "rgb(245, 158, 11)",
+              }}
+            ></IconButton>
+            <Text>{data.comments}</Text>
+          </Flex>
+        </Tooltip>
+        <Tooltip label="Save">
+          <Flex direction="column" align="center">
+            <IconButton
+              borderRadius="50%"
+              fontSize="24px"
+              aria-label="Save"
+              icon={<BsBookmark />}
+              title="Save"
+              _hover={{ backgroundColor: "rgba(47,58,108, 0.1)" }}
+            ></IconButton>
+            <Text>{data.timeToRead}</Text>
+          </Flex>
+        </Tooltip>
 
-        <PopoverArrow />
-        <PopoverContent w="max-content" minW="250px">
-          <PopoverBody>
-            <ButtonGroup display="flex" flexDirection="column">
-              <Button
-                fontWeight="700"
-                backgroundColor="inherit"
-                _hover={{ color: "blue" }}
-              >
-                Copy link
-              </Button>
-              {Share.map((share, i) => (
+        <Popover placement="right-start">
+          <PopoverTrigger>
+            <IconButton
+              borderRadius="50%"
+              fontSize="24px"
+              aria-label="Save"
+              icon={<BsThreeDots />}
+              _hover={{ backgroundColor: "rgba(47,58,108, 0.1)" }}
+            ></IconButton>
+          </PopoverTrigger>
+
+          <PopoverArrow />
+          <PopoverContent w="max-content" minW="250px">
+            <PopoverBody>
+              <ButtonGroup display="flex" flexDirection="column">
                 <Button
-                  key={i}
+                  fontWeight="700"
                   backgroundColor="inherit"
                   _hover={{ color: "blue" }}
                 >
-                  {share.text}
+                  Copy link
                 </Button>
-              ))}
-            </ButtonGroup>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-    </Stack>
+                {Share.map((share, i) => (
+                  <Button
+                    key={i}
+                    backgroundColor="inherit"
+                    _hover={{ color: "blue" }}
+                  >
+                    {share.text}
+                  </Button>
+                ))}
+              </ButtonGroup>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+      </Stack>
+    </ButtonGroup>
   );
 }
 

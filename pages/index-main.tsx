@@ -1,4 +1,5 @@
 import {
+  AspectRatio,
   Avatar,
   Box,
   Button,
@@ -77,15 +78,23 @@ function Post() {
           overflow="hidden"
         >
           {/* Image */}
-          {i == 0 && <Image src={post.image} alt={post.title} />}
+          {i == 0 && (
+            <AspectRatio ratio={21 / 9}>
+              <Image src={post.image} alt={post.title} />
+            </AspectRatio>
+          )}
 
           <Stack direction="column" p="5" spacing="2">
             {/* Author */}
             <Stack direction="row" spacing="2">
-              <Avatar size="sm" src={post.author.image} />
+              <Avatar
+                name={post.author.name}
+                size="sm"
+                src={post.author.image}
+              />
               <Box lineHeight="shorter">
                 <Box fontSize="sm" fontWeight="500">
-                  <Link href={post.author.url}>{post.author.name}</Link>
+                  <Link href={`/u/${post.author.url}`}>{post.author.name}</Link>
                 </Box>
                 <Box fontSize="xs">
                   {post.createdDate.toLocaleString("default", {
