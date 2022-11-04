@@ -98,8 +98,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
               </Button>
               <Button
                 onClick={() => signIn("github", loginOptions)}
-                background="#24292e"
-                color="white"
+                colorScheme="github"
                 data-cy="login-with-github"
               >
                 <Icon as={BsGithub} mr="2" />
@@ -107,8 +106,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
               </Button>
               <Button
                 onClick={() => signIn("google", loginOptions)}
-                background="#1da1f2"
-                color="white"
+                colorScheme="google"
               >
                 <Icon as={BsGoogle} mr="2" />
                 {action} with Google

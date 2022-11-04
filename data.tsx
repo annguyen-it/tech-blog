@@ -173,9 +173,9 @@ export const categories = [
     href: "/",
   },
   {
-    title: "Hashtags",
+    title: "Tags",
     icon: <FaHashtag />,
-    href: "/hashtags",
+    href: "/tags",
   },
   {
     title: "FAQ",
