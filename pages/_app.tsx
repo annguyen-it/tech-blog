@@ -35,8 +35,6 @@ function MyApp({ Component, pageProps }: AppProps<PageProps>) {
   return (
     <>
       <Head>
-        <html lang="en" />
-        <meta charSet="UTF-8" />
         <meta name="description" content="Tech blog is a community of 947,500 amazing developers" />
         <meta name="keywords" content="tech, blog, code" />
         <meta name="author" content="John Doe" />
