@@ -171,13 +171,6 @@ export default function TopBar() {
               Create Post
             </Button>
 
-            {/* <IconButton
-              aria-label="Notification"
-              icon={<BellIcon />}
-              variant="ghost"
-              fontSize="25px"
-              /> */}
-
             <Popover placement="bottom-end" gutter={1}>
               <PopoverTrigger>
                 <IconButton
@@ -192,7 +185,7 @@ export default function TopBar() {
                       borderRadius="full"
                     />
                   }
-                  colorScheme="gray"
+                  variant="solid"
                   p="1"
                   borderRadius="full"
                   data-cy="nav-avatar"
