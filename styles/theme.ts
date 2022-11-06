@@ -16,6 +16,7 @@ export const theme = extendTheme({
     "base-50": "#8a8a8a",
     "base-60": "#717171",
     "base-70": "#575757",
+    "base-90": "#242424",
     "base-100": "#090909",
     "grey-50": "rgb(250, 250, 250)",
     "grey-100": "rgb(245, 245, 245)",
