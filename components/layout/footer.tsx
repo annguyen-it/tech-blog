@@ -40,7 +40,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             href="https://dev.to"
           >
-            DEV
+            Teblo
           </Link>{" "}
           and other inclusive communities.
         </Text>

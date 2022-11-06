@@ -48,5 +48,7 @@ export const ButtonStyles: ComponentStyleConfig = {
       color: "grey-700",
     },
   },
-  defaultProps: {},
+  defaultProps: {
+    variant: "primary",
+  },
 };
