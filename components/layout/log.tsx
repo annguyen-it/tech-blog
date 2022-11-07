@@ -13,7 +13,6 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -23,18 +22,27 @@ import { BsTwitter, BsGithub, BsGoogle, BsFacebook } from "react-icons/bs";
 import { ValidationUtils } from "../../utils/validation";
 import Layout from "./layout";
 
-type LogForm = {
+export type LogForm = {
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 };
 
-type LogLayoutProps = { page: "Login" | "Sign Up" };
-export default function LogLayout({ page }: LogLayoutProps) {
+type LogLayoutProps = {
+  onConfirm: (form: LogForm) => any;
+  onSuccess: () => void;
+  page: "Login" | "Sign Up";
+};
+export default function LogLayout({
+  onConfirm,
+  onSuccess,
+  page,
+}: LogLayoutProps) {
   const { status } = useSession();
   const router = useRouter();
   const {
     register,
+    getValues,
     formState: { errors },
     handleSubmit,
   } = useForm<LogForm>();
@@ -55,14 +63,12 @@ export default function LogLayout({ page }: LogLayoutProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
-  async function login(form: LogForm) {
+  async function onClickSubmit(form: LogForm) {
+    const { confirmPassword, ...postForm } = form;
     setIsSubmitting(true);
     try {
-      const { data } = await axios.post(
-        "http://localhost:8000/api/register",
-        form
-      );
-      console.log(data);
+      const data = await onConfirm(postForm);
+      onSuccess();
     } catch (err) {
       console.log(err);
     } finally {
@@ -163,7 +169,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
 
           <Stack
             as="form"
-            onSubmit={handleSubmit((data) => login(data))}
+            onSubmit={handleSubmit((data) => onClickSubmit(data))}
             spacing="4"
           >
             <FormControl isInvalid={!!errors.email}>
@@ -196,19 +202,27 @@ export default function LogLayout({ page }: LogLayoutProps) {
             </FormControl>
 
             {page === "Sign Up" && (
-              <FormControl isInvalid={!!errors.password}>
+              <FormControl isInvalid={!!errors.confirmPassword}>
                 <FormLabel>Confirm Password</FormLabel>
                 <Input
                   type="password"
                   {...register("confirmPassword", {
                     required: "Confirm password is required",
-                    minLength: {
-                      value: 6,
-                      message: "Password should contain at least 6 characters",
+                    validate: {
+                      passwordEqual: (value) => {
+                        console.log(value, getValues().email);
+
+                        return (
+                          value === getValues().password ||
+                          "Confirm password do not match!"
+                        );
+                      },
                     },
                   })}
                 />
-                <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+                <FormErrorMessage>
+                  {errors.confirmPassword?.message}
+                </FormErrorMessage>
               </FormControl>
             )}
 
