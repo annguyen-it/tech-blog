@@ -38,6 +38,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build
+          if-no-files-found: error
           path: build
 
       - name: Cypress install
@@ -58,22 +59,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-          if-no-files-found: error
           path: .next
 
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
           build: npm run build
-
-      - name: Save build folder
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: .next
-        
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
-        with:
-          build: npm run build
-          start: npm start
