@@ -52,6 +52,7 @@ function Introduction() {
       background="white"
       p="4"
       spacing="4"
+      data-cy="home_introduction"
     >
       <Heading size="md">
         <Link href="/" variant="blue">

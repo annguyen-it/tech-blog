@@ -95,6 +95,7 @@ export default function LogLayout({
         background="white"
         borderRadius="lg"
         boxShadow="0 0 0 1px var(--chakra-colors-grey-900-rgba)"
+        data-cy="log_component"
       >
         <Stack spacing="6" direction="column" textAlign="center">
           <Box>
@@ -111,7 +112,7 @@ export default function LogLayout({
                 onClick={() => signIn("facebook", loginOptions)}
                 variant="solid"
                 colorScheme="facebook"
-                data-cy="login-with-facebook"
+                data-cy="log_with-facebook"
               >
                 <Icon as={BsFacebook} mr="2" />
                 {action} with Facebook
@@ -124,7 +125,7 @@ export default function LogLayout({
                 onClick={() => signIn("github", loginOptions)}
                 variant="solid"
                 colorScheme="github"
-                data-cy="login-with-github"
+                data-cy="log_with-github"
               >
                 <Icon as={BsGithub} mr="2" />
                 {action} with Github
@@ -133,6 +134,7 @@ export default function LogLayout({
                 onClick={() => signIn("google", loginOptions)}
                 variant="solid"
                 colorScheme="google"
+                data-cy="log_with-google"
               >
                 <Icon as={BsGoogle} mr="2" />
                 {action} with Google
@@ -182,6 +184,7 @@ export default function LogLayout({
                     message: "Please enter a valid email",
                   },
                 })}
+                data-cy="log_email"
               />
               <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
             </FormControl>
@@ -189,7 +192,6 @@ export default function LogLayout({
             <FormControl isInvalid={!!errors.password}>
               <FormLabel>Password</FormLabel>
               <Input
-                type="password"
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -197,6 +199,8 @@ export default function LogLayout({
                     message: "Password should contain at least 6 characters",
                   },
                 })}
+                type="password"
+                data-cy="log_pw"
               />
               <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
@@ -209,14 +213,9 @@ export default function LogLayout({
                   {...register("confirmPassword", {
                     required: "Confirm password is required",
                     validate: {
-                      passwordEqual: (value) => {
-                        console.log(value, getValues().email);
-
-                        return (
-                          value === getValues().password ||
-                          "Confirm password do not match!"
-                        );
-                      },
+                      passwordEqual: (value) =>
+                        value === getValues().password ||
+                        "Confirm password do not match!",
                     },
                   })}
                 />
@@ -235,6 +234,7 @@ export default function LogLayout({
               variant="primary"
               type="submit"
               width="full"
+              data-cy="log_submit"
             >
               {action}
             </Button>

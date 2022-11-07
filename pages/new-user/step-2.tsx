@@ -42,7 +42,7 @@ function Step1({ setStep, data }: Step2Props) {
   return (
     <Box
       as="form"
-      onSubmit={handleSubmit((data) => console.log(data))}
+      onSubmit={handleSubmit((data) => {})}
       h="800px"
       maxH="calc(100% - 24px)"
       display="grid"
