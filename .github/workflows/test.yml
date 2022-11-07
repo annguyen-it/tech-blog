@@ -61,7 +61,14 @@ jobs:
           name: build
           path: .next
 
+      - name: Show Cypress information ℹ️
+        run: npx cypress info
+
+      - name: Verify Cypress can run 🏃‍♂️
+        run: npx cypress verify
+
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
           browser: chrome
+          start: npm run start
