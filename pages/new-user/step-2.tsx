@@ -42,7 +42,7 @@ function Step1({ setStep, data }: Step2Props) {
   return (
     <Box
       as="form"
-      onSubmit={handleSubmit((data) => console.log(data))}
+      onSubmit={handleSubmit((data) => {})}
       h="800px"
       maxH="calc(100% - 24px)"
       display="grid"
@@ -87,6 +87,7 @@ function Step1({ setStep, data }: Step2Props) {
           <Box as="figure" h="20">
             <Image
               src={user.image!}
+              alt="Avatar"
               h="inherit"
               display="inline"
               border="2px solid"

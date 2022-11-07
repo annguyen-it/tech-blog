@@ -26,7 +26,7 @@ const SignOut: NextPage = () => {
           onClick={() => signOut({ callbackUrl: "/" })}
           variant="primary"
           size="lg"
-          data-cy="sign-out"
+          data-cy="sign-out_confirm"
         >
           Yes, sign out
         </Button>

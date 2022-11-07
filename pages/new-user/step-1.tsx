@@ -149,6 +149,7 @@ function Step1({ setStep }: Step1Props) {
           <Box as="figure">
             <Image
               src="https://res.cloudinary.com/practicaldev/image/fetch/s--K-811qxB--/c_limit,f_auto,fl_progressive,q_80,w_500/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png"
+              alt="Logo"
               w="12"
               h="12"
               transform="rotate(-30deg)"
