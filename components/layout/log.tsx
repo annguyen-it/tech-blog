@@ -10,16 +10,21 @@ import {
   Icon,
   Input,
   Stack,
-  Text,
+  Text
 } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { BsTwitter,BsGithub,BsGoogle,BsFacebook } from "react-icons/bs";
+import { BsFacebook, BsGithub, BsGoogle, BsTwitter } from "react-icons/bs";
 import { ValidationUtils } from "../../utils/validation";
 import Layout from "./layout";
 
+
+
+//  -------------------------------------------//
+
+  //Submit form
 type LogForm = {
   email: string;
   password: string;
@@ -34,10 +39,20 @@ export default function LogLayout({ page }: LogLayoutProps) {
   const {
     register,
     formState: { errors },
-    handleSubmit,
+    handleSubmit,  getValues,
   } = useForm<LogForm>();
+  
+  //Submit form
+
+// -------------------------------------------//
+ 
+  // Change name button and pseudo
   const action = page === "Login" ? "Continue" : "Sign up";
   const pseudo = page === "Login" ? "Sign in" : "Sign up";
+  //Change name button and pseudo
+
+// -------------------------------------------//
+
   return (
     <Layout>
       <Head>
@@ -122,7 +137,8 @@ export default function LogLayout({ page }: LogLayoutProps) {
 
           <Stack
             as="form"
-            onSubmit={handleSubmit((data) => console.log(data))}
+             onSubmit={handleSubmit((data) => console.log(data))}
+            
             spacing="4"
           >
             <FormControl isInvalid={!!errors.email}>
@@ -142,6 +158,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
             <FormControl isInvalid={!!errors.password}>
               <FormLabel>Password</FormLabel>
               <Input
+              type="password"
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -153,21 +170,29 @@ export default function LogLayout({ page }: LogLayoutProps) {
               <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
 
+           
             {page === "Sign Up" && (
-              <FormControl isInvalid={!!errors.password}>
+              <FormControl isInvalid={!!errors.confirmPassword}>
                 <FormLabel>Confirm Password</FormLabel>
                 <Input
-                
-                type="password"
+                  type="password"
                   {...register("confirmPassword", {
-                    required: "Password is required",
-                    minLength: {
-                      value: 6,
-                      message: "Password should contain at least 6 characters",
+                    required: "Confirm password is required",
+                    validate: {
+                      passwordEqual: (value) => {
+                        console.log(value, getValues().email);
+
+                        return (
+                          value === getValues().password ||
+                          "Confirm password do not match!"
+                        );
+                      },
                     },
                   })}
                 />
-                <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+                <FormErrorMessage>
+                  {errors.confirmPassword?.message}
+                </FormErrorMessage>
               </FormControl>
             )}
 
@@ -175,9 +200,13 @@ export default function LogLayout({ page }: LogLayoutProps) {
               <Checkbox defaultChecked>Remember me</Checkbox>
             </FormControl>
 
-            <Button variant="primary" type="submit" width="full">
+            
+            
+              <Button variant="primary" type="submit" width="full">
               {action}
             </Button>
+            
+            
 
             <Box textAlign="center">
               <Link href="">I forgot my password</Link>
