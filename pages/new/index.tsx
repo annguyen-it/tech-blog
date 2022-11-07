@@ -60,7 +60,7 @@ const New: NextPage = () => {
           as="main"
           px={{ base: "2", lg: "4" }}
           background="#f5f5f5"
-          data-cy="new-post"
+          data-cy="new-post_component"
         >
           <Grid
             as="form"
