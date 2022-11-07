@@ -13,6 +13,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -38,6 +39,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
     handleSubmit,
   } = useForm<LogForm>();
   const [routerPushed, setRouterPushed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const loginOptions = {
     callbackUrl: router.pathname.includes("login") ? "/" : router.pathname,
@@ -52,6 +54,21 @@ export default function LogLayout({ page }: LogLayoutProps) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
+
+  async function login(form: LogForm) {
+    setIsSubmitting(true);
+    try {
+      const { data } = await axios.post(
+        "http://localhost:8000/api/register",
+        form
+      );
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   if (status === "authenticated") {
     return <></>;
@@ -86,18 +103,20 @@ export default function LogLayout({ page }: LogLayoutProps) {
             <Stack>
               <Button
                 onClick={() => signIn("facebook", loginOptions)}
+                variant="solid"
                 colorScheme="facebook"
                 data-cy="login-with-facebook"
               >
                 <Icon as={BsFacebook} mr="2" />
                 {action} with Facebook
               </Button>
-              <Button colorScheme="twitter" color="white">
+              <Button variant="solid" colorScheme="twitter" color="white">
                 <Icon as={BsTwitter} mr="2" />
                 {action} with Twitter
               </Button>
               <Button
                 onClick={() => signIn("github", loginOptions)}
+                variant="solid"
                 colorScheme="github"
                 data-cy="login-with-github"
               >
@@ -106,6 +125,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
               </Button>
               <Button
                 onClick={() => signIn("google", loginOptions)}
+                variant="solid"
                 colorScheme="google"
               >
                 <Icon as={BsGoogle} mr="2" />
@@ -143,7 +163,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
 
           <Stack
             as="form"
-            onSubmit={handleSubmit((data) => console.log(data))}
+            onSubmit={handleSubmit((data) => login(data))}
             spacing="4"
           >
             <FormControl isInvalid={!!errors.email}>
@@ -163,6 +183,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
             <FormControl isInvalid={!!errors.password}>
               <FormLabel>Password</FormLabel>
               <Input
+                type="password"
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -180,7 +201,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
                 <Input
                   type="password"
                   {...register("confirmPassword", {
-                    required: "Password is required",
+                    required: "Confirm password is required",
                     minLength: {
                       value: 6,
                       message: "Password should contain at least 6 characters",
@@ -195,7 +216,12 @@ export default function LogLayout({ page }: LogLayoutProps) {
               <Checkbox defaultChecked>Remember me</Checkbox>
             </FormControl>
 
-            <Button variant="primary" type="submit" width="full">
+            <Button
+              isLoading={isSubmitting}
+              variant="primary"
+              type="submit"
+              width="full"
+            >
               {action}
             </Button>
 

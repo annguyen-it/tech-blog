@@ -87,6 +87,7 @@ function Step1({ setStep, data }: Step2Props) {
           <Box as="figure" h="20">
             <Image
               src={user.image!}
+              alt="Avatar"
               h="inherit"
               display="inline"
               border="2px solid"
