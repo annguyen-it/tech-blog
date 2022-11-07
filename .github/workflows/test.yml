@@ -34,18 +34,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Cypress install
+        uses: cypress-io/github-action@v4
+        with:
+          runTests: false
+          build: npm run build
+
       - name: Save build folder
         uses: actions/upload-artifact@v3
         with:
           name: build
           if-no-files-found: error
           path: .next
-
-      - name: Cypress install
-        uses: cypress-io/github-action@v4
-        with:
-          runTests: false
-          build: npm run build
 
   cypress-run:
     runs-on: ubuntu-latest
