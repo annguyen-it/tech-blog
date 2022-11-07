@@ -39,7 +39,7 @@ jobs:
         with:
           name: build
           if-no-files-found: error
-          path: build
+          path: .next
 
       - name: Cypress install
         uses: cypress-io/github-action@v4
