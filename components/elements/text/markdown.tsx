@@ -7,21 +7,38 @@ import {
   Text,
   UnorderedList,
 } from "@chakra-ui/react";
+import { CSSProperties } from "react";
 import ReactMarkdown from "react-markdown";
+import { SpecialComponents } from "react-markdown/lib/ast-to-react";
 import remarkGfm from "remark-gfm";
 
-type MarkdownProps = { children: string };
+type NormalComponentsProps = {
+  [TagName in keyof JSX.IntrinsicElements]?: CSSProperties;
+};
+type SpecialComponentsProps = {
+  [TagName in keyof SpecialComponents]?: CSSProperties;
+};
+type MarkdownProps = {
+  children: string;
+  style?: NormalComponentsProps & SpecialComponentsProps;
+};
 
-export function Markdown({ children }: MarkdownProps) {
+export function Markdown({ children, style }: MarkdownProps) {
   return (
     <ReactMarkdown
       remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
       components={{
-        a: ({ node, ...props }) => <Link {...props} color="primary" />,
+        a: ({ node, ...props }) => (
+          <Link {...props} color="primary" style={{ ...style?.a }} />
+        ),
         blockquote: ({ node, ...props }) => (
           <blockquote
-            style={{ paddingLeft: "20px", borderLeft: "4px solid #d6d6d7" }}
             {...props}
+            style={{
+              paddingLeft: "20px",
+              borderLeft: "4px solid #d6d6d7",
+              ...style?.blockquote,
+            }}
           />
         ),
         code: ({ node, inline, ...props }) => (
@@ -32,30 +49,43 @@ export function Markdown({ children }: MarkdownProps) {
             bg="rgba(0, 0, 0, 0.1)"
             fontSize="80%"
             color="inherit"
+            style={{ ...style?.code }}
           />
         ),
         h1: ({ node, ...props }) => (
-          <Heading as="h1" {...props} fontSize="4xl" />
+          <Heading as="h1" {...props} fontSize="4xl" style={{ ...style?.h1 }} />
         ),
         h2: ({ node, ...props }) => (
-          <Heading as="h2" {...props} fontSize="3xl" />
+          <Heading as="h2" {...props} fontSize="3xl" style={{ ...style?.h2 }} />
         ),
         h3: ({ node, ...props }) => (
-          <Heading as="h3" {...props} fontSize="2xl" />
+          <Heading as="h3" {...props} fontSize="2xl" style={{ ...style?.h3 }} />
         ),
         h4: ({ node, ...props }) => (
-          <Heading as="h4" {...props} fontSize="xl" />
+          <Heading as="h4" {...props} fontSize="xl" style={{ ...style?.h4 }} />
         ),
         h5: ({ node, ...props }) => (
-          <Heading as="h5" {...props} fontSize="lg" />
+          <Heading as="h5" {...props} fontSize="lg" style={{ ...style?.h5 }} />
         ),
         h6: ({ node, ...props }) => (
-          <Heading as="h6" {...props} fontSize="md" />
+          <Heading as="h6" {...props} fontSize="md" style={{ ...style?.h6 }} />
         ),
-        ol: ({ node, ordered, ...props }) => (
-          <OrderedList {...props} fontSize="xl" />
+        ol: ({ node, ordered, ...props }) => {
+          const { depth } = props;
+          return (
+            <OrderedList
+              {...props}
+              fontSize="xl"
+              styleType={
+                depth === 0 ? "1" : depth === 1 ? "lower-alpha" : "lower-roman"
+              }
+              style={{ ...style?.ol }}
+            />
+          );
+        },
+        p: ({ node, ...props }) => (
+          <Text {...props} fontSize="xl" style={{ ...style?.p }} />
         ),
-        p: ({ node, ...props }) => <Text {...props} fontSize="xl" />,
         pre: ({ node, ...props }) => (
           <Box
             p="5"
@@ -64,11 +94,11 @@ export function Markdown({ children }: MarkdownProps) {
             color="#f8f8f2"
             fontSize="xl"
           >
-            <pre {...props} />
+            <pre {...props} style={{ ...style?.pre }} />
           </Box>
         ),
         ul: ({ node, ordered, ...props }) => (
-          <UnorderedList {...props} fontSize="xl" />
+          <UnorderedList {...props} fontSize="xl" style={{ ...style?.ul }} />
         ),
       }}
     >
