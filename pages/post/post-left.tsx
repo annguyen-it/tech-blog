@@ -23,7 +23,7 @@ type ActionType = {
 };
 function Action(props: ActionType) {
   const { status } = useSession();
-  // console.log(props);
+  // console.log(status);
   const [data, setData] = useState({
     id: 1,
     image:
@@ -47,18 +47,23 @@ function Action(props: ActionType) {
   });
 
   const like = () => {
-    setData((prev) => {
-      return {
-        ...prev,
-        likes: prev.likes + 1,
-      };
-    });
+    if (status === 'authenticated'){
+      setData((prev) => {
+        return {
+          ...prev,
+          likes: prev.likes + 1,
+        };
+      });
+    }else{
+      
+    }
+    
   };
 
   return (
-    <ButtonGroup variant="ghost" w="full">
-      <Stack as="nav" spacing="4" m="auto" textAlign="center">
-        <Tooltip label="Like">
+    <ButtonGroup variant="ghost"  position='fixed' zIndex='99' >
+      <Stack as="nav" spacing="4" m="auto" textAlign="center" paddingTop='40px'  >
+        <Tooltip label="Like" >
           <Flex direction="column" align="center">
             <IconButton
               onClick={like}
