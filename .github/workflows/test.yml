@@ -2,7 +2,7 @@
 #
 # To get started with Next.js see: https://nextjs.org/docs/getting-started
 #
-name: Deploy Next.js site to Pages
+name: Test Next.js
 
 on:
   # Runs on pushes targeting the default branch
@@ -38,7 +38,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: build
-          if-no-files-found: error
           path: build
 
       - name: Cypress install
@@ -69,7 +68,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: build
-          if-no-files-found: error
           path: build
         
       - name: Cypress run
