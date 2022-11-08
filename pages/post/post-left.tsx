@@ -15,8 +15,8 @@ import {
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { BsBookmark, BsSuitHeart, BsThreeDots } from "react-icons/bs";
-import { FaRegComment } from "react-icons/fa";
+import { BsThreeDots } from "react-icons/bs";
+import { FaRegBookmark, FaRegComment, FaRegHeart } from "react-icons/fa";
 import { Share } from "../../data";
 
 function LoginBox() {
@@ -34,10 +34,10 @@ function LoginBox() {
   );
 }
 
-type ActionType = {
-  pid: string;
+type PostLeftType = {
+  pid: number;
 };
-function Action(props: ActionType) {
+export default function PostLeft({ pid }: PostLeftType) {
   const { status } = useSession();
   // console.log(status);
   const [data, setData] = useState({
@@ -76,8 +76,15 @@ function Action(props: ActionType) {
   };
 
   return (
-    <ButtonGroup variant="flat" position="fixed" zIndex="1">
-      <Stack as="nav" spacing="4" m="auto" textAlign="center" paddingTop="40px">
+    <ButtonGroup
+      variant="flat"
+      position="sticky"
+      inset="0"
+      top="24"
+      w="full"
+      zIndex="1"
+    >
+      <Stack as="nav" spacing="4" m="auto" textAlign="center">
         <Tooltip label="Like">
           <Flex direction="column" align="center">
             <IconButton
@@ -85,7 +92,7 @@ function Action(props: ActionType) {
               borderRadius="50%"
               fontSize="24px"
               aria-label="Like"
-              icon={<BsSuitHeart />}
+              icon={<FaRegHeart />}
               colorScheme="red"
             ></IconButton>
             <Text>{data.likes}</Text>
@@ -109,7 +116,7 @@ function Action(props: ActionType) {
               borderRadius="50%"
               fontSize="24px"
               aria-label="Save"
-              icon={<BsBookmark />}
+              icon={<FaRegBookmark />}
               colorScheme="indigo"
             ></IconButton>
             <Text>{data.timeToRead}</Text>
@@ -157,11 +164,4 @@ function Action(props: ActionType) {
       </Stack>
     </ButtonGroup>
   );
-}
-
-type PostLeftType = {
-  pid: string;
-};
-export default function PostLeft({ pid }: PostLeftType) {
-  return <Action pid={pid} />;
 }

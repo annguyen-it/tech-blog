@@ -86,7 +86,7 @@ function TagsSuggestion() {
 
 function BodySuggestion() {
   return (
-    <CommonEffect field="body">
+    <CommonEffect field="content">
       <Heading mb="2" fontSize="lg">
         Editor Basics
       </Heading>

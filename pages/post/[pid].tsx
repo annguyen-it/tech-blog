@@ -1,46 +1,50 @@
-import Layout from "../../components/layout/layout";
-import { NextPage } from "next";
 import { Grid, GridItem } from "@chakra-ui/react";
+import axios from "axios";
+import { GetServerSideProps } from "next";
+import Head from "next/head";
+import Layout from "../../components/layout/layout";
+import { Post, Response } from "../../models";
 import PostLeft from "./post-left";
-import { useRouter } from "next/router";
-import { useState } from "react";
 import PostMain from "./post-main";
 import PostRight from "./post-right";
-import Head from "next/head";
-import { Post } from "../../models";
-import { dummyPost } from "../../data";
 
-const Post: NextPage = () => {
-  const router = useRouter();
-  const pid = router.query["pid"] as string;
-  // console.log(pid);
-  const [dataPost, setDataPost] = useState<Post>(dummyPost);
+type PostProps = { post: Post };
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const postId = context.query["pid"];
+  const { data } = await axios.get<Response<Post>>(
+    `${process.env.NEXT_PUBLIC_API_BASE}/posts/${postId}`
+  );
+  const post = data.data;
+  return { props: { post } };
+};
+
+function Post({ post }: PostProps) {
   return (
     <Layout>
       <Head>
-        <title>{dataPost.title}</title>
+        <title>{post.title}</title>
       </Head>
 
       <Grid
         w="full"
         maxW="7xl"
         m="auto"
-        templateColumns="100px 2fr 1fr"
-        gap="4"
+        templateColumns={{ base: "4rem 1fr", lg: "4rem 7fr 3fr" }}
+        gap={{ base: 2, lg: 4 }}
       >
-        <GridItem>
-          <PostLeft pid={pid} />
+        <GridItem as="aside" gridRowEnd={{ base: "span 2", lg: "initial" }}>
+          <PostLeft pid={post.id} />
+        </GridItem>
+        <GridItem minW="0">
+          <PostMain dataPost={post} />
         </GridItem>
         <GridItem>
-          <PostMain dataPost={dataPost} />
-        </GridItem>
-        <GridItem>
-          <PostRight dataPost={dataPost} />
+          <PostRight dataPost={post} />
         </GridItem>
       </Grid>
     </Layout>
   );
-};
+}
 
 export default Post;

@@ -57,7 +57,12 @@ export function Markdown({ children, style }: MarkdownProps) {
           <Heading as="h1" {...props} fontSize="4xl" style={{ ...style?.h1 }} />
         ),
         h2: ({ node, ...props }) => (
-          <Heading as="h2" {...props} fontSize="3xl" style={{ ...style?.h2 }} />
+          <Heading
+            as="h2"
+            {...props}
+            fontSize={{ base: "27px", lg: "3xl" }}
+            style={{ ...style?.h2 }}
+          />
         ),
         h3: ({ node, ...props }) => (
           <Heading as="h3" {...props} fontSize="2xl" style={{ ...style?.h3 }} />
@@ -85,7 +90,11 @@ export function Markdown({ children, style }: MarkdownProps) {
           );
         },
         p: ({ node, ...props }) => (
-          <Text {...props} fontSize="xl" style={{ ...style?.p }} />
+          <Text
+            {...props}
+            fontSize={{ base: "lg", lg: "xl" }}
+            style={{ ...style?.p }}
+          />
         ),
         pre: ({ node, ...props }) => (
           <Box
