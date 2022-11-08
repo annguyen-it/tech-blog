@@ -6,7 +6,7 @@ import { Markdown } from "../../elements/text/markdown";
 
 export default function NewMainPreview() {
   const { getValues } = useFormContext<EditPost>();
-  const { title, body, coverImage, tags } = getValues();
+  const { title, content, coverImage, tags } = getValues();
   const router = useRouter();
 
   return (
@@ -50,7 +50,7 @@ export default function NewMainPreview() {
 
       {/* Body */}
       <Box px="16" py="8">
-        <Markdown>{body}</Markdown>
+        <Markdown>{content}</Markdown>
       </Box>
     </Box>
   );

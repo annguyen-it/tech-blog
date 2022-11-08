@@ -1,9 +1,9 @@
-import { Author } from "./user";
+import { User } from "./user";
 
 export type EditPost = {
   coverImage: File | null;
   title: string;
-  body: string;
+  content: string;
   tags: string[];
 };
 
@@ -11,9 +11,10 @@ export type Post = {
   id: number;
   coverImage: string;
   title: string;
-  body: string;
-  author: Author;
+  content: string;
+  user: User;
   createdAt: Date;
+  updatedAt: Date; // TODO
   tags: string[];
   likes: number;
   comments: number;
