@@ -59,7 +59,7 @@ function Navigation({ session }: { session: Session | null }) {
       label: "Sign Out",
       url: "/out",
       divider: true,
-      dataCy: "nav-sign-out",
+      dataCy: "layout_sign-out",
     },
   ];
 
@@ -136,7 +136,7 @@ export default function TopBar() {
           <Box
             onClick={() => NextUtils.navigate(router, "/")}
             cursor="pointer"
-            data-cy="logo"
+            data-cy="layout_logo"
           >
             Logo
           </Box>
@@ -166,17 +166,10 @@ export default function TopBar() {
               variant="primary-outline"
               colorScheme="blue"
               fontWeight="600"
-              data-cy="create-post"
+              data-cy="layout_create-post"
             >
               Create Post
             </Button>
-
-            {/* <IconButton
-              aria-label="Notification"
-              icon={<BellIcon />}
-              variant="ghost"
-              fontSize="25px"
-              /> */}
 
             <Popover placement="bottom-end" gutter={1}>
               <PopoverTrigger>
@@ -192,10 +185,10 @@ export default function TopBar() {
                       borderRadius="full"
                     />
                   }
-                  colorScheme="gray"
+                  variant="solid"
                   p="1"
                   borderRadius="full"
-                  data-cy="nav-avatar"
+                  data-cy="layout_avatar"
                 />
               </PopoverTrigger>
               <PopoverContent w="max-content" minW="250px">
@@ -215,7 +208,7 @@ export default function TopBar() {
               variant="flat"
               colorScheme="blue"
               fontWeight="400"
-              data-cy="login"
+              data-cy="layout_login"
             >
               Log in
             </Button>

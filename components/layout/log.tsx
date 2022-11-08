@@ -22,22 +22,32 @@ import { BsTwitter, BsGithub, BsGoogle, BsFacebook } from "react-icons/bs";
 import { ValidationUtils } from "../../utils/validation";
 import Layout from "./layout";
 
-type LogForm = {
+export type LogForm = {
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 };
 
-type LogLayoutProps = { page: "Login" | "Sign Up" };
-export default function LogLayout({ page }: LogLayoutProps) {
+type LogLayoutProps = {
+  onConfirm: (form: LogForm) => any;
+  onSuccess: () => void;
+  page: "Login" | "Sign Up";
+};
+export default function LogLayout({
+  onConfirm,
+  onSuccess,
+  page,
+}: LogLayoutProps) {
   const { status } = useSession();
   const router = useRouter();
   const {
     register,
+    getValues,
     formState: { errors },
     handleSubmit,
   } = useForm<LogForm>();
   const [routerPushed, setRouterPushed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const loginOptions = {
     callbackUrl: router.pathname.includes("login") ? "/" : router.pathname,
@@ -52,6 +62,19 @@ export default function LogLayout({ page }: LogLayoutProps) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
+
+  async function onClickSubmit(form: LogForm) {
+    const { confirmPassword, ...postForm } = form;
+    setIsSubmitting(true);
+    try {
+      const data = await onConfirm(postForm);
+      onSuccess();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   if (status === "authenticated") {
     return <></>;
@@ -72,6 +95,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
         background="white"
         borderRadius="lg"
         boxShadow="0 0 0 1px var(--chakra-colors-grey-900-rgba)"
+        data-cy="log_component"
       >
         <Stack spacing="6" direction="column" textAlign="center">
           <Box>
@@ -86,27 +110,31 @@ export default function LogLayout({ page }: LogLayoutProps) {
             <Stack>
               <Button
                 onClick={() => signIn("facebook", loginOptions)}
+                variant="solid"
                 colorScheme="facebook"
-                data-cy="login-with-facebook"
+                data-cy="log_with-facebook"
               >
                 <Icon as={BsFacebook} mr="2" />
                 {action} with Facebook
               </Button>
-              <Button colorScheme="twitter" color="white">
+              <Button variant="solid" colorScheme="twitter" color="white">
                 <Icon as={BsTwitter} mr="2" />
                 {action} with Twitter
               </Button>
               <Button
                 onClick={() => signIn("github", loginOptions)}
+                variant="solid"
                 colorScheme="github"
-                data-cy="login-with-github"
+                data-cy="log_with-github"
               >
                 <Icon as={BsGithub} mr="2" />
                 {action} with Github
               </Button>
               <Button
                 onClick={() => signIn("google", loginOptions)}
+                variant="solid"
                 colorScheme="google"
+                data-cy="log_with-google"
               >
                 <Icon as={BsGoogle} mr="2" />
                 {action} with Google
@@ -143,7 +171,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
 
           <Stack
             as="form"
-            onSubmit={handleSubmit((data) => console.log(data))}
+            onSubmit={handleSubmit((data) => onClickSubmit(data))}
             spacing="4"
           >
             <FormControl isInvalid={!!errors.email}>
@@ -156,6 +184,7 @@ export default function LogLayout({ page }: LogLayoutProps) {
                     message: "Please enter a valid email",
                   },
                 })}
+                data-cy="log_email"
               />
               <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
             </FormControl>
@@ -170,24 +199,29 @@ export default function LogLayout({ page }: LogLayoutProps) {
                     message: "Password should contain at least 6 characters",
                   },
                 })}
+                type="password"
+                data-cy="log_pw"
               />
               <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
 
             {page === "Sign Up" && (
-              <FormControl isInvalid={!!errors.password}>
+              <FormControl isInvalid={!!errors.confirmPassword}>
                 <FormLabel>Confirm Password</FormLabel>
                 <Input
                   type="password"
                   {...register("confirmPassword", {
-                    required: "Password is required",
-                    minLength: {
-                      value: 6,
-                      message: "Password should contain at least 6 characters",
+                    required: "Confirm password is required",
+                    validate: {
+                      passwordEqual: (value) =>
+                        value === getValues().password ||
+                        "Confirm password do not match!",
                     },
                   })}
                 />
-                <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+                <FormErrorMessage>
+                  {errors.confirmPassword?.message}
+                </FormErrorMessage>
               </FormControl>
             )}
 
@@ -195,7 +229,13 @@ export default function LogLayout({ page }: LogLayoutProps) {
               <Checkbox defaultChecked>Remember me</Checkbox>
             </FormControl>
 
-            <Button variant="primary" type="submit" width="full">
+            <Button
+              isLoading={isSubmitting}
+              variant="primary"
+              type="submit"
+              width="full"
+              data-cy="log_submit"
+            >
               {action}
             </Button>
 
