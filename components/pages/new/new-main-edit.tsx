@@ -102,14 +102,18 @@ function CoverPhoto() {
 
 function Title() {
   const { setSuggestionField } = useContext(NewSuggestionContext);
-  const { register } = useFormContext();
+  const { register } = useFormContext<EditPost>();
+  const { ref: refCallback, ...registerItem } = register("title");
   const ref = useRef<HTMLTextAreaElement | null>(null);
 
   return (
     <Box mb="2">
       <AutoResizeTextarea
-        {...register("title")}
-        ref={ref}
+        {...registerItem}
+        ref={(e) => {
+          refCallback(e);
+          ref.current = e;
+        }}
         onFocus={() =>
           setSuggestionField({
             name: "title",
@@ -389,7 +393,7 @@ export default function NewMainEdit() {
       <Box px="16" py="8">
         <CoverPhoto />
         <Title />
-        <Tags />
+        {/* <Tags /> */}
       </Box>
 
       <Body />
