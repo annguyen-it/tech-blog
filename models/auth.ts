@@ -1,5 +1,3 @@
-import { LoginUser } from "./user";
-
 export type LoginDta = {
   email: string;
   password: string;

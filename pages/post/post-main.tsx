@@ -28,28 +28,7 @@ export default function PostMain({ dataPost }: PostMainProps) {
         </AspectRatio>
       </Box>
 
-      <Stack direction="column" p="5" spacing="2">
-        {/* Author */}
-        <Stack direction="row" spacing="2">
-          <Avatar
-            name={dataPost.author.name}
-            size="sm"
-            src={dataPost.author.image}
-          />
-          <Box lineHeight="shorter">
-            <Box fontSize="sm" fontWeight="500">
-              <Link href={`/u/${dataPost.author.url}`}>
-                {dataPost.author.name}
-              </Link>
-            </Box>
-            <Box fontSize="xs">
-              {dataPost.createdAt.toLocaleString("default", {
-                month: "long",
-              })}{" "}
-              {dataPost.createdAt.getDate()}
-            </Box>
-          </Box>
-        </Stack>
+                <Link href={`/u/${dataPost.user.nickname}`} color="grey.700">
 
         {/* Body */}
         <Stack pl="10" spacing="1">

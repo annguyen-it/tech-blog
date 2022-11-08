@@ -374,11 +374,11 @@ function Body() {
         ref={editorRef}
         onFocus={() =>
           setSuggestionField({
-            name: "body",
+            name: "content",
             y: editorRef.current?.getBoundingClientRect().y || 0,
           })
         }
-        controlKey="body"
+        controlKey="content"
         minRows={8}
         fontSize="lg"
         placeholder="Write your post content here..."

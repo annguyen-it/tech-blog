@@ -31,7 +31,7 @@ const New: NextPage = () => {
   const [defaultValues, setDefaultValues] = useState<EditPost>({
     coverImage: null,
     title: "",
-    body: "",
+    content: "",
     tags: [],
   });
   const methods = useForm<EditPost>({
