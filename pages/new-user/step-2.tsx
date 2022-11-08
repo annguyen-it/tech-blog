@@ -31,7 +31,7 @@ type Step2Props = {
   setStep: (value: SetStateAction<number>) => void;
   data: Session;
 };
-function Step1({ setStep, data }: Step2Props) {
+function Step2({ setStep, data }: Step2Props) {
   const user = data.user!;
   const {
     register,
@@ -91,9 +91,7 @@ function Step1({ setStep, data }: Step2Props) {
               h="inherit"
               display="inline"
               border="2px solid"
-              borderColor="base-90"
-              borderRadius="full"
-              objectFit="cover"
+              borderColor="base.90"
             />
           </Box>
           <Heading as="h3" fontSize="xl">
@@ -157,7 +155,7 @@ function Step1({ setStep, data }: Step2Props) {
               placeholder="Any languages, frameworks, etc. to highlight?"
             />
           </FormControl>
-          <Text mt="2" fontSize="sm" color="grey-600">
+          <Text mt="2" fontSize="sm" color="grey.600">
             What tools and languages are you most experienced with? Are you
             specialized or more of a generalist?
           </Text>
@@ -169,4 +167,4 @@ function Step1({ setStep, data }: Step2Props) {
   );
 }
 
-export default Step1;
+export default Step2;

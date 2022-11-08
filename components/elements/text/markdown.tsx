@@ -29,14 +29,15 @@ export function Markdown({ children, style }: MarkdownProps) {
       remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
       components={{
         a: ({ node, ...props }) => (
-          <Link {...props} color="primary" style={{ ...style?.a }} />
+          <Link {...props} color="primary.500" style={{ ...style?.a }} />
         ),
         blockquote: ({ node, ...props }) => (
           <blockquote
             {...props}
             style={{
               paddingLeft: "20px",
-              borderLeft: "4px solid #d6d6d7",
+              borderLeft: "4px solid",
+              borderColor: "base-20",
               ...style?.blockquote,
             }}
           />

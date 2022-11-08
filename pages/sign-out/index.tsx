@@ -24,7 +24,6 @@ const SignOut: NextPage = () => {
         </Heading>
         <Button
           onClick={() => signOut({ callbackUrl: "/" })}
-          variant="primary"
           size="lg"
           data-cy="sign-out_confirm"
         >

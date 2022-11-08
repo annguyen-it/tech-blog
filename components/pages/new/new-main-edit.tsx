@@ -73,16 +73,16 @@ function CoverPhoto() {
       )}
 
       <Tooltip label="Use ratio of 100:42 for best results">
-        <Button onClick={() => imageRef.current?.click()} variant="outline">
+        <Button onClick={() => imageRef.current?.click()} variant="rock">
           {coverImage ? "Change" : "Add a cover image"}
         </Button>
       </Tooltip>
       {coverImage && (
         <Button
           onClick={() => setValue("coverImage", null)}
-          variant="ghost"
+          variant="flat"
+          colorScheme="red"
           color="red"
-          _hover={{ backgroundColor: "grey-900-rgba-2" }}
         >
           Remove
         </Button>
@@ -252,13 +252,7 @@ function Tags() {
                 display={editingTagIndex === index ? "none" : ""}
                 order={index + 1}
               >
-                <ButtonGroup
-                  variant="tag"
-                  size="sm"
-                  isAttached
-                  mr="1"
-                  mb="1"
-                >
+                <ButtonGroup variant="tag" size="sm" isAttached mr="1" mb="1">
                   <Button
                     onClick={() => onClickTag(index)}
                     px="1"
@@ -289,9 +283,7 @@ function Tags() {
             <ListItem
               alignSelf="center"
               order={
-                editingTagIndex !== -1
-                  ? editingTagIndex + 1
-                  : tags.length + 1
+                editingTagIndex !== -1 ? editingTagIndex + 1 : tags.length + 1
               }
             >
               <Input
@@ -332,7 +324,7 @@ function Tags() {
                         onClick={() => updateTags(item.tag)}
                         p="3"
                         borderRadius="md"
-                        _hover={{ backgroundColor: "grey-100" }}
+                        _hover={{ backgroundColor: "grey.100" }}
                       >
                         <Box fontWeight="500">#{item.tag}</Box>
                         <Text noOfLines={2} fontSize="sm">
@@ -369,7 +361,7 @@ function Body() {
         mb="6"
         px="16"
         py="2"
-        bg="base-0"
+        bg="base.0"
         fontSize="xl"
         flexShrink="0"
       />

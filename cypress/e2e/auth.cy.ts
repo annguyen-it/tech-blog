@@ -23,9 +23,6 @@ describe.skip("Login with GitHub, navigate to private route & sign out", () => {
 });
 
 describe("Login with credentials", () => {
-  before(() => {
-  });
-  
   beforeEach(() => {
     cy.login("credentials");
     cy.visit("/");

@@ -2,7 +2,7 @@ import { Box, Link, Stack, Text } from "@chakra-ui/react";
 
 export default function Footer() {
   return (
-    <Stack p="12" textAlign="center" background="#e5e5e5" fontSize="sm">
+    <Stack p="12" textAlign="center" background="grey.200" fontSize="sm">
       <Text>
         <Link href="/" variant="blue" fontWeight="500">
           Tech blog

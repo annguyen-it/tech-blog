@@ -19,7 +19,7 @@ import {
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { MdSearch } from "react-icons/md";
+import { MdSearch, MdPerson } from "react-icons/md";
 import { NextUtils } from "../../utils/next";
 
 function Navigation({ session }: { session: Session | null }) {
@@ -72,7 +72,7 @@ function Navigation({ session }: { session: Session | null }) {
             mt={divider ? 2 : 0}
             pt={divider ? 2 : 0}
             borderTopWidth={divider ? 1 : 0}
-            borderColor="base-20"
+            borderColor="base.20"
           >
             <Button
               variant="flat-link"
@@ -148,7 +148,7 @@ export default function TopBar() {
             <IconButton
               aria-label="Search keyword"
               icon={<MdSearch />}
-              variant="ghost"
+              variant="flat"
               h="97%"
               fontSize="24px"
             />
@@ -163,8 +163,7 @@ export default function TopBar() {
           <ButtonGroup spacing="3">
             <Button
               onClick={() => NextUtils.navigate(router, "/new")}
-              variant="primary-outline"
-              colorScheme="blue"
+              variant="outline"
               fontWeight="600"
               data-cy="layout_create-post"
             >
@@ -176,16 +175,21 @@ export default function TopBar() {
                 <IconButton
                   aria-label="Navigation menu"
                   icon={
-                    <Image
-                      src={data?.user?.image || ""}
-                      alt="Avatar"
-                      w="full"
-                      h="full"
-                      bg="grey-600"
-                      borderRadius="full"
-                    />
+                    data?.user?.image ? (
+                      <Image
+                        src={data?.user?.image || ""}
+                        alt="Avatar"
+                        w="full"
+                        h="full"
+                        bg="grey.600"
+                        borderRadius="full"
+                      />
+                    ) : (
+                      <MdPerson fontSize="24px" />
+                    )
                   }
                   variant="solid"
+                  colorScheme="gray"
                   p="1"
                   borderRadius="full"
                   data-cy="layout_avatar"
@@ -206,7 +210,6 @@ export default function TopBar() {
             <Button
               onClick={() => NextUtils.navigate(router, "/login")}
               variant="flat"
-              colorScheme="blue"
               fontWeight="400"
               data-cy="layout_login"
             >
@@ -215,8 +218,7 @@ export default function TopBar() {
 
             <Button
               onClick={() => NextUtils.navigate(router, "/signup")}
-              variant="primary-outline"
-              colorScheme="blue"
+              variant="outline"
               fontWeight="600"
             >
               Create account

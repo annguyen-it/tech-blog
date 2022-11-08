@@ -145,7 +145,7 @@ function Step1({ setStep }: Step1Props) {
   return (
     <>
       <Box borderRadius="2xl" overflow="hidden" zIndex="1">
-        <Stack spacing="1" p="12" bg="base-100" color="white">
+        <Stack spacing="1" p="12" bg="base.100" color="white">
           <Box as="figure">
             <Image
               src="https://res.cloudinary.com/practicaldev/image/fetch/s--K-811qxB--/c_limit,f_auto,fl_progressive,q_80,w_500/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png"
@@ -172,7 +172,7 @@ function Step1({ setStep }: Step1Props) {
               <Button
                 onClick={() => onClickPolicy("codeOfConduct")}
                 variant="link"
-                color="primary"
+                color="primary.500"
               >
                 Code of Conduct
               </Button>
@@ -187,7 +187,7 @@ function Step1({ setStep }: Step1Props) {
               <Button
                 onClick={() => onClickPolicy("termsAndConditions")}
                 variant="link"
-                color="primary"
+                color="primary.500"
               >
                 Terms and Conditions
               </Button>
@@ -215,9 +215,7 @@ function Step1({ setStep }: Step1Props) {
         <ModalOverlay />
         <ModalContent px="12" py="4">
           <ModalHeader pb="2">
-            <Button onClick={onClose} variant="primary">
-              Back
-            </Button>
+            <Button onClick={onClose}>Back</Button>
           </ModalHeader>
           <ModalBody>
             <Markdown
