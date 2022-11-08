@@ -56,9 +56,9 @@ Cypress.Commands.add("login", (socialNetwork) => {
   }
 
   cy.visit("/login");
-  cy.dataCy('log_email').type(Cypress.env("CREDENTIALS_USER"));
-  cy.dataCy('log_pw').type(Cypress.env("CREDENTIALS_PW"));
-  cy.dataCy('log_submit').click();
+  cy.dataCy("log_email").type(Cypress.env("CREDENTIALS_USER"));
+  cy.dataCy("log_pw").type(Cypress.env("CREDENTIALS_PW"));
+  cy.dataCy("log_submit").click();
   cy.url().should("equal", Cypress.config().baseUrl + "/");
 });
 

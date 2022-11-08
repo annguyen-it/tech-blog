@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   ButtonGroup,
   Flex,
@@ -17,6 +18,21 @@ import { useState } from "react";
 import { BsBookmark, BsSuitHeart, BsThreeDots } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
 import { Share } from "../../data";
+
+function LoginBox() {
+  return (
+    <Stack
+      display="flex"
+      justifyContent="center"
+      zIndex="99"
+      background="rgb(255, 255, 255)"
+    >
+      <Box>
+        <Text>Log in to continue</Text>
+      </Box>
+    </Stack>
+  );
+}
 
 type ActionType = {
   pid: string;
@@ -47,23 +63,22 @@ function Action(props: ActionType) {
   });
 
   const like = () => {
-    if (status === 'authenticated'){
+    if (status === "authenticated") {
       setData((prev) => {
         return {
           ...prev,
           likes: prev.likes + 1,
         };
       });
-    }else{
-      
+    } else {
+      return <LoginBox />;
     }
-    
   };
 
   return (
-    <ButtonGroup variant="ghost"  position='fixed' zIndex='99' >
-      <Stack as="nav" spacing="4" m="auto" textAlign="center" paddingTop='40px'  >
-        <Tooltip label="Like" >
+    <ButtonGroup variant="flat" position="fixed" zIndex="1">
+      <Stack as="nav" spacing="4" m="auto" textAlign="center" paddingTop="40px">
+        <Tooltip label="Like">
           <Flex direction="column" align="center">
             <IconButton
               onClick={like}
@@ -71,10 +86,7 @@ function Action(props: ActionType) {
               fontSize="24px"
               aria-label="Like"
               icon={<BsSuitHeart />}
-              _hover={{
-                backgroundColor: "rgba(220, 38, 38 , 0.1)",
-                color: "rgba(220, 38, 38)",
-              }}
+              colorScheme="red"
             ></IconButton>
             <Text>{data.likes}</Text>
           </Flex>
@@ -86,10 +98,7 @@ function Action(props: ActionType) {
               fontSize="24px"
               aria-label="Comment"
               icon={<FaRegComment />}
-              _hover={{
-                backgroundColor: "rgba(245, 158, 11, 0.1)",
-                color: "rgb(245, 158, 11)",
-              }}
+              colorScheme="yellow"
             ></IconButton>
             <Text>{data.comments}</Text>
           </Flex>
@@ -101,8 +110,7 @@ function Action(props: ActionType) {
               fontSize="24px"
               aria-label="Save"
               icon={<BsBookmark />}
-              title="Save"
-              _hover={{ backgroundColor: "rgba(47,58,108, 0.1)" }}
+              colorScheme="indigo"
             ></IconButton>
             <Text>{data.timeToRead}</Text>
           </Flex>
@@ -115,30 +123,33 @@ function Action(props: ActionType) {
               fontSize="24px"
               aria-label="Save"
               icon={<BsThreeDots />}
-              _hover={{ backgroundColor: "rgba(47,58,108, 0.1)" }}
             ></IconButton>
           </PopoverTrigger>
 
           <PopoverArrow />
           <PopoverContent w="max-content" minW="250px">
             <PopoverBody>
-              <ButtonGroup display="flex" flexDirection="column">
-                <Button
-                  fontWeight="700"
-                  backgroundColor="inherit"
-                  _hover={{ color: "blue" }}
-                >
-                  Copy link
-                </Button>
-                {Share.map((share, i) => (
+              <ButtonGroup variant="flat" w="full">
+                <Flex direction="column" w="full">
                   <Button
-                    key={i}
+                    display="inline-block"
+                    fontWeight="700"
                     backgroundColor="inherit"
-                    _hover={{ color: "blue" }}
+                    textAlign="left"
                   >
-                    {share.text}
+                    Copy link
                   </Button>
-                ))}
+                  {Share.map((share, i) => (
+                    <Button
+                      display="inline-block"
+                      key={i}
+                      fontWeight="400"
+                      textAlign="left"
+                    >
+                      {share.text}
+                    </Button>
+                  ))}
+                </Flex>
               </ButtonGroup>
             </PopoverBody>
           </PopoverContent>
@@ -154,4 +165,3 @@ type PostLeftType = {
 export default function PostLeft({ pid }: PostLeftType) {
   return <Action pid={pid} />;
 }
-23;

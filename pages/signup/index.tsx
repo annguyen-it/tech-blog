@@ -21,7 +21,7 @@ export default function SignUp() {
   async function signUp(form: LogForm) {
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/register",
+        `${process.env.NEXT_PUBLIC_API_BASE}/register`,
         form
       );
       setSignUpForm(form);

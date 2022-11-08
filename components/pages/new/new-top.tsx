@@ -58,7 +58,7 @@ function NewTop({ edit, setEdit }: NewTopProps) {
         icon={<MdOutlineClose />}
         variant="flat"
         aria-label="Cancel"
-        title="Close editor"
+        title="Close the editor"
         pos={{ lg: "absolute" }}
         top="2"
         right="2"

@@ -10,18 +10,18 @@ export const CheckboxStyles: ComponentStyleConfig = {
   baseStyle: definePartsStyle({
     control: {
       _checked: {
-        bg: "primary",
-        borderColor: "primary",
+        bg: "primary.500",
+        borderColor: "primary.500",
 
         _hover: {
-          bg: "primary",
-          borderColor: "primary",
+          bg: "primary.500",
+          borderColor: "primary.500",
         },
       },
 
       _indeterminate: {
-        bg: "primary",
-        borderColor: "primary",
+        bg: "primary.500",
+        borderColor: "primary.500",
       },
     },
   }),

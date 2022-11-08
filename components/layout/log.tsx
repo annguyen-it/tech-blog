@@ -18,7 +18,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { BsTwitter, BsGithub, BsGoogle, BsFacebook } from "react-icons/bs";
+import { BsFacebook, BsGithub, BsGoogle } from "react-icons/bs";
 import { ValidationUtils } from "../../utils/validation";
 import Layout from "./layout";
 
@@ -70,7 +70,7 @@ export default function LogLayout({
       const data = await onConfirm(postForm);
       onSuccess();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     } finally {
       setIsSubmitting(false);
     }
@@ -110,20 +110,22 @@ export default function LogLayout({
             <Stack>
               <Button
                 onClick={() => signIn("facebook", loginOptions)}
-                variant="solid"
                 colorScheme="facebook"
                 data-cy="log_with-facebook"
               >
                 <Icon as={BsFacebook} mr="2" />
                 {action} with Facebook
               </Button>
-              <Button variant="solid" colorScheme="twitter" color="white">
+              {/* <Button
+                colorScheme="twitter"
+                color="white"
+                data-cy="log_with-twitter"
+              >
                 <Icon as={BsTwitter} mr="2" />
                 {action} with Twitter
-              </Button>
+              </Button> */}
               <Button
                 onClick={() => signIn("github", loginOptions)}
-                variant="solid"
                 colorScheme="github"
                 data-cy="log_with-github"
               >
@@ -132,7 +134,6 @@ export default function LogLayout({
               </Button>
               <Button
                 onClick={() => signIn("google", loginOptions)}
-                variant="solid"
                 colorScheme="google"
                 data-cy="log_with-google"
               >
@@ -152,7 +153,8 @@ export default function LogLayout({
               top: "50%",
               width: "100%",
               display: "block",
-              borderBottom: "1px solid var(--chakra-colors-base-20)",
+              borderBottom: "1px solid",
+              borderColor: "base.20",
               content: `''`,
             }}
           >
@@ -231,7 +233,6 @@ export default function LogLayout({
 
             <Button
               isLoading={isSubmitting}
-              variant="primary"
               type="submit"
               width="full"
               data-cy="log_submit"

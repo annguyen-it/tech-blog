@@ -50,10 +50,10 @@ function NavButtons({ selectedTabIndex, setSelectedTabIndex }: NavButtonsType) {
           onClick={() => onClick(index)}
           fontSize="lg"
           fontWeight={index === selectedTabIndex ? 700 : 400}
-          color={index === selectedTabIndex ? "base-100" : "base-70"}
+          color={index === selectedTabIndex ? "base.100" : "base.70"}
           _hover={{
             background: "white",
-            color: "primary",
+            color: "primary.500",
           }}
         >
           {label}
