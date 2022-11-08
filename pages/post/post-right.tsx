@@ -1,12 +1,4 @@
-import {
-  AspectRatio,
-  Avatar,
-  Box,
-  Button,
-  Text,
-  Link,
-  Stack,
-} from "@chakra-ui/react";
+import { Avatar, Box, Button, Text, Link, Stack } from "@chakra-ui/react";
 import { Post } from "../../models";
 
 type PostMainProps = { dataPost: Post };
@@ -26,19 +18,23 @@ export default function PostRight({ dataPost }: PostMainProps) {
       </Box>
       <Button marginTop="6">Follow</Button>
       <Text>{dataPost.author.intro}</Text>
-      
+
       <Box>
-        <Text fontSize='sm' fontWeight='600'>WORK:</Text>
+        <Text fontSize="sm" fontWeight="600">
+          WORK:
+        </Text>
         <Text fontSize="xs">{dataPost.author.work}</Text>
       </Box>
       <Box>
-        <Text fontSize='sm' fontWeight='600'>JOINED:</Text>
+        <Text fontSize="sm" fontWeight="600">
+          JOINED:
+        </Text>
         <Box fontSize="xs">
-              {dataPost.author.joined.toLocaleString("default", {
-                month: "long",
-              })}{" "}
-              {dataPost.author.joined.getDate()}
-            </Box>
+          {dataPost.author.joined.toLocaleString("default", {
+            month: "long",
+          })}{" "}
+          {dataPost.author.joined.getDate()}
+        </Box>
       </Box>
     </Stack>
   );
