@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Text, Link, Stack, Flex } from "@chakra-ui/react";
+import { Avatar, Box, Button, Link, Stack, Text } from "@chakra-ui/react";
 import { Post } from "../../models";
 
 type PostMainProps = { dataPost: Post };

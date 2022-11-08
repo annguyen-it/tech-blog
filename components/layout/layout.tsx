@@ -8,7 +8,7 @@ export default function AppLayout({ children }: LayoutProps) {
   return (
     <Flex direction="column" pt="14">
       <TopBar />
-      <Box w="full" flex="1 auto" p="4">
+      <Box w="full" flex="1 auto" p={{ base: 2, lg: 4 }}>
         {children}
       </Box>
       <Footer />
