@@ -1,13 +1,13 @@
 import {
-  Box,
-  Stack,
-  Image,
   AspectRatio,
   Avatar,
-  Link,
-  Heading,
-  ButtonGroup,
+  Box,
   Button,
+  ButtonGroup,
+  Heading,
+  Image,
+  Link,
+  Stack,
   Text,
 } from "@chakra-ui/react";
 import router from "next/router";

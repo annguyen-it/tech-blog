@@ -98,7 +98,7 @@ export const EditorToolbar = forwardRef<HTMLDivElement, EditorToolbarProps>(
                 aria-label="More options"
                 icon={<MdOutlineMoreVert />}
                 fontSize={props.fontSize}
-                bg={openPopup ? "grey-200" : undefined}
+                bg={openPopup ? "grey.200" : undefined}
                 ml="auto !important"
               />
             </PopoverTrigger>

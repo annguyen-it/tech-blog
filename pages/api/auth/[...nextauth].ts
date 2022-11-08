@@ -31,11 +31,12 @@ export default NextAuth({
 
         try {
           const res = await axios.post<Response<LoginModel>>(
-            `${process.env.API_BASE}/login`,
+            `${process.env.NEXT_PUBLIC_API_BASE}/login`,
             payload
           );
           // console.log("auth", res.data);
-          return res.data.data.user;
+          const user = res.data.data;
+          return user;
         } catch (e) {
           return null;
         }

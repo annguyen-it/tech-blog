@@ -4,7 +4,7 @@ import { listings, helps, discuss, challenge } from "../data";
 function Listings() {
   return (
     <Box
-      background="grey-50"
+      background="grey.50"
       borderRadius="md"
       boxShadow="0 0 0 1px var(--chakra-colors-grey-900-rgba-2)"
     >
@@ -12,7 +12,7 @@ function Listings() {
         display="flex"
         justifyContent="space-between"
         borderBottom="1px solid"
-        borderColor="grey-100"
+        borderColor="grey.100"
       >
         <Heading p="4" size="md">
           Listings
@@ -39,18 +39,18 @@ function Listings() {
             display="block"
             p="4"
             borderBottom="1px solid"
-            borderColor="grey-100"
+            borderColor="grey.100"
             _hover={{ background: "white" }}
           >
             <Text>{box.title}</Text>
-            <Text color="base-60" fontSize="sm">
+            <Text color="base.60" fontSize="sm">
               {box.event}
             </Text>
           </Link>
         ))}
       </Box>
       <Box w="100%" h="12" p="2" textAlign="center">
-        <Link href="/" color="black" _hover={{ color: "primary-darker" }}>
+        <Link href="/" color="black" _hover={{ color: "primary.600" }}>
           Create a Listing
         </Link>
       </Box>
@@ -60,15 +60,15 @@ function Listings() {
 
 function Help() {
   return (
-    <Box background="grey-50" borderRadius="md">
-      <Box borderBottom="1px solid" borderColor="grey-100" h="12">
+    <Box background="grey.50" borderRadius="md">
+      <Box borderBottom="1px solid" borderColor="grey.100" h="12">
         <Link
           as="h3"
           p="2"
           fontWeight="bold"
           fontSize="1.25rem"
           href="/"
-          _hover={{ color: "primary-darker" }}
+          _hover={{ color: "primary.600" }}
         >
           #help
         </Link>
@@ -83,18 +83,18 @@ function Help() {
             alignItems="center"
             h="28"
             borderBottom="1px solid"
-            borderColor="grey-100"
+            borderColor="grey.100"
             _hover={{ background: "white" }}
           >
             <Text pl="4" pt="4" pr="4">
               {box.title}
             </Text>
             {box.numberCmt == 0 ? (
-              <Tag backgroundColor="yellow-300" borderRadius="md">
+              <Tag backgroundColor="yellow.300" borderRadius="md">
                 New
               </Tag>
             ) : (
-              <Text pl="4" pr="4" color="base-60" fontSize="sm">
+              <Text pl="4" pr="4" color="base.60" fontSize="sm">
                 {box.numberCmt} comments
               </Text>
             )}
@@ -107,15 +107,15 @@ function Help() {
 
 function Discuss() {
   return (
-    <Box background="grey-50" borderRadius="md">
-      <Box borderBottom="1px solid" borderColor="grey-100" h="12">
+    <Box background="grey.50" borderRadius="md">
+      <Box borderBottom="1px solid" borderColor="grey.100" h="12">
         <Link
           as="h3"
           p="2"
           fontWeight="bold"
           fontSize="1.25rem"
           href="/"
-          _hover={{ color: "primary-darker" }}
+          _hover={{ color: "primary.600" }}
         >
           #discuss
         </Link>
@@ -130,18 +130,18 @@ function Discuss() {
             alignItems="center"
             h="28"
             borderBottom="1px solid"
-            borderColor="grey-100"
+            borderColor="grey.100"
             _hover={{ background: "white" }}
           >
             <Text pl="4" pt="4" pr="4">
               {box.title}
             </Text>
             {box.numberCmt == 0 ? (
-              <Tag backgroundColor="yellow-300" borderRadius="md">
+              <Tag backgroundColor="yellow.300" borderRadius="md">
                 New
               </Tag>
             ) : (
-              <Text pl="4" pr="4" color="base-60" fontSize="sm">
+              <Text pl="4" pr="4" color="base.60" fontSize="sm">
                 {box.numberCmt} comments
               </Text>
             )}
@@ -154,15 +154,15 @@ function Discuss() {
 
 function Challenge() {
   return (
-    <Box background="grey-50" borderRadius="md">
-      <Box borderBottom="1px solid" borderColor="grey-50" h="12">
+    <Box background="grey.50" borderRadius="md">
+      <Box borderBottom="1px solid" borderColor="grey.50" h="12">
         <Link
           as="h3"
           p="2"
           fontWeight="bold"
           fontSize="1.25rem"
           href="/"
-          _hover={{ color: "primary-darker" }}
+          _hover={{ color: "primary.600" }}
         >
           #challenge
         </Link>
@@ -177,18 +177,18 @@ function Challenge() {
             alignItems="center"
             h="28"
             borderBottom="1px solid"
-            borderColor="grey-100"
+            borderColor="grey.100"
             _hover={{ background: "white" }}
           >
             <Text pl="4" pt="4" pr="4">
               {box.title}
             </Text>
             {box.numberCmt == 0 ? (
-              <Tag backgroundColor="yellow-300" borderRadius="md">
+              <Tag backgroundColor="yellow.300" borderRadius="md">
                 New
               </Tag>
             ) : (
-              <Text pl="4" pr="4" color="base-60" fontSize="sm">
+              <Text pl="4" pr="4" color="base.60" fontSize="sm">
                 {box.numberCmt} comments
               </Text>
             )}

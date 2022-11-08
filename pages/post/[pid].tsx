@@ -5,6 +5,7 @@ import PostLeft from "./post-left";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import PostMain from "./post-main";
+import PostRight from "./post-right";
 import Head from "next/head";
 import { Post } from "../../models";
 import { dummyPost } from "../../data";
@@ -34,7 +35,9 @@ const Post: NextPage = () => {
         <GridItem>
           <PostMain dataPost={dataPost} />
         </GridItem>
-        <GridItem></GridItem>
+        <GridItem>
+          <PostRight dataPost={dataPost} />
+        </GridItem>
       </Grid>
     </Layout>
   );

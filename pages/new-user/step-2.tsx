@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Flex,
@@ -7,14 +8,14 @@ import {
   FormLabel,
   Heading,
   IconButton,
-  Image,
   Input,
   Stack,
   Text,
   Textarea,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { Session } from "next-auth";
-import { SetStateAction } from "react";
+import { SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { MdKeyboardBackspace } from "react-icons/md";
 
@@ -31,18 +32,31 @@ type Step2Props = {
   setStep: (value: SetStateAction<number>) => void;
   data: Session;
 };
-function Step1({ setStep, data }: Step2Props) {
+function Step2({ setStep, data }: Step2Props) {
   const user = data.user!;
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     formState: { errors },
     handleSubmit,
+    setError,
   } = useForm<UpdateInfoForm>();
+
+  async function update(data: UpdateInfoForm) {
+    setIsSubmitting(true);
+    try {
+      await axios.patch(`${process.env.NEXT_PUBLIC_API_BASE}/users/20`, data);
+    } catch (e) {
+      setError("nickname", { message: "This nickname has already been taken" });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <Box
       as="form"
-      onSubmit={handleSubmit((data) => {})}
+      onSubmit={handleSubmit(update)}
       h="800px"
       maxH="calc(100% - 24px)"
       display="grid"
@@ -64,7 +78,9 @@ function Step1({ setStep, data }: Step2Props) {
           ></IconButton>
         </Box>
         <Box>
-          <Button type="submit">Continue</Button>
+          <Button type="submit" isLoading={isSubmitting}>
+            Continue
+          </Button>
         </Box>
       </Flex>
 
@@ -85,15 +101,10 @@ function Step1({ setStep, data }: Step2Props) {
         {/* Avatar */}
         <Stack spacing="2" textAlign="center">
           <Box as="figure" h="20">
-            <Image
-              src={user.image!}
-              alt="Avatar"
-              h="inherit"
-              display="inline"
+            <Avatar
+              src={user.image ?? undefined}
               border="2px solid"
-              borderColor="base-90"
-              borderRadius="full"
-              objectFit="cover"
+              borderColor="base.90"
             />
           </Box>
           <Heading as="h3" fontSize="xl">
@@ -157,7 +168,7 @@ function Step1({ setStep, data }: Step2Props) {
               placeholder="Any languages, frameworks, etc. to highlight?"
             />
           </FormControl>
-          <Text mt="2" fontSize="sm" color="grey-600">
+          <Text mt="2" fontSize="sm" color="grey.600">
             What tools and languages are you most experienced with? Are you
             specialized or more of a generalist?
           </Text>
@@ -169,4 +180,4 @@ function Step1({ setStep, data }: Step2Props) {
   );
 }
 
-export default Step1;
+export default Step2;

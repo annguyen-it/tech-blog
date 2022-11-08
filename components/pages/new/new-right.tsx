@@ -43,7 +43,7 @@ function TitleSuggestion() {
       <Heading key="new-right-title-1" mb="2" fontSize="lg">
         Writing a Great Post Title
       </Heading>
-      <UnorderedList key="new-right-title-2" color="base-70">
+      <UnorderedList key="new-right-title-2" color="base.70">
         <ListItem>
           Think of your post title as a super short (but compelling!)
           description — like an overview of the actual post in one short
@@ -64,7 +64,7 @@ function TagsSuggestion() {
       <Heading mb="2" fontSize="lg">
         Tagging Guidelines
       </Heading>
-      <UnorderedList color="base-70">
+      <UnorderedList color="base.70">
         <ListItem>Tags help people find your post.</ListItem>
         <ListItem>
           Think of tags as the topics or categories that best describe your
@@ -90,7 +90,7 @@ function BodySuggestion() {
       <Heading mb="2" fontSize="lg">
         Editor Basics
       </Heading>
-      <UnorderedList color="base-70">
+      <UnorderedList color="base.70">
         <ListItem>
           Use{" "}
           <Link
@@ -173,7 +173,7 @@ function BodySuggestion() {
                       as="span"
                       pl="2"
                       borderLeft="2px solid"
-                      borderColor="base-50"
+                      borderColor="base.50"
                     >
                       quoted text
                     </Text>

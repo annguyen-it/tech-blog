@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  ButtonGroup,
   Heading,
   IconButton,
   Link,
@@ -31,8 +32,8 @@ function Tile({ children, href }: { children: React.ReactNode; href: string }) {
       py="2"
       borderRadius="md"
       _hover={{
-        background: "primary-rgba",
-        color: "primary-darker",
+        background: "primary.400.rgba",
+        color: "primary.600",
         textDecoration: "underline",
       }}
     >
@@ -68,8 +69,7 @@ function Introduction() {
       <Stack direction="column" spacing="1">
         <Button
           onClick={() => router.push("/signup")}
-          variant="primary-outline"
-          colorScheme="blue"
+          variant="outline"
           fontWeight="600"
         >
           Create account
@@ -78,7 +78,6 @@ function Introduction() {
         <Button
           onClick={() => router.push("/login")}
           variant="flat"
-          colorScheme="blue"
           fontWeight="400"
         >
           Log in
@@ -106,38 +105,21 @@ function Category() {
 
 function SocialNetwork() {
   return (
-    <Stack as="nav" direction="row">
+    <ButtonGroup as="nav" variant="flat">
+      <IconButton aria-label="twitter" icon={<FaTwitter />} title="Twitter" />
       <IconButton
-        variant="flat"
-        aria-label="twitter"
-        icon={<FaTwitter />}
-        title="Twitter"
-      />
-      <IconButton
-        variant="flat"
         aria-label="facebook"
         icon={<FaFacebookF />}
         title="Facebook"
       />
+      <IconButton aria-label="github" icon={<FaGithub />} title="Github" />
       <IconButton
-        variant="flat"
-        aria-label="github"
-        icon={<FaGithub />}
-        title="Github"
-      />
-      <IconButton
-        variant="flat"
         aria-label="instagram"
         icon={<FaInstagram />}
         title="Instagram"
       />
-      <IconButton
-        variant="flat"
-        aria-label="twitch"
-        icon={<FaTwitch />}
-        title="Twitch"
-      />
-    </Stack>
+      <IconButton aria-label="twitch" icon={<FaTwitch />} title="Twitch" />
+    </ButtonGroup>
   );
 }
 
