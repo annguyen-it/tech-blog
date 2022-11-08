@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Flex,
@@ -7,14 +8,14 @@ import {
   FormLabel,
   Heading,
   IconButton,
-  Image,
   Input,
   Stack,
   Text,
   Textarea,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { Session } from "next-auth";
-import { SetStateAction } from "react";
+import { SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { MdKeyboardBackspace } from "react-icons/md";
 
@@ -33,16 +34,29 @@ type Step2Props = {
 };
 function Step2({ setStep, data }: Step2Props) {
   const user = data.user!;
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     formState: { errors },
     handleSubmit,
+    setError,
   } = useForm<UpdateInfoForm>();
+
+  async function update(data: UpdateInfoForm) {
+    setIsSubmitting(true);
+    try {
+      await axios.patch(`${process.env.NEXT_PUBLIC_API_BASE}/users/20`, data);
+    } catch (e) {
+      setError("nickname", { message: "This nickname has already been taken" });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <Box
       as="form"
-      onSubmit={handleSubmit((data) => {})}
+      onSubmit={handleSubmit(update)}
       h="800px"
       maxH="calc(100% - 24px)"
       display="grid"
@@ -64,7 +78,9 @@ function Step2({ setStep, data }: Step2Props) {
           ></IconButton>
         </Box>
         <Box>
-          <Button type="submit">Continue</Button>
+          <Button type="submit" isLoading={isSubmitting}>
+            Continue
+          </Button>
         </Box>
       </Flex>
 
@@ -85,11 +101,8 @@ function Step2({ setStep, data }: Step2Props) {
         {/* Avatar */}
         <Stack spacing="2" textAlign="center">
           <Box as="figure" h="20">
-            <Image
-              src={user.image!}
-              alt="Avatar"
-              h="inherit"
-              display="inline"
+            <Avatar
+              src={user.image ?? undefined}
               border="2px solid"
               borderColor="base.90"
             />
