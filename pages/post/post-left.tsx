@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   ButtonGroup,
   Flex,
@@ -17,6 +18,16 @@ import { useState } from "react";
 import { BsBookmark, BsSuitHeart, BsThreeDots } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
 import { Share } from "../../data";
+
+function LoginBox() {
+  return (
+    <Stack display='flex' justifyContent='center' zIndex='99' background='rgb(255, 255, 255)'>
+      <Box>
+        <Text>Log in to continue</Text>
+      </Box>
+    </Stack>
+  );
+}
 
 type ActionType = {
   pid: string;
@@ -47,23 +58,23 @@ function Action(props: ActionType) {
   });
 
   const like = () => {
-    if (status === 'authenticated'){
+    console.log(status)
+    if (status === "authenticated") {
       setData((prev) => {
         return {
           ...prev,
           likes: prev.likes + 1,
         };
       });
-    }else{
-      
+    } else {
+      return <LoginBox />
     }
-    
   };
 
   return (
-    <ButtonGroup variant="ghost"  position='fixed' zIndex='99' >
-      <Stack as="nav" spacing="4" m="auto" textAlign="center" paddingTop='40px'  >
-        <Tooltip label="Like" >
+    <ButtonGroup variant="ghost" position="fixed" zIndex="1">
+      <Stack as="nav" spacing="4" m="auto" textAlign="center" paddingTop="40px">
+        <Tooltip label="Like">
           <Flex direction="column" align="center">
             <IconButton
               onClick={like}
@@ -147,6 +158,8 @@ function Action(props: ActionType) {
     </ButtonGroup>
   );
 }
+
+
 
 type PostLeftType = {
   pid: string;
