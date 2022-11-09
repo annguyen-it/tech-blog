@@ -20,14 +20,14 @@ export default function SignUp() {
 
   async function signUp(form: LogForm) {
     try {
-      const { data } = await axios.post(
+      await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE}/register`,
         form
       );
       setSignUpForm(form);
-      return data;
-    } catch (e) {
       return null;
+    } catch (e) {
+      return { error: "This email has already been taken" };
     }
   }
 
@@ -41,7 +41,8 @@ export default function SignUp() {
 
   return (
     <>
-      <LogLayout page="Sign Up" onConfirm={signUp} onSuccess={onOpen} />;
+      <LogLayout page="Sign Up" onConfirm={signUp} onSuccess={onOpen} />
+
       <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
