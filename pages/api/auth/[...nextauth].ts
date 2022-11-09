@@ -1,12 +1,13 @@
 import axios from "axios";
-import NextAuth from "next-auth";
+import { NextApiRequest, NextApiResponse } from "next";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { LoginModel, Response } from "../../../models";
 
-export default NextAuth({
+const handler: (req: NextApiRequest) => NextAuthOptions = (req) => ({
   secret: "cTl79BypYNgPMOSepSHnsXT0rn7u8B9CZKVsATKHdbk=",
   providers: [
     CredentialsProvider({
@@ -60,6 +61,11 @@ export default NextAuth({
       if (user) {
         token.user = user;
       }
+      if (req.url?.includes("/api/auth/session?update")) {
+        // console.log("query ", req.query);
+        (token.user as any).name = req.query["name"];
+        (token.user as any).nickname = req.query["nickname"];
+      }
       // console.log("jwt", user);
       return token;
     },
@@ -74,3 +80,7 @@ export default NextAuth({
     },
   },
 });
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  return NextAuth(req, res, handler(req));
+};
