@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -12,6 +11,7 @@ import {
   Link,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
@@ -29,8 +29,8 @@ export type LogForm = {
 };
 
 type LogLayoutProps = {
-  onConfirm: (form: LogForm) => any;
-  onSuccess: () => void;
+  onConfirm: (form: LogForm) => Promise<{ error: string } | null>;
+  onSuccess?: () => void;
   page: "Login" | "Sign Up";
 };
 export default function LogLayout({
@@ -48,6 +48,7 @@ export default function LogLayout({
   } = useForm<LogForm>();
   const [routerPushed, setRouterPushed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const toast = useToast();
 
   const loginOptions = {
     callbackUrl: router.pathname.includes("login") ? "/" : router.pathname,
@@ -66,14 +67,21 @@ export default function LogLayout({
   async function onClickSubmit(form: LogForm) {
     const { confirmPassword, ...postForm } = form;
     setIsSubmitting(true);
-    try {
-      const data = await onConfirm(postForm);
-      onSuccess();
-    } catch (err) {
-      // console.log(err);
-    } finally {
-      setIsSubmitting(false);
+    const errors = await onConfirm(postForm);
+
+    if (errors) {
+      toast({
+        title: "An error occurred",
+        description: errors.error,
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+    } else {
+      onSuccess?.();
     }
+
+    setIsSubmitting(false);
   }
 
   if (status === "authenticated") {
@@ -196,10 +204,14 @@ export default function LogLayout({
               <Input
                 {...register("password", {
                   required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password should contain at least 6 characters",
-                  },
+                  minLength:
+                    page === "Sign Up"
+                      ? {
+                          value: 6,
+                          message:
+                            "Password should contain at least 6 characters",
+                        }
+                      : undefined,
                 })}
                 type="password"
                 data-cy="log_pw"
@@ -227,9 +239,9 @@ export default function LogLayout({
               </FormControl>
             )}
 
-            <FormControl>
+            {/* <FormControl>
               <Checkbox defaultChecked>Remember me</Checkbox>
-            </FormControl>
+            </FormControl> */}
 
             <Button
               isLoading={isSubmitting}

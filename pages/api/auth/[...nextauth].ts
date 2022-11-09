@@ -64,11 +64,12 @@ export default NextAuth({
       return token;
     },
     session: ({ session, token }) => {
-      session.user = token.user as any;
-      // console.log("session", session);
-      if (session && session.user) {
-        // session.user.accessToken = token.accessToken;
+      if (token) {
+        session.user = token.user as any;
       }
+      // console.log("session", session);
+      // console.log("token", token);
+
       return session;
     },
   },

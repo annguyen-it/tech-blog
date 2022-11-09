@@ -4,22 +4,33 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Layout from "../../components/layout/layout";
 import { Post, Response } from "../../models";
+import FourOhFour from "../404";
 import PostLeft from "./post-left";
 import PostMain from "./post-main";
 import PostRight from "./post-right";
 
-type PostProps = { post: Post };
+type PostProps = { post: Post | null };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const postId = context.query["pid"];
-  const { data } = await axios.get<Response<Post>>(
-    `${process.env.NEXT_PUBLIC_API_BASE}/posts/${postId}`
-  );
-  const post = data.data;
+  let post: Post | null = null;
+
+  try {
+    const { data } = await axios.get<Response<Post>>(
+      `${process.env.NEXT_PUBLIC_API_BASE}/posts/${postId}`
+    );
+    post = data.data;
+  } catch (e) {}
+
   return { props: { post } };
 };
 
-function Post({ post }: PostProps) {
+function Post(props: PostProps) {
+  const post = props.post;
+  if (!post) {
+    return <FourOhFour />;
+  }
+
   return (
     <Layout>
       <Head>
