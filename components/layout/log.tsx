@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 import { BsFacebook, BsGithub, BsGoogle } from "react-icons/bs";
 import { ValidationUtils } from "../../utils/validation";
 import Layout from "./layout";
+const md5 = require("md5");
 
 export type LogForm = {
   email: string;
@@ -66,6 +67,7 @@ export default function LogLayout({
 
   async function onClickSubmit(form: LogForm) {
     const { confirmPassword, ...postForm } = form;
+    postForm.password = md5(postForm.password);
     setIsSubmitting(true);
     const errors = await onConfirm(postForm);
 

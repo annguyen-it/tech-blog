@@ -5,6 +5,8 @@ import { Session } from "next-auth";
 import { SessionProvider, useSession } from "next-auth/react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import "../styles/globals.css";
 import { theme } from "../styles/theme";
 
@@ -19,19 +21,42 @@ let headerInterceptorId: number;
 
 function SessionContainer({ Component, pageProps }: SessionContainerProps) {
   const { status, data } = useSession();
-  if (status === "authenticated") {
-    if (!headerInterceptor) {
-      headerInterceptor = (config) => {
-        const token = (data.user as any).accessToken;
-        if (token && config.headers) {
-          config.headers["Authorization"] = `Bearer ${token}`;
-        }
-        return config;
-      };
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      if (!headerInterceptor) {
+        headerInterceptor = (config) => {
+          const token = (data.user as any).accessToken;
+          if (token && config.headers) {
+            config.headers["Authorization"] = `Bearer ${token}`;
+          }
+          return config;
+        };
+      }
+      headerInterceptorId = axios.interceptors.request.use(headerInterceptor);
+    } else if (status === "unauthenticated") {
+      axios.interceptors.request.eject(headerInterceptorId);
     }
-    headerInterceptorId = axios.interceptors.request.use(headerInterceptor);
-  } else if (status === "unauthenticated") {
-    axios.interceptors.request.eject(headerInterceptorId);
+  }, [status]);
+
+  // console.log(data?.user);
+
+  const ignoreRedirectNewUser = ["/new-user", "/sign-out", "/out"];
+
+  if (status === "authenticated" && data && data.user) {
+    if (
+      ignoreRedirectNewUser.indexOf(router.pathname) === -1 &&
+      (!data.user.name || !(data.user as any).nickname)
+    ) {
+      router.push("/new-user");
+    } else if (
+      router.pathname === "/new-user" &&
+      data.user.name &&
+      (data.user as any).nickname
+    ) {
+      router.push("/");
+    }
   }
 
   return (

@@ -12,6 +12,7 @@ import {
   Stack,
   Text,
   Textarea,
+  useToast
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Session } from "next-auth";
@@ -41,11 +42,21 @@ function Step2({ setStep, data }: Step2Props) {
     handleSubmit,
     setError,
   } = useForm<UpdateInfoForm>();
+  const toast = useToast();
 
   async function update(data: UpdateInfoForm) {
     setIsSubmitting(true);
     try {
-      await axios.patch(`${process.env.NEXT_PUBLIC_API_BASE}/users/20`, data);
+      await axios.patch(`${process.env.NEXT_PUBLIC_API_BASE}/users/1`, data);
+      toast({
+        description: "Updated successfully",
+        duration: 3000,
+        isClosable: true,
+      });
+      await axios.get(
+        `/api/auth/session?update&name=${data.name}&nickname=${data.nickname}`
+      );
+      window.location.replace("/");
     } catch (e) {
       setError("nickname", { message: "This nickname has already been taken" });
     } finally {
@@ -100,11 +111,11 @@ function Step2({ setStep, data }: Step2Props) {
 
         {/* Avatar */}
         <Stack spacing="2" textAlign="center">
-          <Box as="figure" h="20">
+          <Box as="figure">
             <Avatar
               src={user.image ?? undefined}
               border="2px solid"
-              borderColor="base.90"
+              borderColor="base.90 !important"
             />
           </Box>
           <Heading as="h3" fontSize="xl">
