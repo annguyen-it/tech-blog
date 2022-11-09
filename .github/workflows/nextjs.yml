@@ -37,17 +37,17 @@ env:
 
 jobs:
   setup:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         
   build:
     needs: [setup]
-    runs-on: self-hosted
-    strategy:
-      matrix:
-        node-version: [16.x]
+    runs-on: ubuntu-latest
+    #strategy:
+    #  matrix:
+    #    node-version: [16.x]
     steps:
       - name: Detect package manager
         id: detect-package-manager
@@ -66,11 +66,13 @@ jobs:
             echo "Unable to determine packager manager"
             exit 1
           fi
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: "16"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
+
       - name: Restore cache
         id: cache
         uses: actions/cache@v3
@@ -81,9 +83,11 @@ jobs:
           key: npm-${{ hashFiles('**/package-lock.json') }}
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: npm-
+
       - name: Install dependencies
         #if: steps.cache.outputs.cache-hit != 'true'
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+
       - name: Build with Next.js
         run: |
           touch .env.local
@@ -106,6 +110,27 @@ jobs:
       #- name: Static HTML export with Next.js
       #  run: ${{ steps.detect-package-manager.outputs.runner }} next export
 
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: 'just-a-placeholder'
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
+
+      - name: rsync over SSH
+        run: rsync -vn . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/html/tech-blog/
+
+      #- name: Restart Node Server
+      #  uses: appleboy/ssh-action@master
+      #  with:
+      #    host: ${{ secrets.SSH_HOST }}
+      #    username: ${{ secrets.SSH_USER }}
+      #    key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #    port: ${{ secrets.SSH_PORT }}
+      #    script: |
+      #      pm2 reload tech-blog
   #cypress-run:
   #  needs: [build]
   #  runs-on: self-hosted
