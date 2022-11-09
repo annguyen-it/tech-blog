@@ -196,6 +196,7 @@ export default function LogLayout({
                     message: "Please enter a valid email",
                   },
                 })}
+                autoComplete="username"
                 data-cy="log_email"
               />
               <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
@@ -216,6 +217,7 @@ export default function LogLayout({
                       : undefined,
                 })}
                 type="password"
+                autoComplete="current-password"
                 data-cy="log_pw"
               />
               <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
@@ -225,7 +227,6 @@ export default function LogLayout({
               <FormControl isInvalid={!!errors.confirmPassword}>
                 <FormLabel>Confirm Password</FormLabel>
                 <Input
-                  type="password"
                   {...register("confirmPassword", {
                     required: "Confirm password is required",
                     validate: {
@@ -234,6 +235,8 @@ export default function LogLayout({
                         "Confirm password do not match!",
                     },
                   })}
+                  type="password"
+                  autoComplete="current-password"
                 />
                 <FormErrorMessage>
                   {errors.confirmPassword?.message}

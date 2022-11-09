@@ -57,8 +57,15 @@ const handler: (req: NextApiRequest) => NextAuthOptions = (req) => ({
     }),
   ],
   callbacks: {
-    jwt: ({ token, user }) => {
-      if (user) {
+    jwt: async ({ token, user, profile, account }) => {
+      if (account?.access_token) {
+        const res = await axios.post<Response<LoginModel>>(
+          `${process.env.NEXT_PUBLIC_API_BASE}/login/${account.provider}`,
+          { token: account.access_token }
+        );
+        const userFromCredentials = res.data.data;
+        token.user = userFromCredentials;
+      } else if (user) {
         token.user = user;
       }
       if (req.url?.includes("/api/auth/session?update")) {

@@ -104,7 +104,7 @@ export function Markdown({ children, style }: MarkdownProps) {
             color="#f8f8f2"
             fontSize="xl"
           >
-            <pre {...props} style={{ ...style?.pre }} />
+            <pre {...props} style={{ overflow: "auto", ...style?.pre }} />
           </Box>
         ),
         ul: ({ node, ordered, ...props }) => (
