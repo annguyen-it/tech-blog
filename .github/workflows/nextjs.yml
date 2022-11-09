@@ -19,18 +19,19 @@ permissions:
   id-token: write
 
 env:
+  AUTH_GITHUB_ID: ${{ secrets.AUTH_GITHUB_ID }}
+  AUTH_GITHUB_SECRET: ${{ secrets.AUTH_GITHUB_SECRET }}
   CYPRESS_GITHUB_USER: ${{ secrets.CYPRESS_GITHUB_USER }}
   CYPRESS_GITHUB_PW: ${{ secrets.CYPRESS_GITHUB_PW }}
   CYPRESS_FACEBOOK_USER: ${{ secrets.CYPRESS_FACEBOOK_USER }}
   CYPRESS_FACEBOOK_PW: ${{ secrets.CYPRESS_FACEBOOK_PW }}
   CYPRESS_COOKIE_NAME: ${{ secrets.CYPRESS_COOKIE_NAME }}
   CYPRESS_SITE_NAME: ${{ secrets.CYPRESS_SITE_NAME }}
-  AUTH_GITHUB_ID: ${{ secrets.AUTH_GITHUB_ID }}
-  AUTH_GITHUB_SECRET: ${{ secrets.AUTH_GITHUB_SECRET }}
   FACEBOOK_ID: ${{ secrets.FACEBOOK_ID }}
   FACEBOOK_SECRET: ${{ secrets.FACEBOOK_SECRET }}
   GOOGLE_ID: ${{ secrets.GOOGLE_ID }}
   GOOGLE_SECRET: ${{ secrets.GOOGLE_SECRET }}
+  NEXT_PUBLIC_API_BASE: ${{ secrets.NEXT_PUBLIC_API_BASE }}
   NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
   NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
 
@@ -98,6 +99,7 @@ jobs:
           echo FACEBOOK_SECRET=${{ secrets.FACEBOOK_SECRET }} >> .env.local
           echo GOOGLE_ID=${{ secrets.GOOGLE_ID }} >> .env.local
           echo GOOGLE_SECRET=${{ secrets.GOOGLE_SECRET }} >> .env.local
+          echo NEXT_PUBLIC_API_BASE=${{ secrets.NEXT_PUBLIC_API_BASE }} >> .env.local
           echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env.local
           echo NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} >> .env.local
           ${{ steps.detect-package-manager.outputs.runner }} next build
