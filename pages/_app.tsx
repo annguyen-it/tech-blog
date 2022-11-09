@@ -1,4 +1,5 @@
 import { Box, ChakraProvider } from "@chakra-ui/react";
+import axios, { AxiosRequestConfig } from "axios";
 import { NextComponentType, NextPageContext } from "next";
 import { Session } from "next-auth";
 import { SessionProvider, useSession } from "next-auth/react";
@@ -13,8 +14,25 @@ type SessionContainerProps = {
   pageProps: Omit<PageProps, "session">;
 };
 
+let headerInterceptor: (value: AxiosRequestConfig) => AxiosRequestConfig;
+let headerInterceptorId: number;
+
 function SessionContainer({ Component, pageProps }: SessionContainerProps) {
-  const { status } = useSession();
+  const { status, data } = useSession();
+  if (status === "authenticated") {
+    if (!headerInterceptor) {
+      headerInterceptor = (config) => {
+        const token = (data.user as any).accessToken;
+        if (token && config.headers) {
+          config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+      };
+    }
+    headerInterceptorId = axios.interceptors.request.use(headerInterceptor);
+  } else if (status === "unauthenticated") {
+    axios.interceptors.request.eject(headerInterceptorId);
+  }
 
   return (
     <>
@@ -35,7 +53,10 @@ function MyApp({ Component, pageProps }: AppProps<PageProps>) {
   return (
     <>
       <Head>
-        <meta name="description" content="Tech blog is a community of 947,500 amazing developers" />
+        <meta
+          name="description"
+          content="Tech blog is a community of 947,500 amazing developers"
+        />
         <meta name="keywords" content="tech, blog, code" />
         <meta name="author" content="John Doe" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
