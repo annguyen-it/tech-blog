@@ -5,7 +5,7 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   webpack: (
     config,

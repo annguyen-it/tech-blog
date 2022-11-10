@@ -14,9 +14,11 @@ export type Post = {
   content: string;
   user: User;
   createdAt: Date;
-  updatedAt: Date; // TODO
+  updatedAt: Date;
   tags: string[];
-  likes: number;
-  comments: number;
+  viewCount: number;
+  likeCount: number;
+  shareCount: number;
   timeToRead: number;
+  userInteraction: boolean | null;
 };

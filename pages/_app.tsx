@@ -38,6 +38,7 @@ function SessionContainer({ Component, pageProps }: SessionContainerProps) {
     } else if (status === "unauthenticated") {
       axios.interceptors.request.eject(headerInterceptorId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   // console.log(data?.user);

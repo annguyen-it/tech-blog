@@ -12,11 +12,11 @@ import {
   Stack,
   Text,
   Textarea,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Session } from "next-auth";
-import { SetStateAction, useState } from "react";
+import { memo, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { MdKeyboardBackspace } from "react-icons/md";
 
@@ -118,9 +118,9 @@ function Step2({ setStep, data }: Step2Props) {
               borderColor="base.90 !important"
             />
           </Box>
-          <Heading as="h3" fontSize="xl">
+          {/* <Heading as="h3" fontSize="xl">
             {user.name!}
-          </Heading>
+          </Heading> */}
         </Stack>
 
         {/* Main info */}
@@ -191,4 +191,4 @@ function Step2({ setStep, data }: Step2Props) {
   );
 }
 
-export default Step2;
+export default memo(Step2);

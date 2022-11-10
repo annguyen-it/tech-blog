@@ -14,7 +14,7 @@ import {
   Stack,
   useDisclosure,
 } from "@chakra-ui/react";
-import { SetStateAction, useState } from "react";
+import { memo, SetStateAction, useState } from "react";
 import { Markdown } from "../../components/elements/text/markdown";
 
 type PolicyType = "codeOfConduct" | "termsAndConditions";
@@ -245,4 +245,4 @@ function Step1({ setStep }: Step1Props) {
   );
 }
 
-export default Step1;
+export default memo(Step1);

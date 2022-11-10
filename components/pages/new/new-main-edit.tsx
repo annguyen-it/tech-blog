@@ -73,7 +73,11 @@ function CoverPhoto() {
       )}
 
       <Tooltip label="Use ratio of 100:42 for best results">
-        <Button onClick={() => imageRef.current?.click()} variant="rock">
+        <Button
+          onClick={() => imageRef.current?.click()}
+          variant="rock"
+          disabled
+        >
           {coverImage ? "Change" : "Add a cover image"}
         </Button>
       </Tooltip>
@@ -305,6 +309,7 @@ function Tags() {
                 }
                 onKeyDown={onKeyDown}
                 onBlur={() => onBlur()}
+                disabled
                 px="0.5"
                 py="px"
               />
@@ -393,7 +398,7 @@ export default function NewMainEdit() {
       <Box px="16" py="8">
         <CoverPhoto />
         <Title />
-        {/* <Tags /> */}
+        <Tags />
       </Box>
 
       <Body />

@@ -88,6 +88,8 @@ const handler: (req: NextApiRequest) => NextAuthOptions = (req) => ({
   },
 });
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const nextAuth = async (req: NextApiRequest, res: NextApiResponse) => {
   return NextAuth(req, res, handler(req));
 };
+
+export default nextAuth;

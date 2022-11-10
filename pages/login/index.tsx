@@ -1,7 +1,8 @@
 import { signIn } from "next-auth/react";
+import { memo } from "react";
 import LogLayout, { LogForm } from "../../components/layout/log";
 
-export default function Login() {
+function Login() {
   async function login(form: LogForm) {
     const res = await signIn("credentials", {
       callbackUrl: "/",
@@ -18,3 +19,5 @@ export default function Login() {
 
   return <LogLayout page="Login" onConfirm={login} />;
 }
+
+export default memo(Login);

@@ -12,12 +12,15 @@ import {
   Stack,
   Text,
   Tooltip,
+  useToast,
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegBookmark, FaRegComment, FaRegHeart } from "react-icons/fa";
 import { Share } from "../../data";
+import { Post } from "../../models";
 
 function LoginBox() {
   return (
@@ -35,45 +38,35 @@ function LoginBox() {
 }
 
 type PostLeftType = {
-  pid: number;
+  post: Post;
 };
-export default function PostLeft({ pid }: PostLeftType) {
+export default function PostLeft({ post }: PostLeftType) {
   const { status } = useSession();
-  // console.log(status);
-  const [data, setData] = useState({
-    id: 1,
-    image:
-      "https://res.cloudinary.com/practicaldev/image/fetch/s--Vt_eVVRg--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://www.entropywins.wtf/blog/wp-content/uploads/2022/09/code.jpg",
-    author: {
-      url: "johnny.depp",
-      name: "Johnny Depp",
-      intro: "I'm an actor",
-      work: "Hollywood",
-      joined: new Date(2019, 5, 9),
-      image:
-        "https://res.cloudinary.com/practicaldev/image/fetch/s--4Jbi0yB4--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/2884/27097c7514e0bf985ccbe9a8ccd2a550.jpeg",
-    },
-    createdDate: new Date(2022, 9, 9),
-    title: "Advice for junior developers",
-    url: "123456",
-    tags: ["beginners", "newbie", "learning"],
-    likes: 900,
-    comments: 30,
-    timeToRead: 9,
-  });
+  const [likeCount, setLikeCount] = useState(post.likeCount);
+  const toast = useToast();
+
+  console.log(post);
 
   const like = () => {
     if (status === "authenticated") {
-      setData((prev) => {
-        return {
-          ...prev,
-          likes: prev.likes + 1,
-        };
-      });
+      setLikeCount((prev) => prev + 1);
     } else {
       return <LoginBox />;
     }
   };
+
+  async function copyToClipboard() {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      toast({ description: "Copied successfully" });
+    } catch (err) {
+      toast({
+        title: "An error occurred",
+        description: err as any,
+        status: "error",
+      });
+    }
+  }
 
   return (
     <ButtonGroup
@@ -95,7 +88,7 @@ export default function PostLeft({ pid }: PostLeftType) {
               icon={<FaRegHeart />}
               colorScheme="red"
             ></IconButton>
-            <Text>{data.likes}</Text>
+            <Text>{likeCount}</Text>
           </Flex>
         </Tooltip>
         <Tooltip label="Jump to Comment">
@@ -106,8 +99,9 @@ export default function PostLeft({ pid }: PostLeftType) {
               aria-label="Comment"
               icon={<FaRegComment />}
               colorScheme="yellow"
+              disabled
             ></IconButton>
-            <Text>{data.comments}</Text>
+            <Text>{post.viewCount}</Text>
           </Flex>
         </Tooltip>
         <Tooltip label="Save">
@@ -118,8 +112,9 @@ export default function PostLeft({ pid }: PostLeftType) {
               aria-label="Save"
               icon={<FaRegBookmark />}
               colorScheme="indigo"
+              disabled
             ></IconButton>
-            <Text>{data.timeToRead}</Text>
+            <Text>{post.shareCount}</Text>
           </Flex>
         </Tooltip>
 
@@ -139,6 +134,7 @@ export default function PostLeft({ pid }: PostLeftType) {
               <ButtonGroup variant="flat" w="full">
                 <Flex direction="column" w="full">
                   <Button
+                    onClick={() => copyToClipboard()}
                     display="inline-block"
                     fontWeight="700"
                     backgroundColor="inherit"
@@ -156,6 +152,26 @@ export default function PostLeft({ pid }: PostLeftType) {
                       {share.text}
                     </Button>
                   ))}
+                  <Button
+                    display="inline-block"
+                    fontWeight="400"
+                    textAlign="left"
+                    as="a"
+                    href={`https://twitter.com/intent/tweet?url=${window.location.href}`}
+                    target="_blank"
+                  >
+                    Share to Twitter
+                  </Button>
+                  <Button
+                    display="inline-block"
+                    fontWeight="400"
+                    textAlign="left"
+                    as="a"
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
+                    target="_blank"
+                  >
+                    Share to Facebook
+                  </Button>
                 </Flex>
               </ButtonGroup>
             </PopoverBody>

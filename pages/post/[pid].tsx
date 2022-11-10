@@ -45,7 +45,7 @@ function Post(props: PostProps) {
         gap={{ base: 2, lg: 4 }}
       >
         <GridItem as="aside" gridRowEnd={{ base: "span 2", lg: "initial" }}>
-          <PostLeft pid={post.id} />
+          <PostLeft post={post} />
         </GridItem>
         <GridItem minW="0">
           <PostMain dataPost={post} />

@@ -1,8 +1,9 @@
 import { Box, Container, Heading, Link, Text } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
+import { memo } from "react";
 
-export default function FourOhFour() {
+function FourOhFour() {
   const { status } = useSession();
   const title = "The page you were looking for does not exist!";
 
@@ -52,3 +53,5 @@ export default function FourOhFour() {
     </Box>
   );
 }
+
+export default memo(FourOhFour);
