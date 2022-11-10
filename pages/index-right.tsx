@@ -1,4 +1,5 @@
-import { Box, Stack, Link, Text, Heading, Tag } from "@chakra-ui/react";
+import { Box, Stack, Link, Text, Heading, Tag, Button } from "@chakra-ui/react";
+import { memo } from "react";
 import { listings, helps, discuss, challenge } from "../data";
 
 function Listings() {
@@ -17,7 +18,7 @@ function Listings() {
         <Heading p="4" size="md">
           Listings
         </Heading>
-        {/* <Button
+        <Button
           as="a"
           variant="link"
           href="/"
@@ -25,9 +26,10 @@ function Listings() {
           color="Blue"
           fontSize="sm"
           _hover={{ color: "blue" }}
+          disabled
         >
           See all
-        </Button> */}
+        </Button>
       </Box>
 
       <Box>
@@ -199,7 +201,7 @@ function Challenge() {
   );
 }
 
-export default function IndexRight() {
+function IndexRight() {
   return (
     <Stack as="aside" spacing="4">
       <Listings />
@@ -209,3 +211,5 @@ export default function IndexRight() {
     </Stack>
   );
 }
+
+export default memo(IndexRight);

@@ -37,11 +37,13 @@ function Navigation({ session }: { session: Session | null }) {
       label: user?.name,
       subLabel: nickname,
       url: `/${nickname}`,
+      disable: true,
     },
     {
       divider: true,
       label: "Dashboard",
       url: "/dashboard",
+      disable: true,
     },
     {
       label: "Create Post",
@@ -50,10 +52,12 @@ function Navigation({ session }: { session: Session | null }) {
     {
       label: "Reading List",
       url: "/reading-list",
+      disable: true,
     },
     {
       label: "Settings",
       url: "/settings",
+      disable: true,
     },
     {
       label: "Sign Out",
@@ -66,7 +70,7 @@ function Navigation({ session }: { session: Session | null }) {
   return (
     <Box>
       <UnorderedList m="0" styleType="none">
-        {items.map(({ label, subLabel, url, divider, dataCy }) => (
+        {items.map(({ label, subLabel, url, divider, dataCy, disable }) => (
           <ListItem
             key={url}
             mt={divider ? 2 : 0}
@@ -77,6 +81,7 @@ function Navigation({ session }: { session: Session | null }) {
             <Button
               variant="flat-link"
               onClick={() => NextUtils.navigate(router, url)}
+              disabled={disable}
               w="full"
               h={subLabel ? "auto !important" : undefined}
               data-cy={dataCy}
@@ -143,12 +148,13 @@ export default function TopBar() {
         </Flex>
 
         <InputGroup size="md">
-          <Input placeholder="Search..." />
+          <Input placeholder="Search..." disabled />
           <InputRightElement>
             <IconButton
               aria-label="Search keyword"
               icon={<MdSearch />}
               variant="flat"
+              disabled
               h="97%"
               fontSize="24px"
             />

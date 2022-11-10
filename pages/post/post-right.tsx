@@ -30,7 +30,7 @@ export default function PostRight({ dataPost }: PostMainProps) {
           </Link>
         </Box>
 
-        <Button mt="6">Follow</Button>
+        <Button disabled mt="6">Follow</Button>
 
         {dataPost.user.bio && <Text color="base.70">{dataPost.user.bio}</Text>}
 
@@ -44,19 +44,17 @@ export default function PostRight({ dataPost }: PostMainProps) {
             </Box>
           )}
 
-          {dataPost.user.joined && (
-            <Box>
-              <Box fontSize="xs" fontWeight="700" textTransform="uppercase">
-                Joined
-              </Box>
-              <Box>
-                {dataPost.user.joined?.toLocaleString("default", {
-                  month: "long",
-                })}{" "}
-                {dataPost.user.joined?.getDate()}
-              </Box>
+          <Box>
+            <Box fontSize="xs" fontWeight="700" textTransform="uppercase">
+              Joined
             </Box>
-          )}
+            <Box>
+              {new Date(dataPost.user.createdAt).toLocaleString("default", {
+                month: "long",
+              })}{" "}
+              {new Date(dataPost.user.createdAt).getDate()}
+            </Box>
+          </Box>
         </Stack>
       </Stack>
     </Stack>

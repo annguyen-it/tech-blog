@@ -3,7 +3,7 @@ export type SimpleUser = {
   nickname: string | null;
   bio: string | null;
   work: string | null;
-  joined: Date; // TODO
+  createdAt: Date;
   image: string | null;
 };
 

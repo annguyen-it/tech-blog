@@ -214,14 +214,14 @@ function BodySuggestion() {
             </Table>
           </Box>
         </ListItem>
-        {/* <ListItem>
-        Embed rich content such as Tweets, YouTube videos, etc. Use the
-        complete URL:{" "}
-        <Code borderRadius="md" bg="rgba(0, 0, 0, 0.1)" fontSize="xs">
-          &#123;% embed https://... %&#125;
-        </Code>
-        . <Link color="blue">See a list of supported embeds</Link>.
-      </ListItem> */}
+        <ListItem>
+          Embed rich content such as Tweets, YouTube videos, etc. Use the
+          complete URL:{" "}
+          <Code borderRadius="md" bg="rgba(0, 0, 0, 0.1)" fontSize="xs">
+            &#123;% embed https://... %&#125;
+          </Code>
+          . <Link color="blue">See a list of supported embeds</Link>.
+        </ListItem>
         <ListItem>
           In addition to images for the post&apos;s content, you can also drag
           and drop a cover image.

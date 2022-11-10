@@ -30,6 +30,7 @@ function NewBottom() {
         onClick={() => onPublish(false)}
         variant="flat"
         fontWeight="normal"
+        disabled
       >
         Save draft
       </Button>
