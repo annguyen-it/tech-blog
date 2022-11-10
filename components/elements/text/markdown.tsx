@@ -36,8 +36,7 @@ export function Markdown({ children, style }: MarkdownProps) {
             {...props}
             style={{
               paddingLeft: "20px",
-              borderLeft: "4px solid",
-              borderColor: "base-20",
+              borderLeft: "4px solid var(--chakra-colors-base-20)",
               ...style?.blockquote,
             }}
           />
