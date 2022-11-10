@@ -108,7 +108,11 @@ export function Markdown({ children, style }: MarkdownProps) {
           </Box>
         ),
         ul: ({ node, ordered, ...props }) => (
-          <UnorderedList {...props} fontSize="xl" style={{ ...style?.ul }} />
+          <UnorderedList
+            {...props}
+            fontSize={{ base: "lg", lg: "xl" }}
+            style={{ ...style?.ul }}
+          />
         ),
       }}
     >

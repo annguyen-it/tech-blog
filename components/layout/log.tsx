@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -16,9 +17,9 @@ import {
 import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { BsFacebook, BsGithub, BsGoogle } from "react-icons/bs";
+import { BsFacebook, BsGithub, BsGoogle, BsTwitter } from "react-icons/bs";
 import { ValidationUtils } from "../../utils/validation";
 import Layout from "./layout";
 const md5 = require("md5");
@@ -34,11 +35,7 @@ type LogLayoutProps = {
   onSuccess?: () => void;
   page: "Login" | "Sign Up";
 };
-export default function LogLayout({
-  onConfirm,
-  onSuccess,
-  page,
-}: LogLayoutProps) {
+function LogLayout({ onConfirm, onSuccess, page }: LogLayoutProps) {
   const { status } = useSession();
   const router = useRouter();
   const {
@@ -126,14 +123,15 @@ export default function LogLayout({
                 <Icon as={BsFacebook} mr="2" />
                 {action} with Facebook
               </Button>
-              {/* <Button
+              <Button
                 colorScheme="twitter"
                 color="white"
+                disabled
                 data-cy="log_with-twitter"
               >
                 <Icon as={BsTwitter} mr="2" />
                 {action} with Twitter
-              </Button> */}
+              </Button>
               <Button
                 onClick={() => signIn("github", loginOptions)}
                 colorScheme="github"
@@ -244,9 +242,11 @@ export default function LogLayout({
               </FormControl>
             )}
 
-            {/* <FormControl>
-              <Checkbox defaultChecked>Remember me</Checkbox>
-            </FormControl> */}
+            <FormControl>
+              <Checkbox defaultChecked disabled>
+                Remember me
+              </Checkbox>
+            </FormControl>
 
             <Button
               isLoading={isSubmitting}
@@ -268,3 +268,5 @@ export default function LogLayout({
     </Layout>
   );
 }
+
+export default memo(LogLayout);

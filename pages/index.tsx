@@ -4,7 +4,6 @@ import Head from "next/head";
 import Layout from "../components/layout/layout";
 import IndexLeft from "./index-left";
 import IndexMain from "./index-main";
-import IndexRight from "./index-right";
 
 const Home: NextPage = () => {
   return (
@@ -17,7 +16,7 @@ const Home: NextPage = () => {
         w="full"
         maxW="7xl"
         m="auto"
-        templateColumns="240px 2fr 1fr"
+        templateColumns="240px 3fr 1fr"
         gap="4"
       >
         <GridItem>
@@ -27,7 +26,7 @@ const Home: NextPage = () => {
           <IndexMain />
         </GridItem>
         <GridItem>
-          <IndexRight />
+          {/* <IndexRight /> */}
         </GridItem>
       </Grid>
     </Layout>

@@ -2,7 +2,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
-import { useState } from "react";
+import { memo, useState } from "react";
 import FourOhFour from "../404";
 import Step1 from "./step-1";
 import Step2 from "./step-2";
@@ -56,4 +56,4 @@ const NewUser: NextPage = () => {
   );
 };
 
-export default NewUser;
+export default memo(NewUser);

@@ -12,16 +12,22 @@ import {
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { memo } from "react";
 import {
-  FaTwitter,
   FaFacebookF,
   FaGithub,
   FaInstagram,
   FaTwitch,
+  FaTwitter,
 } from "react-icons/fa";
 import { categories, tags } from "../data";
 
-function Tile({ children, href }: { children: React.ReactNode; href: string }) {
+type TileProps = {
+  children: React.ReactNode;
+  href: string;
+  disabled?: boolean;
+};
+function Tile({ children, href, disabled }: TileProps) {
   return (
     <Link
       href={href}
@@ -36,6 +42,7 @@ function Tile({ children, href }: { children: React.ReactNode; href: string }) {
         color: "primary.600",
         textDecoration: "underline",
       }}
+      cursor={disabled ? "not-allowed" : "pointer"}
     >
       {children}
     </Link>
@@ -93,7 +100,7 @@ function Category() {
       <List>
         {categories.map((cat) => (
           <ListItem key={cat.href}>
-            <Tile href={cat.href}>
+            <Tile href={cat.href} disabled={cat.disabled}>
               <Box mr="2"> {cat.icon}</Box> {cat.title}
             </Tile>
           </ListItem>
@@ -140,7 +147,7 @@ function Tag() {
   );
 }
 
-export default function IndexLeft() {
+function IndexLeft() {
   const { status } = useSession();
 
   return (
@@ -152,3 +159,5 @@ export default function IndexLeft() {
     </Stack>
   );
 }
+
+export default memo(IndexLeft);

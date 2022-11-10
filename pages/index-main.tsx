@@ -11,10 +11,11 @@ import {
   Link,
   Stack,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegBookmark, FaRegComment, FaRegHeart } from "react-icons/fa";
-import { Posts } from "../data";
+import { Post, Response } from "../models";
 
 type NavButtonsType = {
   selectedTabIndex: number;
@@ -55,6 +56,7 @@ function NavButtons({ selectedTabIndex, setSelectedTabIndex }: NavButtonsType) {
             background: "white",
             color: "primary.500",
           }}
+          disabled={index > 0}
         >
           {label}
         </Button>
@@ -65,22 +67,35 @@ function NavButtons({ selectedTabIndex, setSelectedTabIndex }: NavButtonsType) {
 
 function Post() {
   const router = useRouter();
+  const [page, setPage] = useState(1);
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    console.log(page);
+    (async function func() {
+      const res = await axios.get<Response<Post[]>>(
+        `${process.env.NEXT_PUBLIC_API_BASE}/posts?page=${page}`
+      );
+      const newPosts = res.data.data;
+      setPosts((state) => [...state, ...newPosts]);
+    })();
+  }, [page]);
 
   return (
     <Stack spacing="2">
-      {Posts.map((post, i) => (
+      {posts.map((post, i) => (
         <Box
           as="article"
-          key={post.id}
+          key={i}
           bg="white"
           boxShadow="0 0 0 1px rgba(23, 23, 23, 0.1)"
           borderRadius="md"
           overflow="hidden"
         >
           {/* Image */}
-          {i == 0 && (
+          {i == 0 && post.coverImage && (
             <AspectRatio ratio={21 / 9}>
-              <Image src={post.image} alt={post.title} />
+              <Image src={post.coverImage} alt={post.title} />
             </AspectRatio>
           )}
 
@@ -88,19 +103,21 @@ function Post() {
             {/* Author */}
             <Stack direction="row" spacing="2">
               <Avatar
-                name={post.author.name}
+                name={post.user.name || ""}
                 size="sm"
-                src={post.author.image}
+                src={post.user.image ?? undefined}
               />
               <Box lineHeight="shorter">
                 <Box fontSize="sm" fontWeight="500">
-                  <Link href={`/u/${post.author.url}`}>{post.author.name}</Link>
+                  <Link href={`/u/${post.user.nickname}`}>
+                    {post.user.name}
+                  </Link>
                 </Box>
                 <Box fontSize="xs">
-                  {post.createdDate.toLocaleString("default", {
+                  {new Date(post.createdAt).toLocaleString("default", {
                     month: "long",
                   })}{" "}
-                  {post.createdDate.getDate()}
+                  {new Date(post.createdAt).getDate()}
                 </Box>
               </Box>
             </Stack>
@@ -108,53 +125,55 @@ function Post() {
             {/* Body */}
             <Stack pl="10" spacing="1">
               <Heading fontSize="3xl">
-                <Link href={`/post/${post.url}`}>{post.title}</Link>
+                <Link href={`/post/${post.id}`}>{post.title}</Link>
               </Heading>
 
               {/* Tags */}
-              <ButtonGroup variant="flat" size="sm" spacing="0">
-                {post.tags.map((tag, i) => (
-                  <Button
-                    key={i}
-                    onClick={() => router.push(`/t/${tag}`)}
-                    fontWeight="400"
-                  >
-                    #{tag}
-                  </Button>
-                ))}
-              </ButtonGroup>
-
-              {/* Buttons */}
-              <Flex justify="space-between">
+              {post.tags?.length > 0 && (
                 <ButtonGroup variant="flat" size="sm" spacing="0">
-                  {post.likes && (
+                  {post.tags?.map((tag, i) => (
                     <Button
-                      onClick={() => router.push(`/post/${post.url}`)}
-                      leftIcon={<FaRegHeart />}
+                      key={i}
+                      onClick={() => router.push(`/t/${tag}`)}
                       fontWeight="400"
                     >
-                      {post.likes} like{post.likes > 1 && "s"}
+                      #{tag}
                     </Button>
-                  )}
+                  ))}
+                </ButtonGroup>
+              )}
+
+              {/* Buttons */}
+              <Flex justify="space-between" align="center">
+                <ButtonGroup variant="flat" size="sm" spacing="0">
                   <Button
-                    onClick={() => router.push(`${post.url}#comments`)}
-                    leftIcon={<FaRegComment />}
+                    onClick={() => router.push(`/post/${post.id}`)}
+                    leftIcon={<FaRegHeart />}
                     fontWeight="400"
                   >
-                    {!post.comments && "Add comment"}
-                    {post.comments == 1 && "1 comment"}
-                    {post.comments > 1 && `${post.comments} comments`}
+                    {post.likeCount} like{post.likeCount > 1 && "s"}
+                  </Button>
+                  <Button
+                    onClick={() => router.push(`/post/${post.id}#comments`)}
+                    leftIcon={<FaRegComment />}
+                    disabled
+                    fontWeight="400"
+                  >
+                    {!post.viewCount && "Add comment"}
+                    {post.viewCount == 1 && "1 comment"}
+                    {post.viewCount > 1 && `${post.viewCount} comments`}
                   </Button>
                 </ButtonGroup>
 
                 <Stack direction="row" align="center">
-                  <Box fontSize="xs">
+                  {/* <Box fontSize="xs">
                     {post.timeToRead} min{post.timeToRead > 1 && "s"} to read
-                  </Box>
+                  </Box> */}
                   <IconButton
                     variant="flat"
                     icon={<FaRegBookmark />}
                     aria-label="Save post"
+                    disabled
                   />
                 </Stack>
               </Flex>
