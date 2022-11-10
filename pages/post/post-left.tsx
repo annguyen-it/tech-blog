@@ -15,7 +15,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegBookmark, FaRegComment, FaRegHeart } from "react-icons/fa";
