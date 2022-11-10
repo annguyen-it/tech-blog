@@ -71,7 +71,6 @@ function Post() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    console.log(page);
     (async function func() {
       const res = await axios.get<Response<Post[]>>(
         `${process.env.NEXT_PUBLIC_API_BASE}/posts?page=${page}`
