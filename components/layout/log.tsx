@@ -203,7 +203,6 @@ function LogLayout({ onConfirm, onSuccess, page }: LogLayoutProps) {
             <FormControl isInvalid={!!errors.password}>
               <FormLabel>Password</FormLabel>
               <Input
-                type="password"
                 {...register("password", {
                   required: "Password is required",
                   minLength:
