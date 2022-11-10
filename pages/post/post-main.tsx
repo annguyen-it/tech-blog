@@ -45,7 +45,7 @@ export default function PostMain({ dataPost }: PostMainProps) {
                   {dataPost.user.name}
                 </Link>
               </Box>
-              <Box fontSize="xs" color="base-60">
+              <Box fontSize="xs" color="base.60">
                 Posted on{" "}
                 {new Date(dataPost.createdAt).toLocaleString("default", {
                   month: "long",
@@ -78,7 +78,7 @@ export default function PostMain({ dataPost }: PostMainProps) {
       </Box>
 
       {/* Body */}
-      <Box pt="8" px="12">
+      <Box py="8" px="12">
         <Markdown>{dataPost.content}</Markdown>
       </Box>
     </Box>
