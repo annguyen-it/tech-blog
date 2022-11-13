@@ -14,9 +14,7 @@ import {
 import { useState } from "react";
 
 function Tools() {
-  const [input, setInput] = useState(
-    "https://thanhnien.vn/thang-gion-gia-o-lach-tray-clb-hai-phong-tro-thanh-a-quan-v-league-2022-post1521063.html"
-  );
+  const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string[]>([]);
 
@@ -61,7 +59,9 @@ function Tools() {
               <UnorderedList>
                 {result.map((r, i) => (
                   <ListItem key={i}>
-                    <Link isExternal href={r}>{r}</Link>
+                    <Link isExternal href={r}>
+                      {r}
+                    </Link>
                   </ListItem>
                 ))}
               </UnorderedList>
