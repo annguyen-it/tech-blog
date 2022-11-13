@@ -64,7 +64,7 @@ function SessionContainer({ Component, pageProps }: SessionContainerProps) {
     <>
       {status !== "loading" && (
         <ChakraProvider resetCSS theme={theme}>
-          <Box background="grey.100">
+          <Box background="grey.100" minH="100vh">
             <Component {...pageProps} />
           </Box>
         </ChakraProvider>
